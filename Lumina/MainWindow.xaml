@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Lumina.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Profile"
+        Title="Login"
         WindowStartupLocation="CenterScreen"
         Background="White"
         Height="600" Width="800">
