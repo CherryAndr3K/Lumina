@@ -87,7 +87,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="HomePage" FontFamily="Fonts/#Roboto" FontSize="25" FontWeight="Regular" VerticalAlignment="Center" Grid.Column="0" Margin="0,2,0,0"/>
+                        <TextBlock Text="Libros" FontFamily="Fonts/#Roboto" FontSize="25" FontWeight="Regular" VerticalAlignment="Center" Grid.Column="0" Margin="0,2,0,0"/>
                         <Border CornerRadius="15" Background="#D6CCC2" Width="232" Grid.Column="1" Margin="0,0,5,0" Cursor="Help">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -101,7 +101,7 @@
                     </Grid>
 
                     <!-- Sección Libros -->
-                    <TextBlock Text="Libros" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,0,0,10"/>
+                    <TextBlock Text="Destacados" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,0,0,10"/>
                     <ItemsControl>
                         <ItemsControl.Resources>
                             <Style TargetType="Image">
@@ -143,17 +143,17 @@
                     </ItemsControl>
 
                     <!-- Sección Música -->
-                    <TextBlock Text="Música" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
+                    <TextBlock Text="Recientes" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,10,0,10"/>
                     <ItemsControl>
                         <ItemsControl.Resources>
                             <Style TargetType="Image">
                                 <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="80"/>
+                                <Setter Property="Height" Value="120"/>
                                 <Setter Property="Stretch" Value="Fill"/>
                                 <Setter Property="Margin" Value="5"/>
                                 <Setter Property="Clip">
                                     <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,80" RadiusX="10" RadiusY="10"/>
+                                        <RectangleGeometry Rect="0,0,80,120" RadiusX="10" RadiusY="10"/>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
@@ -163,17 +163,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Musica/HMHAS.jpg"/>
-                        <Image Source="/Images/Musica/MBF.jpg"/>
-                        <Image Source="/Images/Musica/1989.jpg"/>
-                        <Image Source="/Images/Musica/TBP.jpg"/>
-                        <Image Source="/Images/Musica/FancyT.jpg"/>
-                        <Image Source="/Images/Musica/Spanish.jpg"/>
-                        <Image Source="/Images/Musica/BNE.jpg"/>
-                        <Button Width="80" Height="80" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                        <Image Source="/Images/Libros/Amanecer en la cosecha.jpg"/>
+                        <Image Source="/Images/Libros/La vegetariana.jpg"/>
+                        <Image Source="/Images/Libros/El dragon rojo.jpg"/>
+                        <Image Source="/Images/Libros/OficioT.jpg"/>
+                        <Image Source="/Images/Libros/Gracias.jpg"/>
+                        <Image Source="/Images/Libros/PercyJ.jpg"/>
+                        <Image Source="/Images/Libros/GOD.jpg"/>
+                        <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="/Images/Musica/Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
@@ -185,17 +185,17 @@
                     </ItemsControl>
 
                     <!-- Sección Películas -->
-                    <TextBlock Text="Películas" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
+                    <TextBlock Text="Favoritos" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,10,0,10"/>
                     <ItemsControl>
                         <ItemsControl.Resources>
                             <Style TargetType="Image">
                                 <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="101"/>
+                                <Setter Property="Height" Value="120"/>
                                 <Setter Property="Stretch" Value="Fill"/>
                                 <Setter Property="Margin" Value="5"/>
                                 <Setter Property="Clip">
                                     <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,101" RadiusX="10" RadiusY="10"/>
+                                        <RectangleGeometry Rect="0,0,80,120" RadiusX="10" RadiusY="10"/>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
@@ -205,17 +205,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Peliculas/Huevos.jpg"/>
-                        <Image Source="/Images/Peliculas/Pollo.jpg"/>
-                        <Image Source="/Images/Peliculas/Gallo.jpg"/>
-                        <Image Source="/Images/Peliculas/Conclave.jpg"/>
-                        <Image Source="/Images/Peliculas/Mammamia.jpg"/>
-                        <Image Source="/Images/Peliculas/Castle.jpg"/>
-                        <Image Source="/Images/Peliculas/YourName.jpg"/>
-                        <Button Width="80" Height="101" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                        <Image Source="/Images/Libros/Amanecer en la cosecha.jpg"/>
+                        <Image Source="/Images/Libros/La vegetariana.jpg"/>
+                        <Image Source="/Images/Libros/El dragon rojo.jpg"/>
+                        <Image Source="/Images/Libros/OficioT.jpg"/>
+                        <Image Source="/Images/Libros/Gracias.jpg"/>
+                        <Image Source="/Images/Libros/PercyJ.jpg"/>
+                        <Image Source="/Images/Libros/GOD.jpg"/>
+                        <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="/Images/Peliculas/Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
