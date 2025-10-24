@@ -17,7 +17,7 @@ namespace Lumina.Views
     /// <summary>
     /// Lógica de interacción para Musica.xaml
     /// </summary>
-    public partial class Musica : Window
+    public partial class Musica : Page
     {
         public Musica()
         {
