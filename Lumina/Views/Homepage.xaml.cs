@@ -17,7 +17,7 @@ namespace Lumina.Views
     /// <summary>
     /// Lógica de interacción para Homepage.xaml
     /// </summary>
-    public partial class Homepage : Window
+    public partial class Homepage : Page
     {
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -38,39 +38,8 @@ namespace Lumina.Views
                 tb.Foreground = Brushes.Gray;
             }
         }
-
-
-        // Permite arrastrar la ventana al hacer click en la barra superior
-        private void TopBar_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
-
-        // Minimizar
-        private void BtnMin_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        // Maximizar / Restaurar
-        private void BtnMax_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                WindowState = WindowState.Normal;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
-            }
-        }
-
-        // Cerrar
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
     }
 }
+
+
+        

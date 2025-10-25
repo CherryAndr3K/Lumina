@@ -1,4 +1,4 @@
-﻿<Page x:Class="Lumina.Homepage"
+﻿<Page x:Class="Lumina.Views.Homepage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Inicio" Height="576" Width="829"

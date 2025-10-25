@@ -17,7 +17,7 @@ namespace Lumina.Views
     /// <summary>
     /// Lógica de interacción para Peliculas.xaml
     /// </summary>
-    public partial class Peliculas : Window
+    public partial class Peliculas : Page
     {
         public Peliculas()
         {

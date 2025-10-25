@@ -17,7 +17,7 @@ namespace Lumina.Views
     /// <summary>
     /// Lógica de interacción para Libros.xaml
     /// </summary>
-    public partial class Libros : Window
+    public partial class Libros : Page
     {
         public Libros()
         {
