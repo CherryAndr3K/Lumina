@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lumina.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,11 +8,14 @@ using System.Threading.Tasks;
 
 namespace Lumina.Model
 {
-    internal class IUserRepository
+    public interface IUserRepository
     {
-        bool AuthenticateUser(NetworkCredential credential);
+        bool AutenticateUser(NetworkCredential credential);
         void Add(UserModel useModel);
         void Update(UserModel useModel);
-        void Delete(UserModel useModel);
+        void Delete(string username);
+        UserModel GetByUsername(string username);
+
+
     }
 }

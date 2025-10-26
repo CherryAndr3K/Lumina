@@ -13,10 +13,6 @@ namespace Lumina.Repositories
 { 
     public class UserRepository : RepositoryBase, IUserRepository
     {
-    public void Add(UserModel useModel)
-    {
-        throw new NotImplementedException();
-    }
 
     public bool AutenticateUser(NetworkCredential credential)
     {
@@ -62,8 +58,6 @@ namespace Lumina.Repositories
             command.Parameters.AddWithValue("@Id", userModel.Id);
             command.Parameters.AddWithValue("@username", userModel.Username);
             command.Parameters.AddWithValue("@password", userModel.Password);
-            command.Parameters.AddWithValue("@name", userModel.Name);
-            command.Parameters.AddWithValue("@lastname", userModel.LastName);
             command.Parameters.AddWithValue("@email", userModel.Email);
             command.ExecuteNonQuery();
             connection.Close();

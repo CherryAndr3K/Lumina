@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Lumina.Repositories
 {
-    internal class RepositoryBase
+    public abstract class RepositoryBase
     {
         private readonly string _connectionString;
 
@@ -16,7 +16,7 @@ namespace Lumina.Repositories
             _connectionString =
                 "Server = LAPTOP-8IR410OL\\NET;" +
                 "Database = DB_EjemploEsco; " +
-                "Integrated Security = true";
+                "Integrated Security = true";  //Cambiar esto para cuando se cheque porfis
 
         }
 
