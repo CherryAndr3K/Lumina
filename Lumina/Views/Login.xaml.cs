@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Lumina
 {
-    /// <summary>
-    /// Lógica de interacción para Login.xaml
-    /// </summary>
     public partial class Login : Window
     {
         public Login()
@@ -24,61 +12,75 @@ namespace Lumina
             InitializeComponent();
         }
 
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var tb = sender as TextBox;
-            if (tb.Text == "Buscar...")
-            {
-                tb.Text = "";
-                tb.Foreground = Brushes.Black;
-            }
-        }
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var tb = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(tb.Text))
-            {
-                tb.Text = "Buscar...";
-                tb.Foreground = Brushes.Gray;
-            }
-        }
-
-
-        // Permite arrastrar la ventana al hacer click en la barra superior
+        // ================================
+        // Barra superior (drag/ventana)
+        // ================================
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var win = Window.GetWindow(this); // obtiene la Window que hospeda el Page
-                win?.DragMove();
+                try { DragMove(); } catch { }
             }
         }
 
-        // Minimizar
         private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
+            => WindowState = WindowState.Minimized;
 
-        // Maximizar / Restaurar
         private void Maximize_Click(object sender, RoutedEventArgs e)
+            => WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+            => Close();
+
+        // ================================
+        // Placeholders y borde negro
+        // (usa el Tag del TextBox como texto de placeholder)
+        // ================================
+        private void Placeholder_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
+            if (sender is TextBox tb)
             {
-                WindowState = WindowState.Normal;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
+                string placeholder = tb.Tag as string ?? string.Empty;
+
+                if (tb.Text == placeholder)
+                {
+                    tb.Text = string.Empty;
+                    tb.Foreground = Brushes.Black;
+                }
+
+                // Borde negro al enfocar
+                tb.BorderBrush = Brushes.Black;
+                tb.BorderThickness = new Thickness(2);
             }
         }
 
-        // Cerrar
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Placeholder_LostFocus(object sender, RoutedEventArgs e)
         {
-            Close();
+            if (sender is TextBox tb)
+            {
+                string placeholder = tb.Tag as string ?? string.Empty;
+
+                if (string.IsNullOrWhiteSpace(tb.Text))
+                {
+                    tb.Text = placeholder;
+                    tb.Foreground = Brushes.Gray;
+                }
+
+                // Borde negro más delgado al perder foco
+                tb.BorderBrush = Brushes.Black;
+                tb.BorderThickness = new Thickness(1);
+            }
+        }
+
+        // ================================
+        // Guardar (placeholder de acción)
+        // ================================
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Guardado.", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Aquí puedes validar y navegar a Homepage si quieres:
+            // new Lumina.Views.Homepage().Show();
+            // this.Close();
         }
     }
 }
-        

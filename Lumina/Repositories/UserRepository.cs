@@ -1,68 +1,97 @@
 ﻿using Lumina.Model;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-
-//Se nececitar ajustar segun lo que lleva la base de datos
 namespace Lumina.Repositories
-{ 
+{
+    // Ajusta los nombres de tabla/columnas según tu BD real.
     public class UserRepository : RepositoryBase, IUserRepository
     {
-
-    public bool AutenticateUser(NetworkCredential credential)
-    {
-        bool validUser;
-        using (var connection = GetConnection())
-        using (var command = new SqlCommand())
+        public bool AutenticateUser(NetworkCredential credential)
         {
-            connection.Open();
-            command.Connection = connection;
-            command.CommandText = "select * from ¨[User] where username = @username and [password]=@password";
-            command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = credential.UserName;
-            command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = credential.Password;
-            validUser = command.ExecuteScalar() == null ? false : true;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT COUNT(1) FROM [User] WHERE Username = @username AND [Password] = @password";
+                command.Parameters.AddWithValue("@username", credential.UserName);
+                command.Parameters.AddWithValue("@password", credential.Password);
+                var result = command.ExecuteScalar();
+                int count = (result is int) ? (int)result : Convert.ToInt32(result);
+                return count > 0;
+            }
+        }
 
-            return validUser;
+        public void Add(UserModel userModel)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "INSERT INTO [User](Id, Username, [Password], Email) VALUES (@Id, @username, @password, @email)";
+                command.Parameters.AddWithValue("@Id", string.IsNullOrWhiteSpace(userModel.Id) ? Guid.NewGuid().ToString() : userModel.Id);
+                command.Parameters.AddWithValue("@username", userModel.Username);
+                command.Parameters.AddWithValue("@password", userModel.Password);
+                command.Parameters.AddWithValue("@email", (object?)userModel.Email ?? DBNull.Value);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Update(UserModel userModel)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "UPDATE [User] SET [Password] = @password, Email = @email WHERE Username = @username";
+                command.Parameters.AddWithValue("@username", userModel.Username);
+                command.Parameters.AddWithValue("@password", userModel.Password);
+                command.Parameters.AddWithValue("@email", (object?)userModel.Email ?? DBNull.Value);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Delete(string username)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM [User] WHERE Username = @username";
+                command.Parameters.AddWithValue("@username", username);
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public UserModel? GetByUsername(string username)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT TOP 1 Id, Username, [Password], Email FROM [User] WHERE Username = @username";
+                command.Parameters.AddWithValue("@username", username);
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new UserModel
+                        {
+                            Id = reader["Id"]?.ToString(),
+                            Username = reader["Username"]?.ToString(),
+                            Password = reader["Password"]?.ToString(),
+                            Email = reader["Email"]?.ToString()
+                        };
+                    }
+                }
+            }
+            return null;
         }
     }
-
-    public void Delete(string username)
-    {
-        throw new NotImplementedException();
-    }
-
-    public UserModel GetByUsername(string username)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(UserModel useModel)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Add(UserModel userModel)
-    {
-        using (var connection = GetConnection())
-        using (var command = new SqlCommand())
-        {
-            connection.Open();
-            command.Connection = connection;
-            command.CommandText = "INSERT INTO [User] VALUES (@username +" +
-                " @password, @name, @lastname, @email)";
-            command.Parameters.AddWithValue("@Id", userModel.Id);
-            command.Parameters.AddWithValue("@username", userModel.Username);
-            command.Parameters.AddWithValue("@password", userModel.Password);
-            command.Parameters.AddWithValue("@email", userModel.Email);
-            command.ExecuteNonQuery();
-            connection.Close();
-
-        }
-    }
-}
 }

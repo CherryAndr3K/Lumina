@@ -29,17 +29,17 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Top" Margin="0,6,10,0">
                 <!-- Botón Minimizar -->
                 <Button Width="15" Height="15" Margin="2" Click="Minimize_Click" Background="Transparent" BorderThickness="0">
-                    <Image Source="/Images/Iconos/minimizar.png" Stretch="Uniform"/>
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\minimizar.png" Stretch="Uniform"/>
                 </Button>
 
                 <!-- Botón Maximizar / Restaurar -->
                 <Button Width="15" Height="15" Margin="2" Click="Maximize_Click" Background="Transparent" BorderThickness="0">
-                    <Image Source="/Images/Iconos/maximizar.png" Stretch="Uniform"/>
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\maximizar.png" Stretch="Uniform"/>
                 </Button>
 
                 <!-- Botón Cerrar -->
                 <Button Width="15" Height="15" Margin="2" Click="Close_Click" Background="Transparent" BorderThickness="0">
-                    <Image Source="/Images/Iconos/cerrar.png" Stretch="Uniform"/>
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\cerrar.png" Stretch="Uniform"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -60,19 +60,19 @@
             <Grid Grid.Column="0" Background="#E3D5CA" Margin="0,0,4,0" Grid.ColumnSpan="2">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="">
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                        <Image Source="/Images/Iconos/Home.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Home.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                        <Image Source="/Images/Iconos/Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                        <Image Source="/Images/Iconos/Musica.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Musica.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                        <Image Source="/Images/Iconos/Pelicula.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Pelicula.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                        <Image Source="/Images/Iconos/Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
             </Grid>
@@ -120,17 +120,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Libros/Amanecer en la cosecha.jpg"/>
-                        <Image Source="/Images/Libros/La vegetariana.jpg"/>
-                        <Image Source="/Images/Libros/El dragon rojo.jpg"/>
-                        <Image Source="/Images/Libros/OficioT.jpg"/>
-                        <Image Source="/Images/Libros/Gracias.jpg"/>
-                        <Image Source="/Images/Libros/PercyJ.jpg"/>
-                        <Image Source="/Images/Libros/GOD.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\Amanecer en la cosecha.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\La vegetariana.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\El dragon rojo.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\OficioT.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\Gracias.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\PercyJ.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\GOD.jpg"/>
                         <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
@@ -162,17 +162,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Musica/HMHAS.jpg"/>
-                        <Image Source="/Images/Musica/MBF.jpg"/>
-                        <Image Source="/Images/Musica/1989.jpg"/>
-                        <Image Source="/Images/Musica/TBP.jpg"/>
-                        <Image Source="/Images/Musica/FancyT.jpg"/>
-                        <Image Source="/Images/Musica/Spanish.jpg"/>
-                        <Image Source="/Images/Musica/BNE.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\HMHAS.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\MBF.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\1989.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\TBP.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\FancyT.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\Spanish.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\BNE.jpg"/>
                         <Button Width="80" Height="80" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="/Images/Musica/Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
@@ -204,17 +204,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Peliculas/Huevos.jpg"/>
-                        <Image Source="/Images/Peliculas/Pollo.jpg"/>
-                        <Image Source="/Images/Peliculas/Gallo.jpg"/>
-                        <Image Source="/Images/Peliculas/Conclave.jpg"/>
-                        <Image Source="/Images/Peliculas/Mammamia.jpg"/>
-                        <Image Source="/Images/Peliculas/Castle.jpg"/>
-                        <Image Source="/Images/Peliculas/YourName.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Huevos.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Pollo.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Gallo.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Conclave.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Mammamia.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Castle.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\YourName.jpg"/>
                         <Button Width="80" Height="101" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="/Images/Peliculas/Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
