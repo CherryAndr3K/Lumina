@@ -85,7 +85,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="HomePage" FontFamily="Fonts/#Roboto" FontSize="25" FontWeight="Regular" VerticalAlignment="Center" Grid.Column="0" Margin="0,2,0,0"/>
+                        <TextBlock FontFamily="Fonts/#Roboto" FontSize="25" FontWeight="Regular" VerticalAlignment="Center" Grid.Column="0" Margin="0,2,0,0"><Run Language="es-mx" Text="Musica"/></TextBlock>
                         <Border CornerRadius="15" Background="#D6CCC2" Width="232" Grid.Column="1" Margin="0,0,5,0" Cursor="Help">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -99,129 +99,117 @@
                     </Grid>
 
                     <!-- Sección Música -->
-                    <TextBlock Text="Destacadas" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
+                    <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"><Run Text="Tod"/><Run Text="os los albumes"/></TextBlock>
                     <ItemsControl>
                         <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="80"/>
+                            <!-- Portadas cuadradas 120x120 con esquinas redondeadas -->
+                            <Style x:Key="MusicImg" TargetType="Image">
+                                <Setter Property="Width" Value="120"/>
+                                <Setter Property="Height" Value="120"/>
                                 <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
                                 <Setter Property="Clip">
                                     <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,80" RadiusX="10" RadiusY="10"/>
+                                        <RectangleGeometry Rect="0,0,120,120" RadiusX="10" RadiusY="10"/>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </ItemsControl.Resources>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Musica/HMHAS.jpg"/>
-                        <Image Source="/Images/Musica/MBF.jpg"/>
-                        <Image Source="/Images/Musica/1989.jpg"/>
-                        <Image Source="/Images/Musica/TBP.jpg"/>
-                        <Image Source="/Images/Musica/FancyT.jpg"/>
-                        <Image Source="/Images/Musica/Spanish.jpg"/>
-                        <Image Source="/Images/Musica/BNE.jpg"/>
-                        <Button Width="80" Height="80" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Musica/Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
-                    </ItemsControl>
 
-                    <!-- Sección Música -->
-                    <TextBlock Text="Recientes" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
-                    <ItemsControl>
-                        <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="80"/>
-                                <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Clip">
-                                    <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,80" RadiusX="10" RadiusY="10"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.Resources>
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Musica/HMHAS.jpg"/>
-                        <Image Source="/Images/Musica/MBF.jpg"/>
-                        <Image Source="/Images/Musica/1989.jpg"/>
-                        <Image Source="/Images/Musica/TBP.jpg"/>
-                        <Image Source="/Images/Musica/FancyT.jpg"/>
-                        <Image Source="/Images/Musica/Spanish.jpg"/>
-                        <Image Source="/Images/Musica/BNE.jpg"/>
-                        <Button Width="80" Height="80" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Musica/Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
-                    </ItemsControl>
 
-                    <!-- Sección Música -->
-                    <TextBlock Text="Favoritos" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
-                    <ItemsControl>
-                        <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="80"/>
-                                <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Clip">
-                                    <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,80" RadiusX="10" RadiusY="10"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.Resources>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Musica/HMHAS.jpg"/>
-                        <Image Source="/Images/Musica/MBF.jpg"/>
-                        <Image Source="/Images/Musica/1989.jpg"/>
-                        <Image Source="/Images/Musica/TBP.jpg"/>
-                        <Image Source="/Images/Musica/FancyT.jpg"/>
-                        <Image Source="/Images/Musica/Spanish.jpg"/>
-                        <Image Source="/Images/Musica/BNE.jpg"/>
-                        <Button Width="80" Height="80" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Musica/Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
+                        <!-- HMHAS -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/HMHAS.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|HMHAS|/Images/Musica/HMHAS.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- MBF -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/MBF.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|MBF|/Images/Musica/MBF.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- 1989 -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/1989.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|1989|/Images/Musica/1989.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- TBP -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/TBP.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|TBP|/Images/Musica/TBP.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- FancyT -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/FancyT.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|FancyT|/Images/Musica/FancyT.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Spanish -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/Spanish.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|Spanish|/Images/Musica/Spanish.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- BNE -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/BNE.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|BNE|/Images/Musica/BNE.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Huntrix -->
+                        <Grid Width="120" Height="120" Margin="5">
+                            <Image Source="/Images/Musica/Huntrix.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Music|Huntrix|/Images/Musica/Huntrix.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
                     </ItemsControl>
 
                 </StackPanel>

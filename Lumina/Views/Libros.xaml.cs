@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-// Aliases para evitar ambigüedad y usar los tipos correctos
+// Alias para evitar ambigüedad y usar los tipos correctos
 using FavoritesStore = Lumina.Services.FavoritesStore;
 using SMediaType = Lumina.Services.MediaType;  // el que usan los métodos de FavoritesStore
 using MMediaType = Lumina.Model.MediaType;     // opcional si lo necesitas en otro lado
@@ -130,6 +130,33 @@ namespace Lumina.Views
                 var nowFav = FavoritesStore.Toggle(title, type, image);   // coincide el tipo
                 SetStarIcon(btn, nowFav);
             }
+        }
+
+
+        //Navegacion
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Homepage());
+        }
+
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Libros());
+        }
+
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Musica());
+        }
+
+        private void Pelicula_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Peliculas());
+        }
+
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Favoritos());
         }
     }
 }
