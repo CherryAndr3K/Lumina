@@ -1,15 +1,16 @@
-﻿using System.Data.SqlClient;
+﻿using System.Configuration;
+using System.Data.SqlClient;
 
 namespace Lumina.Repositories
 {
-    public abstract class RepositoryBase
+    public class RepositoryBase
     {
         private readonly string _connectionString;
 
         public RepositoryBase()
         {
-            //cadena de conexión
-            _connectionString = "Data Source=balkar\\sqlgestion;Initial Catalog=MediaAppDB;Integrated Security=True;TrustServerCertificate=True";
+            _connectionString = ConfigurationManager
+                .ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
         protected SqlConnection GetConnection()
@@ -18,3 +19,4 @@ namespace Lumina.Repositories
         }
     }
 }
+
