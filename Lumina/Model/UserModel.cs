@@ -8,9 +8,9 @@ namespace Lumina.Model
 {
     public class UserModel
     {
-        public String Id { get; set; }
-        public String Username { get; set; }
-        public String Password { get; set; }
-        public String Email { get; set; }
+        public int UsuarioID { get; set; }          
+        public string Nombre { get; set; }
+        public string Constrasena { get; set; }
+        public string Avatar { get; set; }
     }
 }

@@ -32,7 +32,7 @@
                 </Button>
 
                 <!-- Botón Maximizar / Restaurar -->
-                <Button Width="15" Height="15" Margin="2" Click="MaximizeRestore_Click" Background="Transparent" BorderThickness="0">
+                <Button Width="15" Height="15" Margin="2" Click="Maximize_Click" Background="Transparent" BorderThickness="0">
                     <Image Source="/Images/Iconos/maximizar.png" Stretch="Uniform"/>
                 </Button>
 
@@ -99,130 +99,127 @@
                     </Grid>
 
                     <!-- Sección Películas -->
-                    <TextBlock Text="Destacados" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
+                    <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10" Text="Todas las peliculas"/>
+
                     <ItemsControl>
                         <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="101"/>
+                            <Style x:Key="PosterImg" TargetType="Image">
+                                <Setter Property="Width" Value="110"/>
+                                <Setter Property="Height" Value="140"/>
                                 <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
                                 <Setter Property="Clip">
                                     <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,101" RadiusX="10" RadiusY="10"/>
+                                        <RectangleGeometry Rect="0,0,110,140" RadiusX="10" RadiusY="10"/>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </ItemsControl.Resources>
+
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Peliculas/Huevos.jpg"/>
-                        <Image Source="/Images/Peliculas/Pollo.jpg"/>
-                        <Image Source="/Images/Peliculas/Gallo.jpg"/>
-                        <Image Source="/Images/Peliculas/Conclave.jpg"/>
-                        <Image Source="/Images/Peliculas/Mammamia.jpg"/>
-                        <Image Source="/Images/Peliculas/Castle.jpg"/>
-                        <Image Source="/Images/Peliculas/YourName.jpg"/>
-                        <Button Width="80" Height="101" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Peliculas/Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
+
+                        <!-- Huevos -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Huevos.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Huevos|/Images/Peliculas/Huevos.jpg">
+                                <Image x:Name="StarIcon" Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Pollo -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Pollo.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Pollo|/Images/Peliculas/Pollo.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Gallo -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Gallo.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Gallo|/Images/Peliculas/Gallo.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Cónclave -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Conclave.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Conclave|/Images/Peliculas/Conclave.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Mamma Mia -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Mammamia.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Mammamia|/Images/Peliculas/Mammamia.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Castle -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Castle.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Castle|/Images/Peliculas/Castle.jpg">
+                                <Image  Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Your Name -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/YourName.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|YourName|/Images/Peliculas/YourName.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Captain -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Peliculas/Captain.jpg" Style="{StaticResource PosterImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Movie|Captain|/Images/Peliculas/Captain.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
                     </ItemsControl>
 
-                    <!-- Sección Películas -->
-                    <TextBlock Text="Recientes" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
-                    <ItemsControl>
-                        <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="101"/>
-                                <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Clip">
-                                    <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,101" RadiusX="10" RadiusY="10"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.Resources>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Peliculas/Huevos.jpg"/>
-                        <Image Source="/Images/Peliculas/Pollo.jpg"/>
-                        <Image Source="/Images/Peliculas/Gallo.jpg"/>
-                        <Image Source="/Images/Peliculas/Conclave.jpg"/>
-                        <Image Source="/Images/Peliculas/Mammamia.jpg"/>
-                        <Image Source="/Images/Peliculas/Castle.jpg"/>
-                        <Image Source="/Images/Peliculas/YourName.jpg"/>
-                        <Button Width="80" Height="101" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Peliculas/Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
-                    </ItemsControl>
 
-                    <!-- Sección Películas -->
-                    <TextBlock Text="Favoritas" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
-                    <ItemsControl>
-                        <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="101"/>
-                                <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Clip">
-                                    <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,101" RadiusX="10" RadiusY="10"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.Resources>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Peliculas/Huevos.jpg"/>
-                        <Image Source="/Images/Peliculas/Pollo.jpg"/>
-                        <Image Source="/Images/Peliculas/Gallo.jpg"/>
-                        <Image Source="/Images/Peliculas/Conclave.jpg"/>
-                        <Image Source="/Images/Peliculas/Mammamia.jpg"/>
-                        <Image Source="/Images/Peliculas/Castle.jpg"/>
-                        <Image Source="/Images/Peliculas/YourName.jpg"/>
-                        <Button Width="80" Height="101" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Peliculas/Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
-                    </ItemsControl>
 
                 </StackPanel>
             </ScrollViewer>

@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lumina.Repositories
 {
-    public abstract class RepositoryBase
+    public class RepositoryBase
     {
         private readonly string _connectionString;
 
         public RepositoryBase()
         {
-            _connectionString =
-                "Server = LAPTOP-8IR410OL\\NET;" +
-                "Database = DB_EjemploEsco; " +
-                "Integrated Security = true";  //Cambiar esto para cuando se cheque porfis
-
+            _connectionString = ConfigurationManager
+                .ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
         protected SqlConnection GetConnection()
@@ -26,3 +19,4 @@ namespace Lumina.Repositories
         }
     }
 }
+

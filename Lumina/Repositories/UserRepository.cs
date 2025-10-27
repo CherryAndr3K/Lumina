@@ -8,6 +8,7 @@ namespace Lumina.Repositories
     // Ajusta los nombres de tabla/columnas según tu BD real.
     public class UserRepository : RepositoryBase, IUserRepository
     {
+        // LOGIN
         public bool AutenticateUser(NetworkCredential credential)
         {
             using (var connection = GetConnection())
@@ -15,15 +16,18 @@ namespace Lumina.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(1) FROM [User] WHERE Username = @username AND [Password] = @password";
-                command.Parameters.AddWithValue("@username", credential.UserName);
-                command.Parameters.AddWithValue("@password", credential.Password);
-                var result = command.ExecuteScalar();
-                int count = (result is int) ? (int)result : Convert.ToInt32(result);
+
+                // Verifica si existe un usuario con ese nombre y contraseña
+                command.CommandText = "SELECT COUNT(*) FROM Usuarios WHERE Nombre = @nombre AND Contrasena = @contrasena";
+                command.Parameters.AddWithValue("@nombre", credential.UserName);
+                command.Parameters.AddWithValue("@contrasena", credential.Password);
+
+                int count = (int)command.ExecuteScalar();
                 return count > 0;
             }
         }
 
+        // REGISTRO
         public void Add(UserModel userModel)
         {
             using (var connection = GetConnection())
@@ -31,67 +35,56 @@ namespace Lumina.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "INSERT INTO [User](Id, Username, [Password], Email) VALUES (@Id, @username, @password, @email)";
-                command.Parameters.AddWithValue("@Id", string.IsNullOrWhiteSpace(userModel.Id) ? Guid.NewGuid().ToString() : userModel.Id);
-                command.Parameters.AddWithValue("@username", userModel.Username);
-                command.Parameters.AddWithValue("@password", userModel.Password);
-                command.Parameters.AddWithValue("@email", (object?)userModel.Email ?? DBNull.Value);
+
+                // Inserta un nuevo usuario (UsuarioID es autoincremental en la BD)
+                command.CommandText = @"INSERT INTO Usuarios (Nombre, Contrasena, Avatar) 
+                                        VALUES (@nombre, @contrasena, @avatar)";
+
+                command.Parameters.AddWithValue("@nombre", userModel.Nombre);
+                command.Parameters.AddWithValue("@contrasena", userModel.Constrasena);
+                command.Parameters.AddWithValue("@avatar", (object?)userModel.Avatar ?? DBNull.Value);
+
                 command.ExecuteNonQuery();
             }
         }
 
-        public void Update(UserModel userModel)
+        // Obtener usuario por nombre
+        public UserModel GetByUsername(string nombre)
         {
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE [User] SET [Password] = @password, Email = @email WHERE Username = @username";
-                command.Parameters.AddWithValue("@username", userModel.Username);
-                command.Parameters.AddWithValue("@password", userModel.Password);
-                command.Parameters.AddWithValue("@email", (object?)userModel.Email ?? DBNull.Value);
-                command.ExecuteNonQuery();
-            }
-        }
+                command.CommandText = "SELECT UsuarioID, Nombre, Contrasena, Avatar FROM Usuarios WHERE Nombre = @nombre";
+                command.Parameters.AddWithValue("@nombre", nombre);
 
-        public void Delete(string username)
-        {
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
-            {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "DELETE FROM [User] WHERE Username = @username";
-                command.Parameters.AddWithValue("@username", username);
-                command.ExecuteNonQuery();
-            }
-        }
-
-        public UserModel? GetByUsername(string username)
-        {
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
-            {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "SELECT TOP 1 Id, Username, [Password], Email FROM [User] WHERE Username = @username";
-                command.Parameters.AddWithValue("@username", username);
                 using (var reader = command.ExecuteReader())
                 {
                     if (reader.Read())
                     {
                         return new UserModel
                         {
-                            Id = reader["Id"]?.ToString(),
-                            Username = reader["Username"]?.ToString(),
-                            Password = reader["Password"]?.ToString(),
-                            Email = reader["Email"]?.ToString()
+                            UsuarioID = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Constrasena = reader.GetString(2),
+                            Avatar = reader.IsDBNull(3) ? null : reader.GetString(3)
                         };
                     }
                 }
             }
             return null;
+        }
+
+        // Métodos pendientes 
+        public void Delete(string nombre)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(UserModel userModel)
+        {
+            throw new NotImplementedException();
         }
     }
 }

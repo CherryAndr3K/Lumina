@@ -42,7 +42,7 @@ namespace Lumina
             {
                 string placeholder = tb.Tag as string ?? string.Empty;
 
-                if (tb.Text == placeholder)
+                if (!string.IsNullOrEmpty(placeholder) && tb.Text == placeholder)
                 {
                     tb.Text = string.Empty;
                     tb.Foreground = Brushes.Black;
@@ -60,7 +60,7 @@ namespace Lumina
             {
                 string placeholder = tb.Tag as string ?? string.Empty;
 
-                if (string.IsNullOrWhiteSpace(tb.Text))
+                if (!string.IsNullOrWhiteSpace(placeholder) && string.IsNullOrWhiteSpace(tb.Text))
                 {
                     tb.Text = placeholder;
                     tb.Foreground = Brushes.Gray;
@@ -73,12 +73,13 @@ namespace Lumina
         }
 
         // ================================
-        // Guardar (placeholder de acción)
+        // Guardar
         // ================================
         private void Guardar_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Guardado.", "Login", MessageBoxButton.OK, MessageBoxImage.Information);
-            // Aquí puedes validar y navegar a Homepage si quieres:
+            MessageBox.Show("Cambios guardados correctamente.", "Guardar", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            // Si quieres navegar a Homepage tras guardar:
             // new Lumina.Views.Homepage().Show();
             // this.Close();
         }
