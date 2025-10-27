@@ -99,130 +99,93 @@
                     </Grid>
 
                     <!-- Sección Libros -->
-                    <TextBlock Text="Destacados" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,0,0,10"/>
+                    <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,0,0,10">
+  <Run Language="es-mx" Text="Todos los libros"/>
+                    </TextBlock>
+
                     <ItemsControl>
                         <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="120"/>
+                            <Style x:Key="BookImg" TargetType="Image">
+                                <Setter Property="Width" Value="110"/>
+                                <Setter Property="Height" Value="140"/>
                                 <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
                                 <Setter Property="Clip">
                                     <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,120" RadiusX="10" RadiusY="10"/>
+                                        <RectangleGeometry Rect="0,0,110,140" RadiusX="10" RadiusY="10"/>
                                     </Setter.Value>
                                 </Setter>
                             </Style>
                         </ItemsControl.Resources>
+
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Libros/Amanecer en la cosecha.jpg"/>
-                        <Image Source="/Images/Libros/La vegetariana.jpg"/>
-                        <Image Source="/Images/Libros/El dragon rojo.jpg"/>
-                        <Image Source="/Images/Libros/OficioT.jpg"/>
-                        <Image Source="/Images/Libros/Gracias.jpg"/>
-                        <Image Source="/Images/Libros/PercyJ.jpg"/>
-                        <Image Source="/Images/Libros/GOD.jpg"/>
-                        <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
+
+                        <!-- Amanecer en la cosecha -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Libros/Amanecer en la cosecha.jpg" Style="{StaticResource BookImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Book|Amanecer en la cosecha|/Images/Libros/Amanecer en la cosecha.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- La vegetariana -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Libros/La vegetariana.jpg" Style="{StaticResource BookImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Book|La vegetariana|/Images/Libros/La vegetariana.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- El dragón rojo -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Libros/El dragon rojo.jpg" Style="{StaticResource BookImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Book|El dragon rojo|/Images/Libros/El dragon rojo.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- OficioT -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Libros/OficioT.jpg" Style="{StaticResource BookImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Book|OficioT|/Images/Libros/OficioT.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- PercyJ -->
+                        <Grid Width="110" Height="140" Margin="5">
+                            <Image Source="/Images/Libros/PercyJ.jpg" Style="{StaticResource BookImg}"/>
+                            <Button Width="22" Height="22"
+            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+            Background="Transparent" BorderBrush="Transparent"
+            Click="Star_Toggle_Click" Loaded="Star_Loaded"
+            Tag="Book|PercyJ|/Images/Libros/PercyJ.jpg">
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                            </Button>
+                        </Grid>
+
                     </ItemsControl>
 
-                    <!-- Sección Música -->
-                    <TextBlock Text="Recientes" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,10,0,10"/>
-                    <ItemsControl>
-                        <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="120"/>
-                                <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Clip">
-                                    <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,120" RadiusX="10" RadiusY="10"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.Resources>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Libros/Amanecer en la cosecha.jpg"/>
-                        <Image Source="/Images/Libros/La vegetariana.jpg"/>
-                        <Image Source="/Images/Libros/El dragon rojo.jpg"/>
-                        <Image Source="/Images/Libros/OficioT.jpg"/>
-                        <Image Source="/Images/Libros/Gracias.jpg"/>
-                        <Image Source="/Images/Libros/PercyJ.jpg"/>
-                        <Image Source="/Images/Libros/GOD.jpg"/>
-                        <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
-                    </ItemsControl>
 
-                    <!-- Sección Películas -->
-                    <TextBlock Text="Favoritos" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,10,0,10"/>
-                    <ItemsControl>
-                        <ItemsControl.Resources>
-                            <Style TargetType="Image">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Height" Value="120"/>
-                                <Setter Property="Stretch" Value="Fill"/>
-                                <Setter Property="Margin" Value="5"/>
-                                <Setter Property="Clip">
-                                    <Setter.Value>
-                                        <RectangleGeometry Rect="0,0,80,120" RadiusX="10" RadiusY="10"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ItemsControl.Resources>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <Image Source="/Images/Libros/Amanecer en la cosecha.jpg"/>
-                        <Image Source="/Images/Libros/La vegetariana.jpg"/>
-                        <Image Source="/Images/Libros/El dragon rojo.jpg"/>
-                        <Image Source="/Images/Libros/OficioT.jpg"/>
-                        <Image Source="/Images/Libros/Gracias.jpg"/>
-                        <Image Source="/Images/Libros/PercyJ.jpg"/>
-                        <Image Source="/Images/Libros/GOD.jpg"/>
-                        <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
-                            <Border CornerRadius="10" ClipToBounds="True">
-                                <Grid>
-                                    <Image Source="/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
-                                        <Image.Effect>
-                                            <BlurEffect/>
-                                        </Image.Effect>
-                                    </Image>
-                                    <TextBlock Text="+" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Foreground="Black" FontWeight="Light" Height="63"/>
-                                </Grid>
-                            </Border>
-                        </Button>
-                    </ItemsControl>
 
                 </StackPanel>
             </ScrollViewer>
