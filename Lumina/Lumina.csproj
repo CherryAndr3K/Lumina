@@ -9,12 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Iconos\star_filled.png" />
+    <None Remove="Images\Iconos\star_outline.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ViewModels\" />
     <Folder Include="Styles\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Iconos\star_filled.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\star_outline.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
