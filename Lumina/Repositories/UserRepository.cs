@@ -5,6 +5,7 @@ using System.Net;
 
 namespace Lumina.Repositories
 {
+    // Ajusta los nombres de tabla/columnas según tu BD real.
     public class UserRepository : RepositoryBase, IUserRepository
     {
         // LOGIN

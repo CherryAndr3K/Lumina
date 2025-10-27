@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Lumina.Views
 {
@@ -16,8 +15,7 @@ namespace Lumina.Views
         {
             InitializeComponent();
 
-            // Ajusta la altura máxima para que, al maximizar con WindowStyle=None,
-            // no cubra la barra de tareas.
+            // Para que la ventana sin borde no tape la barra de tareas al maximizar
             MaxHeight = SystemParameters.WorkArea.Height;
             MaxWidth = SystemParameters.WorkArea.Width;
         }
@@ -35,8 +33,6 @@ namespace Lumina.Views
                     if (e.ClickCount == 2)
                     {
                         ToggleMaximizeRestore();
-                        // Si agregas x:Name="MaxIcon" a la imagen del botón,
-                        // también actualizamos el ícono aquí.
                         UpdateMaxIconIfNamed();
                     }
                     else if (e.LeftButton == MouseButtonState.Pressed)
@@ -51,45 +47,41 @@ namespace Lumina.Views
             }
         }
 
+        // Minimizar
         private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
+            => WindowState = WindowState.Minimized;
 
+        // Maximizar / Restaurar (handler principal)
         private void MaximizeRestore_Click(object sender, RoutedEventArgs e)
         {
             ToggleMaximizeRestore();
 
-            // Actualiza el ícono del propio botón (su Content es un <Image/>)
+            // Si el botón tiene un <Image/> como Content, actualiza el ícono
             if (sender is Button btn && btn.Content is Image img)
             {
                 SetMaximizeIcon(WindowState == WindowState.Maximized, img);
             }
         }
 
+        // Compatibilidad si en XAML usas Maximize_Click
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+            => MaximizeRestore_Click(sender, e);
+
+        // Cerrar
         private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+            => Close();
 
         private void ToggleMaximizeRestore()
         {
-            if (WindowState == WindowState.Normal)
-            {
-                WindowState = WindowState.Maximized;
-            }
-            else
-            {
-                WindowState = WindowState.Normal;
-            }
+            WindowState = (WindowState == WindowState.Normal)
+                          ? WindowState.Maximized
+                          : WindowState.Normal;
         }
 
         // Intenta encontrar una imagen llamada "MaxIcon" en XAML para actualizarla
-        // cuando maximices/restaures con doble clic en la barra.
         private void UpdateMaxIconIfNamed()
         {
-            var named = FindName("MaxIcon") as Image;
-            if (named != null)
+            if (FindName("MaxIcon") is Image named)
             {
                 SetMaximizeIcon(WindowState == WindowState.Maximized, named);
             }
@@ -110,7 +102,7 @@ namespace Lumina.Views
             }
             catch
             {
-                // Si la imagen no existe o hay un problema de recurso, no rompas la app.
+                // Si la imagen no existe o hay un problema de recurso, ignora.
             }
         }
 
@@ -119,32 +111,25 @@ namespace Lumina.Views
         // ================================
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (sender is TextBox tb && _placeholderActive)
             {
-                if (_placeholderActive)
-                {
-                    tb.Text = string.Empty;
-                    tb.Opacity = 1.0;
-                    _placeholderActive = false;
-                }
+                tb.Text = string.Empty;
+                tb.Opacity = 1.0; // se ve como texto real
+                _placeholderActive = false;
             }
         }
 
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
-                if (string.IsNullOrWhiteSpace(tb.Text))
-                {
-                    tb.Text = PlaceholderText;
-                    tb.Opacity = 0.6; // se nota como placeholder
-                    _placeholderActive = true;
-                }
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6; // aspecto de placeholder
+                _placeholderActive = true;
             }
         }
 
-        // Opcional: si quieres inicializar el placeholder al cargar,
-        // llama a esto desde el constructor si tu TextBox empieza vacío.
+        // Opcional: inicializar placeholder al cargar
         private void InitSearchPlaceholderIfNeeded(TextBox tb)
         {
             if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
@@ -153,31 +138,6 @@ namespace Lumina.Views
                 tb.Opacity = 0.6;
                 _placeholderActive = true;
             }
-        }
-        // Minimizar
-        private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        // Maximizar / Restaurar
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
-            {
-                WindowState = WindowState.Normal;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
-            }
-        }
-
-        // Cerrar
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-
         }
     }
 }

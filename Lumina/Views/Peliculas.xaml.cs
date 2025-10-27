@@ -1,23 +1,16 @@
-﻿using Lumina.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
+// Aliases para evitar ambigüedad y usar los tipos correctos
+using FavoritesStore = Lumina.Services.FavoritesStore;
+using SMediaType = Lumina.Services.MediaType;  // el tipo que espera FavoritesStore
 
 namespace Lumina.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Peliculas.xaml
-    /// </summary>
     public partial class Peliculas : Page
     {
         public Peliculas()
@@ -31,13 +24,14 @@ namespace Lumina.Views
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var win = Window.GetWindow(this); // obtiene la Window que hospeda el Page
-                win?.DragMove();
+                try { win?.DragMove(); } catch { }
             }
         }
+
+        // Placeholder de la caja de búsqueda
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            var tb = sender as TextBox;
-            if (tb.Text == "Buscar...")
+            if (sender is TextBox tb && tb.Text == "Buscar...")
             {
                 tb.Text = "";
                 tb.Foreground = Brushes.Black;
@@ -46,60 +40,50 @@ namespace Lumina.Views
 
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            var tb = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(tb.Text))
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
                 tb.Text = "Buscar...";
                 tb.Foreground = Brushes.Gray;
             }
         }
 
-        //Minimizar
+        // Minimar/Maximizar/Cerrar (Page -> actúan sobre la Window contenedora)
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             var win = Window.GetWindow(this);
-            if (win != null)
-                win.WindowState = WindowState.Minimized;
+            if (win != null) win.WindowState = WindowState.Minimized;
         }
 
-        // Maximizar
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
             var win = Window.GetWindow(this);
             if (win != null)
-            {
-                if (win.WindowState == WindowState.Maximized)
-                    win.WindowState = WindowState.Normal;
-                else
-                    win.WindowState = WindowState.Maximized;
-            }
+                win.WindowState = (win.WindowState == WindowState.Maximized)
+                                  ? WindowState.Normal
+                                  : WindowState.Maximized;
         }
 
-
-        // Cerrar
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             var win = Window.GetWindow(this);
             win?.Close();
-
         }
-
 
         // ======= FAVORITOS: helpers y handlers =======
 
-        private static (MediaType type, string title, string? image) ParseTag(string tag)
+        private static (SMediaType type, string title, string? image) ParseTag(string tag)
         {
             // Divide en máximo 3 partes para no romper títulos con '|'
             var p = (tag ?? "").Split(new[] { '|' }, 3, StringSplitOptions.None);
 
-            var type = MediaType.Book;
+            var type = SMediaType.Movie; // Por defecto "películas"
             if (p.Length > 0)
             {
                 switch ((p[0] ?? "").Trim().ToLowerInvariant())
                 {
-                    case "movie": type = MediaType.Movie; break;
-                    case "music": type = MediaType.Music; break;
-                    case "book": type = MediaType.Book; break;
+                    case "movie": type = SMediaType.Movie; break;
+                    case "music": type = SMediaType.Music; break;
+                    case "book": type = SMediaType.Book; break;
                 }
             }
 
@@ -116,7 +100,8 @@ namespace Lumina.Views
             if (btn.Content is Image img)
             {
                 var uri = new Uri(
-                    fav ? "pack://application:,,,/Images/Iconos/star_filled.png"
+                    fav
+                        ? "pack://application:,,,/Images/Iconos/star_filled.png"
                         : "pack://application:,,,/Images/Iconos/star_outline.png",
                     UriKind.Absolute);
 
@@ -128,8 +113,8 @@ namespace Lumina.Views
         {
             if (sender is Button btn && btn.Tag is string tag)
             {
-                var (type, title, _) = ParseTag(tag);
-                SetStarIcon(btn, FavoritesStore.IsFavorite(title, type));
+                var (type, title, _) = ParseTag(tag);                    // type = SMediaType
+                SetStarIcon(btn, FavoritesStore.IsFavorite(title, type)); // coincide el tipo
             }
         }
 
@@ -137,12 +122,10 @@ namespace Lumina.Views
         {
             if (sender is Button btn && btn.Tag is string tag)
             {
-                var (type, title, image) = ParseTag(tag);
-                var nowFav = FavoritesStore.Toggle(title, type, image);
+                var (type, title, image) = ParseTag(tag);                // type = SMediaType
+                var nowFav = FavoritesStore.Toggle(title, type, image);  // coincide el tipo
                 SetStarIcon(btn, nowFav);
             }
         }
-
-
     }
 }
