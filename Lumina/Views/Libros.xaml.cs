@@ -14,6 +14,8 @@ namespace Lumina.Views
 {
     public partial class Libros : Page
     {
+        private const string PlaceholderText = "Buscar...";
+        private bool _placeholderActive = true;
         public Libros()
         {
             InitializeComponent();
@@ -28,26 +30,6 @@ namespace Lumina.Views
             }
         }
 
-        // ================================
-        // Placeholder de la caja de búsqueda
-        // ================================
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb && tb.Text == "Buscar...")
-            {
-                tb.Text = "";
-                tb.Foreground = Brushes.Black;
-            }
-        }
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
-            {
-                tb.Text = "Buscar...";
-                tb.Foreground = Brushes.Gray;
-            }
-        }
 
         // ================================
         // Ventana (Page -> actúa sobre Window contenedora)
@@ -132,6 +114,41 @@ namespace Lumina.Views
             }
         }
 
+
+
+        // ================================
+        // Caja de búsqueda (placeholder)
+        // ================================
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb && _placeholderActive)
+            {
+                tb.Text = string.Empty;
+                tb.Opacity = 1.0; // se ve como texto real
+                _placeholderActive = false;
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6; // aspecto de placeholder
+                _placeholderActive = true;
+            }
+        }
+
+        // Opcional: inicializar placeholder al cargar
+        private void InitSearchPlaceholderIfNeeded(TextBox tb)
+        {
+            if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6;
+                _placeholderActive = true;
+            }
+        }
 
         //Navegacion
         private void Home_Click(object sender, RoutedEventArgs e)
