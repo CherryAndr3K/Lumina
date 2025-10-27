@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-// Aliases para evitar ambigüedad y usar los tipos correctos
+// Alias para evitar ambigüedad y usar los tipos correctos
 using FavoritesStore = Lumina.Services.FavoritesStore;
 using SMediaType = Lumina.Services.MediaType;  // el que usan los métodos de FavoritesStore
 using MMediaType = Lumina.Model.MediaType;     // opcional si lo necesitas en otro lado
@@ -14,6 +14,8 @@ namespace Lumina.Views
 {
     public partial class Libros : Window
     {
+        private const string PlaceholderText = "Buscar...";
+        private bool _placeholderActive = true;
         public Libros()
         {
             InitializeComponent();
@@ -27,26 +29,6 @@ namespace Lumina.Views
             }
         }
 
-        // ================================
-        // Placeholder de la caja de búsqueda
-        // ================================
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb && tb.Text == "Buscar...")
-            {
-                tb.Text = "";
-                tb.Foreground = Brushes.Black;
-            }
-        }
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
-            {
-                tb.Text = "Buscar...";
-                tb.Foreground = Brushes.Gray;
-            }
-        }
 
         // ================================
         // Ventana (ahora métodos directos de Window)
@@ -125,6 +107,68 @@ namespace Lumina.Views
                 var nowFav = FavoritesStore.Toggle(title, type, image);   // coincide el tipo
                 SetStarIcon(btn, nowFav);
             }
+        }
+
+
+
+        // ================================
+        // Caja de búsqueda (placeholder)
+        // ================================
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb && _placeholderActive)
+            {
+                tb.Text = string.Empty;
+                tb.Opacity = 1.0; // se ve como texto real
+                _placeholderActive = false;
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6; // aspecto de placeholder
+                _placeholderActive = true;
+            }
+        }
+
+        // Opcional: inicializar placeholder al cargar
+        private void InitSearchPlaceholderIfNeeded(TextBox tb)
+        {
+            if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6;
+                _placeholderActive = true;
+            }
+        }
+
+        //Navegacion
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Homepage());
+        }
+
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Libros());
+        }
+
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Musica());
+        }
+
+        private void Pelicula_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Peliculas());
+        }
+
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService?.Navigate(new Favoritos());
         }
     }
 }

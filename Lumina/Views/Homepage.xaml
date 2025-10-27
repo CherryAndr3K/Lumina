@@ -4,8 +4,8 @@
         Title="Inicio" Height="576" Width="829"
         WindowStyle="None"
         Background="#EDEDE9">
-
-    <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
+    
+<!-- Grid principal que contendrá la barra superior y el resto del contenido -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>

@@ -10,7 +10,7 @@ namespace Lumina.Model
     {
         public int UsuarioID { get; set; }          
         public string Nombre { get; set; }
-        public string Constrasena { get; set; }
+        public string Contrasena { get; set; }
         public string Avatar { get; set; }
     }
 }
