@@ -1,7 +1,8 @@
-﻿<Page x:Class="Lumina.Views.Homepage"
+﻿<Window x:Class="Lumina.Views.Homepage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Inicio" Height="576" Width="829"
+        WindowStyle="None"
         Background="#EDEDE9">
 
     <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
@@ -228,5 +229,4 @@
             </ScrollViewer>
         </Grid>
     </Grid>
-</Page>
-
+</Window>
