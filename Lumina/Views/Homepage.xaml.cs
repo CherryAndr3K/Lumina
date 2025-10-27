@@ -51,13 +51,52 @@ namespace Lumina.Views
         // Navegación del menu
         // ================================
 
-        private void NavLibros_Click(object sender, RoutedEventArgs e)
+        //Libros
+        private void Libros_Click(object sender, RoutedEventArgs e)
         {
-            Libros ventanaLibros = new Libros();
-            ventanaLibros.Show(); // Muestra la nueva ventana
-            this.Close(); // Cierra la ventana actual 
+            var librosWindow = new Libros();
+            librosWindow.Owner = this;
+            librosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            librosWindow.Show();
+            this.Hide();
         }
 
+        //Musica
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            var musicaWindow = new Musica();
+            musicaWindow.Owner = this;
+            musicaWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            musicaWindow.Show();
+            this.Hide();
+        }
+
+        //Peliculas
+        private void Peliculas_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            var peliculasWindow = new Peliculas();
+            peliculasWindow.Owner = this;
+            peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            peliculasWindow.Show();
+            this.Hide();
+            */
+        }
+        //Favoritos
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            var favoritosWindow = new Favoritos();
+            favoritosWindow.Owner = this;
+            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            favoritosWindow.Show();
+            this.Hide();
+            */
+        }
+
+        // ================================
+        // Botones de ventana
+        // ================================
 
         // Minimizar
         private void Minimize_Click(object sender, RoutedEventArgs e)
