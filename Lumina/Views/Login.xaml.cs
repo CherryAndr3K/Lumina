@@ -44,26 +44,25 @@ namespace Lumina
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         // Permite arrastrar la ventana al hacer click en la barra superior
-        private void TopBar_MouseDown(object sender, MouseButtonEventArgs e)
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
+            {
+                var win = Window.GetWindow(this); // obtiene la Window que hospeda el Page
+                win?.DragMove();
+            }
         }
 
         // Minimizar
-        private void BtnMin_Click(object sender, RoutedEventArgs e)
+        private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
         // Maximizar / Restaurar
-        private void BtnMax_Click(object sender, RoutedEventArgs e)
+        private void Maximize_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
             {
@@ -76,7 +75,7 @@ namespace Lumina
         }
 
         // Cerrar
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }

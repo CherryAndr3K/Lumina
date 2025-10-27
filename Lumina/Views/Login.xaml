@@ -86,7 +86,7 @@
                     <Image Source="/Images/Iconos/minimizar.png" Stretch="Uniform"/>
                 </Button>
                 <!-- Maximizar/Restaurar -->
-                <Button Width="15" Height="15" Margin="2" Click="MaximizeRestore_Click"
+                <Button Width="15" Height="15" Margin="2" Click="Maximize_Click"
                     Background="Transparent" BorderThickness="0">
                     <Image Source="/Images/Iconos/maximizar.png" Stretch="Uniform"/>
                 </Button>
@@ -99,7 +99,7 @@
         </Grid>
 
         <!-- Contenido principal -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,0,0,-1">
             <!-- Tres columnas: centramos el contenido en la del medio -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -110,7 +110,7 @@
             <StackPanel Grid.Column="1"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
-                    Width="280">
+                    Width="280" Height="484">
 
                 <!-- Título principal -->
                 <TextBlock Text="Lumina"

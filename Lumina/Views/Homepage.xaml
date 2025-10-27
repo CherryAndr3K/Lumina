@@ -33,7 +33,7 @@
                 </Button>
 
                 <!-- Botón Maximizar / Restaurar -->
-                <Button Width="15" Height="15" Margin="2" Click="MaximizeRestore_Click" Background="Transparent" BorderThickness="0">
+                <Button Width="15" Height="15" Margin="2" Click="Maximize_Click" Background="Transparent" BorderThickness="0">
                     <Image Source="/Images/Iconos/maximizar.png" Stretch="Uniform"/>
                 </Button>
 
