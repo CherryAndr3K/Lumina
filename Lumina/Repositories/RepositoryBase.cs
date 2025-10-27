@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 
 namespace Lumina.Repositories
 {
@@ -13,11 +8,8 @@ namespace Lumina.Repositories
 
         public RepositoryBase()
         {
-            _connectionString =
-                "Server = LAPTOP-8IR410OL\\NET;" +
-                "Database = DB_EjemploEsco; " +
-                "Integrated Security = true";  //Cambiar esto para cuando se cheque porfis
-
+            //cadena de conexión
+            _connectionString = "Data Source=balkar\\sqlgestion;Initial Catalog=MediaAppDB;Integrated Security=True;TrustServerCertificate=True";
         }
 
         protected SqlConnection GetConnection()

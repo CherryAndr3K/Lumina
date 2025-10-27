@@ -1,68 +1,89 @@
 ﻿using Lumina.Model;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-
-//Se nececitar ajustar segun lo que lleva la base de datos
 namespace Lumina.Repositories
-{ 
+{
     public class UserRepository : RepositoryBase, IUserRepository
     {
-
-    public bool AutenticateUser(NetworkCredential credential)
-    {
-        bool validUser;
-        using (var connection = GetConnection())
-        using (var command = new SqlCommand())
+        // LOGIN
+        public bool AutenticateUser(NetworkCredential credential)
         {
-            connection.Open();
-            command.Connection = connection;
-            command.CommandText = "select * from ¨[User] where username = @username and [password]=@password";
-            command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = credential.UserName;
-            command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = credential.Password;
-            validUser = command.ExecuteScalar() == null ? false : true;
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
 
-            return validUser;
+                // Verifica si existe un usuario con ese nombre y contraseña
+                command.CommandText = "SELECT COUNT(*) FROM Usuarios WHERE Nombre = @nombre AND Contrasena = @contrasena";
+                command.Parameters.AddWithValue("@nombre", credential.UserName);
+                command.Parameters.AddWithValue("@contrasena", credential.Password);
+
+                int count = (int)command.ExecuteScalar();
+                return count > 0;
+            }
+        }
+
+        // REGISTRO
+        public void Add(UserModel userModel)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+
+                // Inserta un nuevo usuario (UsuarioID es autoincremental en la BD)
+                command.CommandText = @"INSERT INTO Usuarios (Nombre, Contrasena, Avatar) 
+                                        VALUES (@nombre, @contrasena, @avatar)";
+
+                command.Parameters.AddWithValue("@nombre", userModel.Nombre);
+                command.Parameters.AddWithValue("@contrasena", userModel.Constrasena);
+                command.Parameters.AddWithValue("@avatar", (object?)userModel.Avatar ?? DBNull.Value);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        // Obtener usuario por nombre
+        public UserModel GetByUsername(string nombre)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT UsuarioID, Nombre, Contrasena, Avatar FROM Usuarios WHERE Nombre = @nombre";
+                command.Parameters.AddWithValue("@nombre", nombre);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new UserModel
+                        {
+                            UsuarioID = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Constrasena = reader.GetString(2),
+                            Avatar = reader.IsDBNull(3) ? null : reader.GetString(3)
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Métodos pendientes 
+        public void Delete(string nombre)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(UserModel userModel)
+        {
+            throw new NotImplementedException();
         }
     }
-
-    public void Delete(string username)
-    {
-        throw new NotImplementedException();
-    }
-
-    public UserModel GetByUsername(string username)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Update(UserModel useModel)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Add(UserModel userModel)
-    {
-        using (var connection = GetConnection())
-        using (var command = new SqlCommand())
-        {
-            connection.Open();
-            command.Connection = connection;
-            command.CommandText = "INSERT INTO [User] VALUES (@username +" +
-                " @password, @name, @lastname, @email)";
-            command.Parameters.AddWithValue("@Id", userModel.Id);
-            command.Parameters.AddWithValue("@username", userModel.Username);
-            command.Parameters.AddWithValue("@password", userModel.Password);
-            command.Parameters.AddWithValue("@email", userModel.Email);
-            command.ExecuteNonQuery();
-            connection.Close();
-
-        }
-    }
-}
 }
