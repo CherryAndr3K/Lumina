@@ -148,27 +148,27 @@ namespace Lumina.Views
         //Navegacion
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new Homepage());
+            
         }
 
         private void Libros_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new Libros());
+            
         }
 
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new Musica());
+          
         }
 
         private void Pelicula_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new Peliculas());
+            
         }
 
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new Favoritos());
+          
         }
     }
 }
