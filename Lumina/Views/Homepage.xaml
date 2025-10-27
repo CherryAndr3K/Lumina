@@ -62,7 +62,7 @@
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Home.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="NavLibros_Click">
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">

@@ -12,7 +12,7 @@ using MMediaType = Lumina.Model.MediaType;     // opcional si lo necesitas en ot
 
 namespace Lumina.Views
 {
-    public partial class Libros : Page
+    public partial class Libros : Window
     {
         public Libros()
         {
@@ -23,8 +23,7 @@ namespace Lumina.Views
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var win = Window.GetWindow(this);
-                if (win != null) { try { win.DragMove(); } catch { } }
+                try { this.DragMove(); } catch { }
             }
         }
 
@@ -50,27 +49,23 @@ namespace Lumina.Views
         }
 
         // ================================
-        // Ventana (Page -> actúa sobre Window contenedora)
+        // Ventana (ahora métodos directos de Window)
         // ================================
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
-            var win = Window.GetWindow(this);
-            if (win != null) win.WindowState = WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;
         }
 
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
-            var win = Window.GetWindow(this);
-            if (win != null)
-                win.WindowState = (win.WindowState == WindowState.Maximized)
-                                  ? WindowState.Normal
-                                  : WindowState.Maximized;
+            this.WindowState = (this.WindowState == WindowState.Maximized)
+                              ? WindowState.Normal
+                              : WindowState.Maximized;
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            var win = Window.GetWindow(this);
-            win?.Close();
+            this.Close();
         }
 
         // ======= FAVORITOS: helpers y handlers =======

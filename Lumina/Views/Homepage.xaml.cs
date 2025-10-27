@@ -47,6 +47,18 @@ namespace Lumina.Views
             }
         }
 
+        // ================================
+        // Navegación del menu
+        // ================================
+
+        private void NavLibros_Click(object sender, RoutedEventArgs e)
+        {
+            Libros ventanaLibros = new Libros();
+            ventanaLibros.Show(); // Muestra la nueva ventana
+            this.Close(); // Cierra la ventana actual 
+        }
+
+
         // Minimizar
         private void Minimize_Click(object sender, RoutedEventArgs e)
             => WindowState = WindowState.Minimized;
