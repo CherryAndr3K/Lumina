@@ -79,6 +79,34 @@ namespace Lumina
         {
             Close();
         }
+
+        private void Placeholder_GotFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb.Text == "Ingrese su nombre")
+            {
+                tb.Text = "";
+                tb.Foreground = Brushes.LightGray;
+            }
+        }
+
+        private void Placeholder_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as TextBox;
+
+            // Si el campo quedó vacío o con espacios
+            if (string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = "Ingrese su nombre"; 
+                tb.Foreground = Brushes.Gray;  
+            }
+        }
+
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            // Lógica para guardar los cambios
+            MessageBox.Show("Cambios guardados correctamente.", "Guardar", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
         

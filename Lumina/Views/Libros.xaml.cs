@@ -52,29 +52,33 @@ namespace Lumina.Views
             }
         }
 
-        // Minimizar
+        //Minimizar
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            var win = Window.GetWindow(this);
+            if (win != null)
+                win.WindowState = WindowState.Minimized;
         }
 
-        // Maximizar / Restaurar
+        // Maximizar
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
+            var win = Window.GetWindow(this);
+            if (win != null)
             {
-                WindowState = WindowState.Normal;
-            }
-            else
-            {
-                WindowState = WindowState.Maximized;
+                if (win.WindowState == WindowState.Maximized)
+                    win.WindowState = WindowState.Normal;
+                else
+                    win.WindowState = WindowState.Maximized;
             }
         }
 
         // Cerrar
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            var win = Window.GetWindow(this);
+            win?.Close();
+
         }
     }
 }
