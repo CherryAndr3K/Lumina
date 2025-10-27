@@ -29,6 +29,7 @@ namespace Lumina.Views
             {
                 if (e.ChangedButton == MouseButton.Left)
                 {
+                    // Doble clic: maximizar/restaurar
                     if (e.ClickCount == 2)
                     {
                         ToggleMaximizeRestore();
@@ -62,7 +63,7 @@ namespace Lumina.Views
             }
         }
 
-        // Compatibilidad si en XAML dejaste Maximize_Click
+        // Compatibilidad si en XAML usas Maximize_Click
         private void Maximize_Click(object sender, RoutedEventArgs e)
             => MaximizeRestore_Click(sender, e);
 
@@ -110,31 +111,25 @@ namespace Lumina.Views
         // ================================
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (sender is TextBox tb && _placeholderActive)
             {
-                if (_placeholderActive)
-                {
-                    tb.Text = string.Empty;
-                    tb.Opacity = 1.0; // texto real
-                    _placeholderActive = false;
-                }
+                tb.Text = string.Empty;
+                tb.Opacity = 1.0; // se ve como texto real
+                _placeholderActive = false;
             }
         }
 
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb)
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
-                if (string.IsNullOrWhiteSpace(tb.Text))
-                {
-                    tb.Text = PlaceholderText;
-                    tb.Opacity = 0.6; // aspecto placeholder
-                    _placeholderActive = true;
-                }
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6; // aspecto de placeholder
+                _placeholderActive = true;
             }
         }
 
-        // Inicializa el placeholder al cargar (si lo llamas desde Loaded)
+        // Opcional: inicializar placeholder al cargar
         private void InitSearchPlaceholderIfNeeded(TextBox tb)
         {
             if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
