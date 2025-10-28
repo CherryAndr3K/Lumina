@@ -61,19 +61,19 @@
             <!-- Barra lateral izquierda -->
             <Grid Grid.Column="0" Background="#E3D5CA" Margin="0,0,4,0" Grid.ColumnSpan="2">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="">
-                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Home_Click">
                         <Image Source="/Images/Iconos/Home.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Libros_Click">
                         <Image Source="/Images/Iconos/Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Musica_Click">
                         <Image Source="/Images/Iconos/Musica.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Peliculas_Click">
                         <Image Source="/Images/Iconos/Pelicula.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
-                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Favoritos_Click">
                         <Image Source="/Images/Iconos/Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>

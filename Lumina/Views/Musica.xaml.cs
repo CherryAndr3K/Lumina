@@ -20,47 +20,10 @@ namespace Lumina.Views
         public Musica()
         {
             InitializeComponent();
-            this.StateChanged += Musica_StateChanged;
+
         }
 
-        private void Musica_StateChanged(object sender, EventArgs e)
-        {
-            // Actualizar el ícono de maximizar/restaurar cuando cambie el estado de la ventana
-            UpdateMaximizeIcon();
-        }
-
-        private void UpdateMaximizeIcon()
-        {
-            // Buscar el botón de maximizar y actualizar su ícono
-            var maximizeButton = FindMaximizeButton();
-            if (maximizeButton != null && maximizeButton.Content is Image image)
-            {
-                SetMaximizeIcon(this.WindowState == WindowState.Maximized, image);
-            }
-        }
-
-        private Button FindMaximizeButton()
-        {
-            // Encuentra el botón de maximizar en la barra de título
-            // Asumiendo que está en el StackPanel de botones
-            if (VisualTreeHelper.GetChildrenCount(this) > 0)
-            {
-                var mainGrid = VisualTreeHelper.GetChild(this, 0) as Grid;
-                if (mainGrid != null && VisualTreeHelper.GetChildrenCount(mainGrid) > 1)
-                {
-                    var titleBar = VisualTreeHelper.GetChild(mainGrid, 0) as Grid;
-                    if (titleBar != null)
-                    {
-                        var stackPanel = titleBar.Children[1] as StackPanel; // El StackPanel de botones
-                        if (stackPanel != null && stackPanel.Children.Count > 1)
-                        {
-                            return stackPanel.Children[1] as Button; // El segundo botón es maximizar
-                        }
-                    }
-                }
-            }
-            return null;
-        }
+        
 
         // Permite arrastrar la ventana al hacer click en la barra superior
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
@@ -141,24 +104,24 @@ namespace Lumina.Views
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             var peliculasWindow = new Peliculas();
             peliculasWindow.Owner = this;
             peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             peliculasWindow.Show();
             this.Hide();
-            */
+            
         }
 
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             var favoritosWindow = new Favoritos();
             favoritosWindow.Owner = this;
             favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             favoritosWindow.Show();
             this.Hide();
-            */
+            
         }
 
         // ================================
@@ -254,16 +217,6 @@ namespace Lumina.Views
             }
         }
 
-        // Evento para manejar cuando se cierra la ventana
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-
-            // Si esta ventana era la owner de otras, cierra la aplicación
-            if (this.Owner == null)
-            {
-                Application.Current.Shutdown();
-            }
-        }
+        
     }
 }

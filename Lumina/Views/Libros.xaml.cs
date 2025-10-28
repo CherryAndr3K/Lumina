@@ -50,6 +50,48 @@ namespace Lumina.Views
             this.Close();
         }
 
+        // Navegación entre ventanas (ahora se abren nuevas ventanas en lugar de navegar)
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            var homeWindow = new Homepage();
+            homeWindow.Owner = this;
+            homeWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            homeWindow.Show();
+            this.Hide();
+        }
+
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            //No hacer nada estamos en ventana de libros
+        }
+
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            var musicaWindow = new Musica();
+            musicaWindow.Owner = this;
+            musicaWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            musicaWindow.Show();
+            this.Hide();
+        }
+
+        private void Peliculas_Click(object sender, RoutedEventArgs e)
+        {
+            var peliculasWindow = new Peliculas();
+            peliculasWindow.Owner = this;
+            peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            peliculasWindow.Show();
+            this.Hide();
+        }
+
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            var favoritosWindow = new Favoritos();
+            favoritosWindow.Owner = this;
+            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            favoritosWindow.Show();
+            this.Hide();
+        }
+
         // ======= FAVORITOS: helpers y handlers =======
 
         private static (SMediaType type, string title, string? image) ParseTag(string tag)
@@ -145,30 +187,6 @@ namespace Lumina.Views
             }
         }
 
-        //Navegacion
-        private void Home_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Libros_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Musica_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-
-        private void Pelicula_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void Favoritos_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
+      
     }
 }
