@@ -1,7 +1,11 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+
+// IMPORTANTE: si Register.xaml está en la carpeta Views, agrega este using
+using Lumina.Views;
 
 namespace Lumina
 {
@@ -73,7 +77,7 @@ namespace Lumina
         }
 
         // ================================
-        // Guardar
+        // Guardar (Login)
         // ================================
         private void Guardar_Click(object sender, RoutedEventArgs e)
         {
@@ -82,6 +86,15 @@ namespace Lumina
             // Si quieres navegar a Homepage tras guardar:
             // new Lumina.Views.Homepage().Show();
             // this.Close();
+        }
+
+        // ================================
+        // Registro (nuevo)
+        // ================================
+        private void BtnRegistro_Click(object sender, RoutedEventArgs e)
+        {
+            var registro = new Register(); // abre la ventana Register.xaml
+            registro.ShowDialog();         // modal: bloquea hasta que se cierre
         }
     }
 }

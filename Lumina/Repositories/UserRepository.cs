@@ -41,7 +41,7 @@ namespace Lumina.Repositories
                                         VALUES (@nombre, @contrasena, @avatar)";
 
                 command.Parameters.AddWithValue("@nombre", userModel.Nombre);
-                command.Parameters.AddWithValue("@contrasena", userModel.Constrasena);
+                command.Parameters.AddWithValue("@contrasena", userModel.Contrasena);
                 command.Parameters.AddWithValue("@avatar", (object?)userModel.Avatar ?? DBNull.Value);
 
                 command.ExecuteNonQuery();
@@ -67,7 +67,7 @@ namespace Lumina.Repositories
                         {
                             UsuarioID = reader.GetInt32(0),
                             Nombre = reader.GetString(1),
-                            Constrasena = reader.GetString(2),
+                            Contrasena = reader.GetString(2),
                             Avatar = reader.IsDBNull(3) ? null : reader.GetString(3)
                         };
                     }
