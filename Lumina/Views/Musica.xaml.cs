@@ -1,15 +1,65 @@
-﻿using System.Windows;
+﻿using Lumina.Services;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+
+// Alias para evitar ambigüedad y usar los tipos correctos
+using FavoritesStore = Lumina.Services.FavoritesStore;
+using SMediaType = Lumina.Services.MediaType;
+using MMediaType = Lumina.Model.MediaType;
 
 namespace Lumina.Views
 {
-    public partial class Musica : Page
+    public partial class Musica : Window
     {
+        private const string PlaceholderText = "Buscar...";
+        private bool _placeholderActive = true;
+
         public Musica()
         {
             InitializeComponent();
+            this.StateChanged += Musica_StateChanged;
+        }
+
+        private void Musica_StateChanged(object sender, EventArgs e)
+        {
+            // Actualizar el ícono de maximizar/restaurar cuando cambie el estado de la ventana
+            UpdateMaximizeIcon();
+        }
+
+        private void UpdateMaximizeIcon()
+        {
+            // Buscar el botón de maximizar y actualizar su ícono
+            var maximizeButton = FindMaximizeButton();
+            if (maximizeButton != null && maximizeButton.Content is Image image)
+            {
+                SetMaximizeIcon(this.WindowState == WindowState.Maximized, image);
+            }
+        }
+
+        private Button FindMaximizeButton()
+        {
+            // Encuentra el botón de maximizar en la barra de título
+            // Asumiendo que está en el StackPanel de botones
+            if (VisualTreeHelper.GetChildrenCount(this) > 0)
+            {
+                var mainGrid = VisualTreeHelper.GetChild(this, 0) as Grid;
+                if (mainGrid != null && VisualTreeHelper.GetChildrenCount(mainGrid) > 1)
+                {
+                    var titleBar = VisualTreeHelper.GetChild(mainGrid, 0) as Grid;
+                    if (titleBar != null)
+                    {
+                        var stackPanel = titleBar.Children[1] as StackPanel; // El StackPanel de botones
+                        if (stackPanel != null && stackPanel.Children.Count > 1)
+                        {
+                            return stackPanel.Children[1] as Button; // El segundo botón es maximizar
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         // Permite arrastrar la ventana al hacer click en la barra superior
@@ -17,60 +67,203 @@ namespace Lumina.Views
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var win = Window.GetWindow(this); // obtiene la Window que hospeda el Page
-                win?.DragMove();
+                try { this.DragMove(); } catch { }
             }
         }
+
+        // Minimizar
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        // Maximizar/Restaurar
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                this.WindowState = WindowState.Normal;
+            else
+                this.WindowState = WindowState.Maximized;
+
+            // Actualizar el ícono después de cambiar el estado
+            if (sender is Button btn && btn.Content is Image image)
+            {
+                SetMaximizeIcon(this.WindowState == WindowState.Maximized, image);
+            }
+        }
+
+        // Cerrar
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // Método para cambiar entre íconos de maximizar/restaurar
+        private void SetMaximizeIcon(bool isMaximized, Image targetImage)
+        {
+            // Cambia entre "maximizar.png" y "restaurar.png"
+            var uri = new Uri(
+                isMaximized
+                    ? "pack://application:,,,/Images/Iconos/restaurar.png"
+                    : "pack://application:,,,/Images/Iconos/maximizar.png",
+                UriKind.Absolute);
+
+            try
+            {
+                targetImage.Source = new BitmapImage(uri);
+            }
+            catch
+            {
+                // Si la imagen no existe o hay un problema de recurso, ignora.
+            }
+        }
+
+        // Navegación entre ventanas (ahora se abren nuevas ventanas en lugar de navegar)
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            var homeWindow = new Homepage();
+            homeWindow.Owner = this;
+            homeWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            homeWindow.Show();
+            this.Hide();
+        }
+
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            var librosWindow = new Libros();
+            librosWindow.Owner = this;
+            librosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            librosWindow.Show();
+            this.Hide();
+        }
+
+       
+
+        private void Peliculas_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            var peliculasWindow = new Peliculas();
+            peliculasWindow.Owner = this;
+            peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            peliculasWindow.Show();
+            this.Hide();
+            */
+        }
+
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            /*
+            var favoritosWindow = new Favoritos();
+            favoritosWindow.Owner = this;
+            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            favoritosWindow.Show();
+            this.Hide();
+            */
+        }
+
+        // ================================
+        // Caja de búsqueda (placeholder)
+        // ================================
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            var tb = sender as TextBox;
-            if (tb.Text == "Buscar...")
+            if (sender is TextBox tb && _placeholderActive)
             {
-                tb.Text = "";
-                tb.Foreground = Brushes.Black;
+                tb.Text = string.Empty;
+                tb.Opacity = 1.0; // se ve como texto real
+                _placeholderActive = false;
             }
         }
 
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            var tb = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(tb.Text))
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
-                tb.Text = "Buscar...";
-                tb.Foreground = Brushes.Gray;
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6; // aspecto de placeholder
+                _placeholderActive = true;
             }
         }
 
-        //Minimizar
-        private void Minimize_Click(object sender, RoutedEventArgs e)
+        // Opcional: inicializar placeholder al cargar
+        private void InitSearchPlaceholderIfNeeded(TextBox tb)
         {
-            var win = Window.GetWindow(this);
-            if (win != null)
-                win.WindowState = WindowState.Minimized;
-        }
-
-        // Maximizar
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            var win = Window.GetWindow(this);
-            if (win != null)
+            if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
             {
-                if (win.WindowState == WindowState.Maximized)
-                    win.WindowState = WindowState.Normal;
-                else
-                    win.WindowState = WindowState.Maximized;
+                tb.Text = PlaceholderText;
+                tb.Opacity = 0.6;
+                _placeholderActive = true;
             }
         }
 
+        // ======= FAVORITOS: helpers y handlers =======
 
-        // Cerrar
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private static (SMediaType type, string title, string? image) ParseTag(string tag)
         {
-            var win = Window.GetWindow(this);
-            win?.Close();
+            // Divide en máximo 3 partes para no romper títulos con '|'
+            var p = (tag ?? "").Split(new[] { '|' }, 3, StringSplitOptions.None);
 
+            var type = SMediaType.Book;
+            if (p.Length > 0)
+            {
+                switch ((p[0] ?? "").Trim().ToLowerInvariant())
+                {
+                    case "movie": type = SMediaType.Movie; break;
+                    case "music": type = SMediaType.Music; break;
+                    case "book": type = SMediaType.Book; break;
+                }
+            }
+
+            var title = p.Length > 1 ? (p[1] ?? "").Trim() : "";
+            var image = p.Length > 2 ? (p[2] ?? "").Trim() : null;
+
+            if (string.IsNullOrWhiteSpace(image)) image = null;
+            return (type, title, image);
         }
 
+        private static void SetStarIcon(Button btn, bool fav)
+        {
+            // Tu XAML usa <Button><Image .../></Button>, así que Content es Image
+            if (btn.Content is Image img)
+            {
+                var uri = new Uri(
+                    fav
+                        ? "pack://application:,,,/Images/Iconos/star_filled.png"
+                        : "pack://application:,,,/Images/Iconos/star_outline.png",
+                    UriKind.Absolute);
 
+                img.Source = new BitmapImage(uri);
+            }
+        }
+
+        private void Star_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string tag)
+            {
+                var (type, title, _) = ParseTag(tag);
+                SetStarIcon(btn, FavoritesStore.IsFavorite(title, type));
+            }
+        }
+
+        private void Star_Toggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string tag)
+            {
+                var (type, title, image) = ParseTag(tag);
+                var nowFav = FavoritesStore.Toggle(title, type, image);
+                SetStarIcon(btn, nowFav);
+            }
+        }
+
+        // Evento para manejar cuando se cierra la ventana
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            // Si esta ventana era la owner de otras, cierra la aplicación
+            if (this.Owner == null)
+            {
+                Application.Current.Shutdown();
+            }
+        }
     }
 }

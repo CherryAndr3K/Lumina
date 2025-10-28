@@ -1,8 +1,11 @@
-﻿<Page x:Class="Lumina.Views.Libros"
+﻿<Window x:Class="Lumina.Views.Libros"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Inicio" Height="576" Width="829"
-        Background="#EDEDE9">
+        Title="LUMINA - Libros" Height="576" Width="829"
+        Background="#EDEDE9"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
 
     <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
     <Grid>
@@ -21,7 +24,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Título de la ventana -->
-            <TextBlock Text="LUMINA" VerticalAlignment="Top" Margin="10,4,0,0"
+            <TextBlock Text="LUMINA - Libros" VerticalAlignment="Top" Margin="10,4,0,0"
                        FontWeight="Bold" FontSize="16"/>
 
             <!-- Botones de ventana -->
@@ -100,7 +103,7 @@
 
                     <!-- Sección Libros -->
                     <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,0,0,10">
-  <Run Language="es-mx" Text="Todos los libros"/>
+                        <Run Language="es-mx" Text="Todos los libros"/>
                     </TextBlock>
 
                     <ItemsControl>
@@ -185,11 +188,9 @@
 
                     </ItemsControl>
 
-
-
                 </StackPanel>
             </ScrollViewer>
         </Grid>
     </Grid>
-</Page>
+</Window>
 
