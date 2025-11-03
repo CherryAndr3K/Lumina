@@ -15,9 +15,6 @@ namespace Lumina.Views
         {
             InitializeComponent();
 
-            // Para que la ventana sin borde no tape la barra de tareas al maximizar
-            MaxHeight = SystemParameters.WorkArea.Height;
-            MaxWidth = SystemParameters.WorkArea.Width;
         }
 
         // ================================
@@ -74,13 +71,13 @@ namespace Lumina.Views
         //Peliculas
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             var peliculasWindow = new Peliculas();
             peliculasWindow.Owner = this;
             peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             peliculasWindow.Show();
             this.Hide();
-            */
+            
         }
         //Favoritos
         private void Favoritos_Click(object sender, RoutedEventArgs e)

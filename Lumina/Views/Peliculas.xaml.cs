@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Lumina.Services;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,27 +7,123 @@ using System.Windows.Media.Imaging;
 
 // Alias para evitar ambigüedad y usar los tipos correctos
 using FavoritesStore = Lumina.Services.FavoritesStore;
-using SMediaType = Lumina.Services.MediaType;  // el tipo que espera FavoritesStore
+using SMediaType = Lumina.Services.MediaType;
+using MMediaType = Lumina.Model.MediaType;
 
 namespace Lumina.Views
 {
-    public partial class Peliculas : Page
+    public partial class Peliculas : Window
     {
         private const string PlaceholderText = "Buscar...";
         private bool _placeholderActive = true;
+
         public Peliculas()
         {
             InitializeComponent();
+            
         }
+
+        
+
 
         // Permite arrastrar la ventana al hacer click en la barra superior
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                var win = Window.GetWindow(this); // obtiene la Window que hospeda el Page
-                try { win?.DragMove(); } catch { }
+                try { this.DragMove(); } catch { }
             }
+        }
+
+        // Minimizar
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        // Maximizar/Restaurar
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+                this.WindowState = WindowState.Normal;
+            else
+                this.WindowState = WindowState.Maximized;
+
+            // Actualizar el ícono después de cambiar el estado
+            if (sender is Button btn && btn.Content is Image image)
+            {
+                SetMaximizeIcon(this.WindowState == WindowState.Maximized, image);
+            }
+        }
+
+        // Cerrar
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        // Método para cambiar entre íconos de maximizar/restaurar
+        private void SetMaximizeIcon(bool isMaximized, Image targetImage)
+        {
+            // Cambia entre "maximizar.png" y "restaurar.png"
+            var uri = new Uri(
+                isMaximized
+                    ? "pack://application:,,,/Images/Iconos/restaurar.png"
+                    : "pack://application:,,,/Images/Iconos/maximizar.png",
+                UriKind.Absolute);
+
+            try
+            {
+                targetImage.Source = new BitmapImage(uri);
+            }
+            catch
+            {
+                // Si la imagen no existe o hay un problema de recurso, ignora.
+            }
+        }
+
+        // Navegación entre ventanas (ahora se abren nuevas ventanas en lugar de navegar)
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            var homeWindow = new Homepage();
+            homeWindow.Owner = this;
+            homeWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            homeWindow.Show();
+            this.Hide();
+        }
+
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            var librosWindow = new Libros();
+            librosWindow.Owner = this;
+            librosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            librosWindow.Show();
+            this.Hide();
+        }
+
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            var musicaWindow = new Musica();
+            musicaWindow.Owner = this;
+            musicaWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            musicaWindow.Show();
+            this.Hide();
+        }
+
+        private void Peliculas_Click(object sender, RoutedEventArgs e)
+        {
+            // Ya estamos en películas, no hacer nada
+        }
+
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            
+            var favoritosWindow = new Favoritos();
+            favoritosWindow.Owner = this;
+            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            favoritosWindow.Show();
+            this.Hide();
+            
         }
 
         // ================================
@@ -64,28 +160,6 @@ namespace Lumina.Views
             }
         }
 
-        // Minimar/Maximizar/Cerrar (Page -> actúan sobre la Window contenedora)
-        private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            var win = Window.GetWindow(this);
-            if (win != null) win.WindowState = WindowState.Minimized;
-        }
-
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            var win = Window.GetWindow(this);
-            if (win != null)
-                win.WindowState = (win.WindowState == WindowState.Maximized)
-                                  ? WindowState.Normal
-                                  : WindowState.Maximized;
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            var win = Window.GetWindow(this);
-            win?.Close();
-        }
-
         // ======= FAVORITOS: helpers y handlers =======
 
         private static (SMediaType type, string title, string? image) ParseTag(string tag)
@@ -93,7 +167,7 @@ namespace Lumina.Views
             // Divide en máximo 3 partes para no romper títulos con '|'
             var p = (tag ?? "").Split(new[] { '|' }, 3, StringSplitOptions.None);
 
-            var type = SMediaType.Movie; // Por defecto "películas"
+            var type = SMediaType.Movie; // Por defecto "películas" para esta ventana
             if (p.Length > 0)
             {
                 switch ((p[0] ?? "").Trim().ToLowerInvariant())
@@ -130,8 +204,8 @@ namespace Lumina.Views
         {
             if (sender is Button btn && btn.Tag is string tag)
             {
-                var (type, title, _) = ParseTag(tag);                    // type = SMediaType
-                SetStarIcon(btn, FavoritesStore.IsFavorite(title, type)); // coincide el tipo
+                var (type, title, _) = ParseTag(tag);
+                SetStarIcon(btn, FavoritesStore.IsFavorite(title, type));
             }
         }
 
@@ -139,37 +213,22 @@ namespace Lumina.Views
         {
             if (sender is Button btn && btn.Tag is string tag)
             {
-                var (type, title, image) = ParseTag(tag);                // type = SMediaType
-                var nowFav = FavoritesStore.Toggle(title, type, image);  // coincide el tipo
+                var (type, title, image) = ParseTag(tag);
+                var nowFav = FavoritesStore.Toggle(title, type, image);
                 SetStarIcon(btn, nowFav);
             }
         }
 
-
-        //navegacion
-        private void Home_Click(object sender, RoutedEventArgs e)
+        // Evento para manejar cuando se cierra la ventana
+        protected override void OnClosed(EventArgs e)
         {
-            NavigationService?.Navigate(new Homepage());
-        }
+            base.OnClosed(e);
 
-        private void Libros_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new Libros());
-        }
-
-        private void Musica_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new Musica());
-        }
-
-        private void Pelicula_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new Peliculas());
-        }
-
-        private void Favoritos_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService?.Navigate(new Favoritos());
+            // Si esta ventana era la owner de otras, cierra la aplicación
+            if (this.Owner == null)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }
