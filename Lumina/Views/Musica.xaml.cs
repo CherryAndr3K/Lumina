@@ -169,6 +169,26 @@ namespace Lumina.Views
             }
         }
 
+
+        private void MusicLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string url)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch
+                {
+                    MessageBox.Show("No se pudo abrir el enlace.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);

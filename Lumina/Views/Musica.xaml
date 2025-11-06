@@ -127,11 +127,16 @@
                         <!-- HMHAS -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/HMHAS.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/1aqg30bNvLSWgShZgX4oop?si=nCNQ8mMVSaSnn8xABvB6bw">
+                            </Button>
                             <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|HMHAS|/Images/Musica/HMHAS.jpg">
+                                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|HMHAS|/Images/Musica/HMHAS.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -139,10 +144,15 @@
                         <!-- MBF -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/MBF.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/7aJuG4TFXa2hmE4z1yxc3n?si=So9DIOeqQACaavxKm_LBKg">      
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|MBF|/Images/Musica/MBF.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|MBF|/Images/Musica/MBF.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -150,10 +160,15 @@
                         <!-- 1989 -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/1989.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/1yGbNOtRIgdIiGHOEBaZWf?si=kp0If4-dTC2lros1e11jzQ">
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|1989|/Images/Musica/1989.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|1989|/Images/Musica/1989.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -161,10 +176,15 @@
                         <!-- TBP -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/TBP.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/0FZK97MXMm5mUQ8mtudjuK?si=oiRRiQRyQUCNsz141VxsFg">
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|TBP|/Images/Musica/TBP.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|TBP|/Images/Musica/TBP.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -172,10 +192,15 @@
                         <!-- FancyT -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/FancyT.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/3o81FH5FTYVtoBQOZr3T7y?si=1mKp3dA1TLektVlDAkgQVw">
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|FancyT|/Images/Musica/FancyT.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|FancyT|/Images/Musica/FancyT.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -183,10 +208,15 @@
                         <!-- Spanish -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/Spanish.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/1inJBfnZWe33KcXl6TNaXV?si=EgsblTAQQqW2jbv0ypH0dA">
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|Spanish|/Images/Musica/Spanish.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|Spanish|/Images/Musica/Spanish.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -194,10 +224,15 @@
                         <!-- BNE -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/BNE.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/27UqZoE1kV6sIV6uQcI28A?si=HunX322RSTC7dmeZgRtEAQ">
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|BNE|/Images/Musica/BNE.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|BNE|/Images/Musica/BNE.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -205,10 +240,15 @@
                         <!-- Huntrix -->
                         <Grid Width="120" Height="120" Margin="5">
                             <Image Source="/Images/Musica/Huntrix.jpg" Style="{StaticResource MusicImg}"/>
+                            <Button Width="120" Height="120"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="MusicLink_Click"
+                                    Tag="https://open.spotify.com/intl-es/album/14JkAa6IiFaOh5s0nMyMU9?si=WAzy7qyUTqqqk63kAePE7g">
+                            </Button>
                             <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|Huntrix|/Images/Musica/Huntrix.jpg">
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Music|Huntrix|/Images/Musica/Huntrix.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>

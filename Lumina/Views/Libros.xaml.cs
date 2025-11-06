@@ -202,6 +202,28 @@ namespace Lumina.Views
         }
 
 
+        // === NUEVO MÉTODO PARA ENLACES DE LIBROS ===
+        private void BookLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string url)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
         // ================================
         // Caja de búsqueda (placeholder)
         // ================================

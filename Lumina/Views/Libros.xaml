@@ -129,11 +129,12 @@
                         <!-- Amanecer en la cosecha -->
                         <Grid Width="110" Height="140" Margin="5">
                             <Image Source="/Images/Libros/Amanecer en la cosecha.jpg" Style="{StaticResource BookImg}"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|Amanecer en la cosecha|/Images/Libros/Amanecer en la cosecha.jpg">
+                            <Button Width="110" Height="140" Background="Transparent" BorderBrush="Transparent" Click="BookLink_Click"
+                                    Tag="http://reader.z-library.sk/read/38211b599cd769a15db5fdbef55055f98a6b7191fce08b8ee72b256976f10933/116540389/1aac6c/los-juegos-del-hambre-5-amanecer-en-la-cosecha.html?client_key=1fFLi67gBrNRP1j1iPy1&amp;extension=epub&amp;signature=e99ad9c0204cf6bc877d59c2bb80be7f40dcd3ca51f21df8c65c3c9230b84d95&amp;download_location=https%3A%2F%2Fz-library.ec%2Fdl%2F116540389%2Ff2fd49"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Book|Amanecer en la cosecha|/Images/Libros/Amanecer en la cosecha.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -141,11 +142,12 @@
                         <!-- La vegetariana -->
                         <Grid Width="110" Height="140" Margin="5">
                             <Image Source="/Images/Libros/La vegetariana.jpg" Style="{StaticResource BookImg}"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|La vegetariana|/Images/Libros/La vegetariana.jpg">
+                            <Button Width="110" Height="140" Background="Transparent" BorderBrush="Transparent" Click="BookLink_Click"
+                                    Tag="https://reader.z-library.sk/read/e44a54d177a7ed8aff3c799a27cb74c4138cc8bd4371fcd3bfca8120ab8c8a47/29266701/d109b8/la-vegetariana.html?client_key=1fFLi67gBrNRP1j1iPy1&amp;extension=epub&amp;signature=183c2f70a41b96a29636f712076c079e979a62e00491d95b4010d57f56ccff75&amp;download_location=https%3A%2F%2Fes.z-library.sk%2Fdl%2F29266701%2F328910"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Book|La vegetariana|/Images/Libros/La vegetariana.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
@@ -153,38 +155,42 @@
                         <!-- El dragón rojo -->
                         <Grid Width="110" Height="140" Margin="5">
                             <Image Source="/Images/Libros/El dragon rojo.jpg" Style="{StaticResource BookImg}"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|El dragon rojo|/Images/Libros/El dragon rojo.jpg">
+                            <Button Width="110" Height="140" Background="Transparent" BorderBrush="Transparent" Click="BookLink_Click"
+                                    Tag="https://reader.z-library.sk/read/7299331a8c32156cbaaf905b4f845ec5c808de876d8132d2ebf9f2bdad603f82/4645627/aa0381/el-drag%C3%B3n-rojo.html?client_key=1fFLi67gBrNRP1j1iPy1&amp;extension=epub&amp;signature=18f3e561421dfb649c3b12b049cdaafc2ffc296ce61d246d4dfaa027a221aab4&amp;download_location=https%3A%2F%2Fes.z-library.sk%2Fdl%2F4645627%2F034a81"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Book|El dragon rojo|/Images/Libros/El dragon rojo.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
 
-                        <!-- OficioT -->
+                        <!-- Oficio de tinieblas -->
                         <Grid Width="110" Height="140" Margin="5">
                             <Image Source="/Images/Libros/OficioT.jpg" Style="{StaticResource BookImg}"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|OficioT|/Images/Libros/OficioT.jpg">
+                            <Button Width="110" Height="140" Background="Transparent" BorderBrush="Transparent" Click="BookLink_Click"
+                                    Tag="https://reader.z-library.sk/read/af130809496cbd91cbc368cd316896947e2e6e9632d09e4d7eeff7e27a6dc855/15487806/35eb1b/oficio-de-tinieblas.html?client_key=1fFLi67gBrNRP1j1iPy1&amp;extension=epub&amp;signature=d02774fbcaa09037c1e9f08791f74142e66f04651008211a6b7dc608e9fd111c&amp;download_location=https%3A%2F%2Fes.z-library.sk%2Fdl%2F15487806%2Ff1463e"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Book|OficioT|/Images/Libros/OficioT.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
 
-                        <!-- PercyJ -->
+                        <!-- Percy Jackson -->
                         <Grid Width="110" Height="140" Margin="5">
                             <Image Source="/Images/Libros/PercyJ.jpg" Style="{StaticResource BookImg}"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|PercyJ|/Images/Libros/PercyJ.jpg">
+                            <Button Width="110" Height="140" Background="Transparent" BorderBrush="Transparent" Click="BookLink_Click"
+                                    Tag="https://reader.z-library.sk/read/4b880e1e6a6ee1e56be28cf5ee32fe7aa93be13fe4430245485311bd3cb715a8/1175816/5df8ba/the-lightning-thief.html?client_key=1fFLi67gBrNRP1j1iPy1&amp;extension=epub&amp;signature=e49d0fd2602f54d26c6323bd28a18e10647a6b3cda0440b04af4a9f26b833a09&amp;download_location=https%3A%2F%2Fes.z-library.sk%2Fdl%2F1175816%2Faf9443"/>
+                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
+                                    Background="Transparent" BorderBrush="Transparent"
+                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
+                                    Tag="Book|PercyJ|/Images/Libros/PercyJ.jpg">
                                 <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
+
 
                     </ItemsControl>
 

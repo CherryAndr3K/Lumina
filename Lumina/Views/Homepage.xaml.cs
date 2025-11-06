@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Lumina.Infra;
+using Lumina.Models;
+using Lumina.Repositories;
 
 namespace Lumina.Views
 {
@@ -10,6 +15,9 @@ namespace Lumina.Views
     {
         private const string PlaceholderText = "Buscar...";
         private bool _placeholderActive = true;
+
+        // Repo de favoritos
+        private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
 
         public Homepage()
         {
@@ -80,15 +88,108 @@ namespace Lumina.Views
             
         }
         //Favoritos
-        private void Favoritos_Click(object sender, RoutedEventArgs e)
+
+        // ================= Helpers BD / Favoritos =================
+        private static string Cnn() =>
+            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+        private static void ParseTag(string tag, out string tipo, out string titulo, out string imagePath)
         {
-            /*
-            var favoritosWindow = new Favoritos();
-            favoritosWindow.Owner = this;
-            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            favoritosWindow.Show();
-            this.Hide();
-            */
+            tipo = titulo = imagePath = "";
+            if (string.IsNullOrWhiteSpace(tag)) return;
+            var p = tag.Split('|');
+            if (p.Length > 0) tipo = p[0].Trim();
+            if (p.Length > 1) titulo = p[1].Trim();
+            if (p.Length > 2) imagePath = p[2].Trim();
+        }
+
+        private static int? ResolveReferenciaId_AlbumPorTitulo(string titulo)
+        {
+            using var cn = new SqlConnection(Cnn());
+            using var cmd = new SqlCommand("SELECT TOP 1 AlbumID FROM dbo.Albumes WHERE Titulo=@t", cn);
+            cmd.Parameters.AddWithValue("@t", titulo);
+            cn.Open();
+            var o = cmd.ExecuteScalar();
+            return o == null ? (int?)null : Convert.ToInt32(o);
+        }
+
+        private static bool ExisteFavorito(int userId, string tipo, int referenciaId)
+        {
+            using var cn = new SqlConnection(Cnn());
+            using var cmd = new SqlCommand(
+                "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+            cmd.Parameters.AddWithValue("@u", userId);
+            cmd.Parameters.AddWithValue("@t", tipo);
+            cmd.Parameters.AddWithValue("@r", referenciaId);
+            cn.Open();
+            using var rd = cmd.ExecuteReader();
+            return rd.Read();
+        }
+
+        private static void SetStarIcon(Button btn, bool isFav)
+        {
+            var path = isFav
+                ? "/Images/Iconos/star_filled.png"
+                : "/Images/Iconos/star_outline.png";
+
+            var uri = new Uri(path, UriKind.Relative);
+            if (btn.Content is Image img)
+            {
+                img.Source = new BitmapImage(uri);
+            }
+            else
+            {
+                btn.Content = new Image
+                {
+                    Source = new BitmapImage(uri),
+                    Width = 18,
+                    Height = 18
+                };
+            }
+        }
+
+
+        // ================= Botón ⭐ por tarjeta =================
+        private void Star_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button btn || btn.Tag is not string tag) return;
+
+            ParseTag(tag, out var tipo, out var titulo, out _);
+            if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
+
+            var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
+            var isFav = id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
+            SetStarIcon(btn, isFav);
+        }
+
+        private void Star_Toggle_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button btn || btn.Tag is not string tag) return;
+
+            ParseTag(tag, out var tipo, out var titulo, out _);
+            if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
+
+            var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
+            if (!id.HasValue) { MessageBox.Show("No se encontró el álbum en la BD."); return; }
+
+            var isFav = ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
+            if (isFav) { MessageBox.Show("Ya está en Favoritos."); SetStarIcon(btn, true); return; }
+
+            try
+            {
+                _ = _favRepo.Add(new Favorito
+                {
+                    UsuarioId = AppSession.CurrentUserId,
+                    Tipo = "Album",
+                    ReferenciaId = id.Value
+                });
+                SetStarIcon(btn, true);
+                MessageBox.Show($"Añadido a Favoritos: {titulo}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo agregar: " + ex.Message);
+            }
         }
 
         // ================================
@@ -187,5 +288,113 @@ namespace Lumina.Views
                 _placeholderActive = true;
             }
         }
+
+
+        //links
+
+        private void MusicLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string url)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch
+                {
+                    MessageBox.Show("No se pudo abrir el enlace.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+        private void BookLink_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string url)
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void Poster_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image img && img.Tag is string link && !string.IsNullOrWhiteSpace(link))
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = link,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+
+
+        // 1) Helper reutilizable para abrir URLs desde Button.Tag o Image.Tag
+        private static void OpenUrlFrom(object sender)
+        {
+            string url = null;
+
+            if (sender is Button btn && btn.Tag is string t1) url = t1;
+            else if (sender is Image img && img.Tag is string t2) url = t2;
+
+            if (!string.IsNullOrWhiteSpace(url) && url != "#")
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}",
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        // 2) Poster_Click para Button.Click (firma correcta: RoutedEventHandler)
+private void Poster_Click(object sender, RoutedEventArgs e)
+{
+    OpenUrlFrom(sender);
+}
+
+        // 4) Favoritos_Click
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: abrir ventana de favoritos o navegar a la sección
+            MessageBox.Show("Favoritos (pendiente).", "Lumina",
+                MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+
     }
 }

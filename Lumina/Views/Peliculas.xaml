@@ -126,7 +126,10 @@
 
                         <!-- Huevos -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Huevos.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Huevos.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://www.youtube.com/watch?v=5bgjbk1wInA"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
@@ -138,7 +141,10 @@
 
                         <!-- Pollo -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Pollo.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Pollo.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://www.youtube.com/watch?v=FeuHkSOYSMY"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
@@ -150,7 +156,10 @@
 
                         <!-- Gallo -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Gallo.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Gallo.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://www.youtube.com/watch?v=KL_TRDegmpo"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
@@ -162,7 +171,10 @@
 
                         <!-- Cónclave -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Conclave.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Conclave.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://pelisplus.la/peliculas/conclave-2024"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
@@ -174,7 +186,10 @@
 
                         <!-- Mamma Mia -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Mammamia.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Mammamia.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://pelisplus.la/peliculas/mamma-mia-2008"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
@@ -186,19 +201,25 @@
 
                         <!-- Castle -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Castle.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Castle.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://pelisplus.la/peliculas/el-increible-castillo-vagabundo-2004"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
             Click="Star_Toggle_Click" Loaded="Star_Loaded"
             Tag="Movie|Castle|/Images/Peliculas/Castle.jpg">
-                                <Image  Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
+                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
                             </Button>
                         </Grid>
 
                         <!-- Your Name -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/YourName.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/YourName.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://pelisplus.la/peliculas/your-name-2016"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"
@@ -210,7 +231,10 @@
 
                         <!-- Captain -->
                         <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Captain.jpg" Style="{StaticResource PosterImg}"/>
+                            <Image Source="/Images/Peliculas/Captain.jpg"
+           Style="{StaticResource PosterImg}"
+           MouseLeftButtonUp="Poster_Click"
+           Tag="https://pelisplus.la/peliculas/capitan-america-y-el-soldado-del-invierno-2014"/>
                             <Button Width="22" Height="22"
             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
             Background="Transparent" BorderBrush="Transparent"

@@ -199,6 +199,28 @@ namespace Lumina.Views
             }
         }
 
+
+        // ===================== NUEVO: abrir enlaces al hacer clic =====================
+        private void Poster_Click(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image img && img.Tag is string link && !string.IsNullOrWhiteSpace(link))
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = link,
+                        UseShellExecute = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
