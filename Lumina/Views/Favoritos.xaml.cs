@@ -16,13 +16,13 @@ namespace Lumina.Views
         private const string PlaceholderText = "Buscar...";
         private bool _placeholderActive = true;
 
-        // Repos
+        // Repositorio
         private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
 
-        // Card para la UI (mapea FavoritoView -> tarjeta visible)
+        // Clase auxiliar para mostrar los favoritos en la UI
         private class FavoriteCard
         {
-            public int FavoritoID { get; set; }
+            public int FavoritoId { get; set; }  // 👈 corregido
             public string Title { get; set; } = "";
             public string Type { get; set; } = "";   // Album | Libro | Pelicula
             public string ImagePath { get; set; } = "/Images/Iconos/Favoritos.png";
@@ -33,7 +33,7 @@ namespace Lumina.Views
 
         public Favoritos()
         {
-            InitializeComponent();
+            InitializeComponent(); // siempre primero
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -50,8 +50,10 @@ namespace Lumina.Views
                 var views = _favRepo.GetAllViews(); // FavoritoView
                 var list = views.Select(v => new FavoriteCard
                 {
-                    FavoritoID = v.FavoritoId,
-                    Title = string.IsNullOrWhiteSpace(v.ReferenciaTitulo) ? "(Sin título)" : v.ReferenciaTitulo,
+                    FavoritoId = v.FavoritoId, // 👈 corregido
+                    Title = string.IsNullOrWhiteSpace(v.ReferenciaTitulo)
+                        ? "(Sin título)"
+                        : v.ReferenciaTitulo,
                     Type = v.Tipo,
                     ImagePath = IconFor(v.Tipo)
                 }).ToList();
@@ -60,7 +62,9 @@ namespace Lumina.Views
                 _filtered = new ObservableCollection<FavoriteCard>(_all);
                 FavList.ItemsSource = _filtered;
 
-                EmptyState.Visibility = _filtered.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                EmptyState.Visibility = _filtered.Count == 0
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
             }
             catch (Exception ex)
             {
@@ -89,11 +93,14 @@ namespace Lumina.Views
             }
         }
 
-        private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+            => WindowState = WindowState.Minimized;
 
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
-            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+            WindowState = (WindowState == WindowState.Maximized)
+                ? WindowState.Normal
+                : WindowState.Maximized;
 
             if (sender is Button btn && btn.Content is Image image)
             {
@@ -101,7 +108,8 @@ namespace Lumina.Views
             }
         }
 
-        private void Close_Click(object sender, RoutedEventArgs e) => Close();
+        private void Close_Click(object sender, RoutedEventArgs e)
+            => Close();
 
         private void SetMaximizeIcon(bool isMaximized, Image targetImage)
         {
@@ -116,29 +124,52 @@ namespace Lumina.Views
         // ===== Navegación =====
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-            var homeWindow = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-            homeWindow.Show(); Hide();
+            var homeWindow = new Homepage
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            homeWindow.Show();
+            Hide();
         }
 
         private void Libros_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Libros { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-            w.Show(); Hide();
+            var w = new Libros
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.Show();
+            Hide();
         }
 
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Musica { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-            w.Show(); Hide();
+            var w = new Musica
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.Show();
+            Hide();
         }
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-            w.Show(); Hide();
+            var w = new Peliculas
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.Show();
+            Hide();
         }
 
-        private void Favoritos_Click(object sender, RoutedEventArgs e) { /* ya estás aquí */ }
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            // Ya estás en favoritos
+        }
 
         // ===== Placeholder búsqueda =====
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -174,6 +205,8 @@ namespace Lumina.Views
         // ===== Filtrado y acciones =====
         private void ApplyFilter()
         {
+            if (FavList == null || EmptyState == null) return; // seguridad
+
             var q = (SearchBox?.Text ?? "").Trim().ToLower();
             bool useAll = string.IsNullOrEmpty(q) || q == PlaceholderText.ToLower();
 
@@ -188,10 +221,13 @@ namespace Lumina.Views
             foreach (var x in src) _filtered.Add(x);
 
             FavList.ItemsSource = _filtered;
-            EmptyState.Visibility = _filtered.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            EmptyState.Visibility = _filtered.Count == 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilter();
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+            => ApplyFilter();
 
         // ⭐ quitar desde Favoritos (usa repositorio)
         private void Star_Remove_Click(object sender, RoutedEventArgs e)
@@ -208,10 +244,10 @@ namespace Lumina.Views
 
                 try
                 {
-                    if (_favRepo.Delete(card.FavoritoID))
+                    if (_favRepo.Delete(card.FavoritoId)) 
                     {
                         // quita de _all y vuelve a filtrar
-                        var item = _all.FirstOrDefault(x => x.FavoritoID == card.FavoritoID);
+                        var item = _all.FirstOrDefault(x => x.FavoritoId == card.FavoritoId); 
                         if (item != null) _all.Remove(item);
                         ApplyFilter();
                     }
