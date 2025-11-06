@@ -93,6 +93,16 @@ namespace Lumina.Views
             this.Hide();
         }
 
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new Login();
+            loginWindow.Owner = this;
+            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            loginWindow.Show();
+            this.Hide();
+        }
+
+
         // ======= FAVORITOS: helpers y handlers =======
 
         private readonly IFavoritoRepository _favRepo = new FavoritoRepository();

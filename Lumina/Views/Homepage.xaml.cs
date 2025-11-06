@@ -88,6 +88,25 @@ namespace Lumina.Views
             
         }
         //Favoritos
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            var favoritosWindow = new Favoritos();
+            favoritosWindow.Owner = this;
+            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            favoritosWindow.Show();
+            this.Hide();
+        }
+
+        //Login
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new Login();
+            loginWindow.Owner = this;
+            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            loginWindow.Show();
+            this.Hide();
+        }
+
 
         // ================= Helpers BD / Favoritos =================
         private static string Cnn() =>
@@ -386,6 +405,7 @@ private void Poster_Click(object sender, RoutedEventArgs e)
     OpenUrlFrom(sender);
 }
 
+        /*
         // 4) Favoritos_Click
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
@@ -393,6 +413,7 @@ private void Poster_Click(object sender, RoutedEventArgs e)
             MessageBox.Show("Favoritos (pendiente).", "Lumina",
                 MessageBoxButton.OK, MessageBoxImage.Information);
         }
+        */
 
 
 

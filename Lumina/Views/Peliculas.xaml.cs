@@ -133,6 +133,12 @@ namespace Lumina.Views
             w.Show(); Hide();
         }
 
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
+        }
+
         // ===== Placeholder búsqueda =====
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {

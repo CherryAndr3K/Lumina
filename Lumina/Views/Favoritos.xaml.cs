@@ -171,6 +171,15 @@ namespace Lumina.Views
             // Ya estás en favoritos
         }
 
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new Login();
+            loginWindow.Owner = this;
+            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            loginWindow.Show();
+            this.Hide();
+        }
+
         // ===== Placeholder búsqueda =====
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {

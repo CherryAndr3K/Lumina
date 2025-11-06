@@ -70,12 +70,8 @@ namespace Lumina.Views
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
-                w.ShowDialog();
-            }
-            catch { MessageBox.Show("Ventana Login no disponible."); }
+            var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
         }
 
         // ========== Placeholders (TextBox usa Tag como placeholder) ==========
