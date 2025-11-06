@@ -77,7 +77,7 @@
                         <Image Source="/Images/Iconos/Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Click="Login_Click">
-                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </StackPanel>
             </Grid>
@@ -93,6 +93,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Libros" FontFamily="Fonts/#Roboto" FontSize="25" FontWeight="Regular" VerticalAlignment="Center" Grid.Column="0" Margin="0,2,0,0"/>
                         <Border CornerRadius="15" Background="#D6CCC2" Width="232" Grid.Column="1" Margin="0,0,5,0" Cursor="Help">
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
@@ -102,6 +103,9 @@
                                 <TextBox BorderThickness="0" Background="Transparent" Foreground="Black" VerticalAlignment="Center" Margin="0,0,0,0" Grid.Column="1" Text="Buscar..." GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
                             </Grid>
                         </Border>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\agregar.png" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="409,0,0,0"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\editar.png" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="441,0,0,0"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\eliminar.png" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="471,0,0,0"/>
                     </Grid>
 
                     <!-- Sección Libros -->
