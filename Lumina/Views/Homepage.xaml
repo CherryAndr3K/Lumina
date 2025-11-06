@@ -4,8 +4,8 @@
         Title="Inicio" Height="576" Width="829"
         WindowStyle="None"
         Background="#EDEDE9">
-    
-<!-- Grid principal que contendrá la barra superior y el resto del contenido -->
+
+    <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -73,6 +73,9 @@
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Favoritos_Click">
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Click="Login_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     </Button>
                 </StackPanel>
             </Grid>
