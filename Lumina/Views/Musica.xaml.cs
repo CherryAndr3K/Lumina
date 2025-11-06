@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Lumina.Infra;
+using Lumina.Models;
+using Lumina.Repositories;
+using Microsoft.Data.SqlClient;
+using System;
+using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Lumina.Infra;
-using Lumina.Models;
-using Lumina.Repositories;
 
 namespace Lumina.Views
 {
@@ -22,6 +23,8 @@ namespace Lumina.Views
         public Musica()
         {
             InitializeComponent();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                Loaded += (_, __) => { /* carga diferida si la necesitas */ };
         }
 
         // ================= Helpers BD / Favoritos =================
@@ -40,47 +43,53 @@ namespace Lumina.Views
 
         private static int? ResolveReferenciaId_AlbumPorTitulo(string titulo)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand("SELECT TOP 1 AlbumID FROM dbo.Albumes WHERE Titulo=@t", cn);
-            cmd.Parameters.AddWithValue("@t", titulo);
-            cn.Open();
-            var o = cmd.ExecuteScalar();
-            return o == null ? (int?)null : Convert.ToInt32(o);
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand("SELECT TOP 1 AlbumID FROM dbo.Albumes WHERE Titulo=@t", cn);
+                cmd.Parameters.AddWithValue("@t", (object?)titulo ?? DBNull.Value);
+                cn.Open();
+                var o = cmd.ExecuteScalar();
+                return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private static bool ExisteFavorito(int userId, string tipo, int referenciaId)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand(
-                "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
-            cmd.Parameters.AddWithValue("@u", userId);
-            cmd.Parameters.AddWithValue("@t", tipo);
-            cmd.Parameters.AddWithValue("@r", referenciaId);
-            cn.Open();
-            using var rd = cmd.ExecuteReader();
-            return rd.Read();
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand(
+                    "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+                cmd.Parameters.AddWithValue("@u", userId);
+                cmd.Parameters.AddWithValue("@t", tipo);
+                cmd.Parameters.AddWithValue("@r", referenciaId);
+                cn.Open();
+                using var rd = cmd.ExecuteReader();
+                return rd.Read();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static void SetStarIcon(Button btn, bool isFav)
         {
-            var path = isFav
-                ? "/Images/Iconos/star_filled.png"
-                : "/Images/Iconos/star_outline.png";
+            var relative = isFav ? "/Images/Iconos/star_filled.png" : "/Images/Iconos/star_outline.png";
+            var uri = new Uri($"pack://application:,,,{relative}", UriKind.Absolute);
 
-            var uri = new Uri(path, UriKind.Relative);
-            if (btn.Content is Image img)
+            try
             {
-                img.Source = new BitmapImage(uri);
+                var bmp = new BitmapImage(uri);
+                if (btn.Content is Image img) img.Source = bmp;
+                else btn.Content = new Image { Source = bmp, Width = 18, Height = 18 };
             }
-            else
-            {
-                btn.Content = new Image
-                {
-                    Source = new BitmapImage(uri),
-                    Width = 18,
-                    Height = 18
-                };
-            }
+            catch { /* no romper UI si falta el recurso */ }
         }
 
         // ================= Barra superior / navegación =================
@@ -88,7 +97,9 @@ namespace Lumina.Views
         {
             if (e.LeftButton == MouseButtonState.Pressed) { try { DragMove(); } catch { } }
         }
+
         private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
@@ -105,25 +116,26 @@ namespace Lumina.Views
 
         private void MusicaR(object sender, RoutedEventArgs e)
         {
-            var musicaRWindow = new MusicaR();
-            musicaRWindow.Owner = this;
-            musicaRWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            musicaRWindow.Show();
-            this.Hide();
+            var w = new MusicaR { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
         }
+
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
+
         private void Home_Click(object sender, RoutedEventArgs e)
         { var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+
         private void Libros_Click(object sender, RoutedEventArgs e)
         { var w = new Libros { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         { var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         { var w = new Favoritos { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+
         private void Login_Click(object sender, RoutedEventArgs e)
         { var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
-
-
 
         // ================= Placeholder búsqueda =================
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -142,6 +154,7 @@ namespace Lumina.Views
         // ================= Botón ⭐ por tarjeta =================
         private void Star_Loaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
             ParseTag(tag, out var tipo, out var titulo, out _);
@@ -154,6 +167,7 @@ namespace Lumina.Views
 
         private void Star_Toggle_Click(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
             ParseTag(tag, out var tipo, out var titulo, out _);
@@ -182,7 +196,6 @@ namespace Lumina.Views
             }
         }
 
-
         private void MusicLink_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is string url)
@@ -209,4 +222,3 @@ namespace Lumina.Views
         }
     }
 }
-

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Lumina.Infra;
+using Lumina.Models;
+using Lumina.Repositories;
+using Microsoft.Data.SqlClient;
+using System;
+using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Lumina.Infra;
-using Lumina.Models;
-using Lumina.Repositories;
 
 namespace Lumina.Views
 {
@@ -22,6 +23,8 @@ namespace Lumina.Views
         public Peliculas()
         {
             InitializeComponent();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                Loaded += (_, __) => { /* carga diferida si la necesitas */ };
         }
 
         // ===== Helpers BD / Favoritos =====
@@ -40,47 +43,53 @@ namespace Lumina.Views
 
         private static int? ResolveReferenciaId_PeliculaPorTitulo(string titulo)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand("SELECT TOP 1 PeliculaID FROM dbo.Peliculas WHERE Titulo=@t", cn);
-            cmd.Parameters.AddWithValue("@t", titulo);
-            cn.Open();
-            var o = cmd.ExecuteScalar();
-            return o == null ? (int?)null : Convert.ToInt32(o);
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand("SELECT TOP 1 PeliculaID FROM dbo.Peliculas WHERE Titulo=@t", cn);
+                cmd.Parameters.AddWithValue("@t", (object?)titulo ?? DBNull.Value);
+                cn.Open();
+                var o = cmd.ExecuteScalar();
+                return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private static bool ExisteFavorito(int userId, string tipo, int referenciaId)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand(
-                "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
-            cmd.Parameters.AddWithValue("@u", userId);
-            cmd.Parameters.AddWithValue("@t", tipo);
-            cmd.Parameters.AddWithValue("@r", referenciaId);
-            cn.Open();
-            using var rd = cmd.ExecuteReader();
-            return rd.Read();
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand(
+                    "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+                cmd.Parameters.AddWithValue("@u", userId);
+                cmd.Parameters.AddWithValue("@t", tipo);
+                cmd.Parameters.AddWithValue("@r", referenciaId);
+                cn.Open();
+                using var rd = cmd.ExecuteReader();
+                return rd.Read();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static void SetStarIcon(Button btn, bool isFav)
         {
-            var path = isFav
-                ? "/Images/Iconos/star_filled.png"
-                : "/Images/Iconos/star_outline.png";
+            var relative = isFav ? "/Images/Iconos/star_filled.png" : "/Images/Iconos/star_outline.png";
+            var uri = new Uri($"pack://application:,,,{relative}", UriKind.Absolute);
 
-            var uri = new Uri(path, UriKind.Relative);
-            if (btn.Content is Image img)
+            try
             {
-                img.Source = new BitmapImage(uri);
+                var bmp = new BitmapImage(uri);
+                if (btn.Content is Image img) img.Source = bmp;
+                else btn.Content = new Image { Source = bmp, Width = 18, Height = 18 };
             }
-            else
-            {
-                btn.Content = new Image
-                {
-                    Source = new BitmapImage(uri),
-                    Width = 18,
-                    Height = 18
-                };
-            }
+            catch { /* ignorar si falta recurso */ }
         }
 
         // ===== Barra superior / navegación =====
@@ -141,11 +150,8 @@ namespace Lumina.Views
 
         private void PeliculasR(object sender, RoutedEventArgs e)
         {
-            var peliculasRWindow = new PeliculasR();
-            peliculasRWindow.Owner = this;
-            peliculasRWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            peliculasRWindow.Show();
-            this.Hide();
+            var w = new PeliculasR { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
         }
 
         // ===== Placeholder búsqueda =====
@@ -174,6 +180,7 @@ namespace Lumina.Views
         // ===== Botón ⭐ por tarjeta =====
         private void Star_Loaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
             ParseTag(tag, out var tipo, out var titulo, out _);
@@ -186,6 +193,7 @@ namespace Lumina.Views
 
         private void Star_Toggle_Click(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
             ParseTag(tag, out var tipo, out var titulo, out _);
@@ -214,8 +222,7 @@ namespace Lumina.Views
             }
         }
 
-
-        // ===================== NUEVO: abrir enlaces al hacer clic =====================
+        // ===== Abrir enlaces en posters =====
         private void Poster_Click(object sender, MouseButtonEventArgs e)
         {
             if (sender is Image img && img.Tag is string link && !string.IsNullOrWhiteSpace(link))
