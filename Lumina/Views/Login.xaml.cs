@@ -16,6 +16,11 @@ namespace Lumina
             InitializeComponent();
         }
 
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
         // ================================
         // Barra superior (drag/ventana)
         // ================================

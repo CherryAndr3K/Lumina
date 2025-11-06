@@ -25,6 +25,11 @@ namespace Lumina.Views
             InitializeComponent();
         }
 
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
 
         // Placeholders y borde negro (como en Login)
         private void Placeholder_GotFocus(object sender, RoutedEventArgs e)
