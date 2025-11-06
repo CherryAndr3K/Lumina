@@ -1,52 +1,262 @@
-﻿<Window x:Class="Lumina.Views.Register"
+﻿<Window x:Class="Lumina.Views.Homepage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Registro" Height="400" Width="350"
-        WindowStartupLocation="CenterScreen"
-        Background="White">
+        Title="Inicio" Height="576" Width="829"
+        WindowStyle="None"
+        Background="#EDEDE9">
 
-    <Grid Margin="20">
-        <StackPanel VerticalAlignment="Center">
+    <Window.Resources>
+        <!-- Estilo para botones redondeados -->
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,8,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="20"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="10,5">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <TextBlock Text="Crear cuenta"
-                       FontSize="22"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,20"/>
+        <Style x:Key="RoundedInput" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Padding" Value="12,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="20"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                          VerticalAlignment="Center"
+                          Margin="0"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-            <TextBox x:Name="txtCorreo"
-         Text="Correo"
-         Tag="Correo"
-         Foreground="Gray"
-         GotFocus="Placeholder_GotFocus"
-         LostFocus="Placeholder_LostFocus"
-         Margin="0,10,0,0"
-         Height="35"/>
+    </Window.Resources>
 
-            <TextBox x:Name="txtNombre"
-         Text="Nombre"
-         Tag="Nombre"
-         Foreground="Gray"
-         GotFocus="Placeholder_GotFocus"
-         LostFocus="Placeholder_LostFocus"
-         Margin="0,10,0,0"
-         Height="35"/>
+    <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <!-- Barra superior -->
+            <RowDefinition Height="*"/>
+            <!-- Contenido principal -->
+        </Grid.RowDefinitions>
 
-            <TextBox x:Name="txtPassword"
-         Text="Contraseña"
-         Tag="Contraseña"
-         Foreground="Gray"
-         GotFocus="Placeholder_GotFocus"
-         LostFocus="Placeholder_LostFocus"
-         Margin="0,10,0,0"
-         Height="35"/>
+        <!-- Barra superior personalizada -->
+        <Grid Height="40" Background="#D6CCC2" Grid.Row="0" MouseDown="TitleBar_MouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <Button Content="Registrar"
-        Background="Black"
-        Foreground="White"
-        Margin="0,20,0,0"
-        Height="40"
-        Click="BtnRegistrar_Click"/>
-        </StackPanel>
+            <!-- Título de la ventana -->
+            <TextBlock Text="LUMINA" VerticalAlignment="Top" Margin="10,4,0,0"
+                       FontWeight="Bold" FontSize="16"/>
+
+            <!-- Botones de ventana -->
+            <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Top" Margin="0,6,10,0">
+                <!-- Botón Minimizar -->
+                <Button Width="15" Height="15" Margin="2" Click="Minimize_Click" Background="Transparent" BorderThickness="0">
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\minimizar.png" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Botón Maximizar / Restaurar -->
+                <Button Width="15" Height="15" Margin="2" Click="Maximize_Click" Background="Transparent" BorderThickness="0">
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\maximizar.png" Stretch="Uniform"/>
+                </Button>
+
+                <!-- Botón Cerrar -->
+                <Button Width="15" Height="15" Margin="2" Click="Close_Click" Background="Transparent" BorderThickness="0">
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\cerrar.png" Stretch="Uniform"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Contenido principal con barra lateral y ScrollViewer -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4"/>
+                <ColumnDefinition Width="56"/>
+                <ColumnDefinition Width="143*"/>
+                <ColumnDefinition Width="21*"/>
+                <ColumnDefinition Width="30*"/>
+                <ColumnDefinition Width="18*"/>
+                <ColumnDefinition Width="557*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Barra lateral izquierda -->
+            <Grid Grid.Column="0" Background="#E3D5CA" Margin="0,0,4,0" Grid.ColumnSpan="2">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Cursor="">
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Home.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Libros_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Musica_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Musica.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Peliculas_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Pelicula.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Favoritos_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Button>
+                    <Button Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Click="Login_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- Contenido principal con ScrollViewer -->
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="6" Margin="46,0,0,0" Grid.Column="1">
+                <StackPanel Margin="20">
+                    <!-- Encabezado -->
+<Grid Grid.Row="1" Margin="0,0,0,-1">
+    <!-- Tres columnas: centramos el contenido en la del medio -->
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Column="1"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Width="280" >
+
+        <!-- Título principal -->
+        <TextBlock Text="Lumina"
+               FontSize="28"
+               FontWeight="Bold"
+               Foreground="Black"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,5"/>
+
+        <!-- Subtítulo -->
+        <TextBlock Text="Registro"
+               FontSize="20"
+               Foreground="Black"
+               HorizontalAlignment="Center"
+               Margin="0,0,0,20"/>
+
+                            <!-- Avatar con flechas -->
+                            <Grid Margin="0,0,0,30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Flecha izquierda -->
+                                <Button Content="⟨"
+FontSize="20"
+Width="40" Height="40"
+Background="Transparent"
+BorderThickness="0"
+Grid.Column="0"
+VerticalAlignment="Center"/>
+
+                                <!-- Imagen avatar redonda -->
+                                <Border Grid.Column="1"
+Width="180" Height="180"
+Background="Transparent"
+CornerRadius="90">
+                                    <Image Source="/Images/Avatares/Kat_Lumina1.png"
+   Width="180" Height="180"
+   Stretch="Uniform">
+                                        <Image.Clip>
+                                            <EllipseGeometry Center="90,90" RadiusX="90" RadiusY="90"/>
+                                        </Image.Clip>
+                                    </Image>
+                                </Border>
+
+                                <!-- Flecha derecha -->
+                                <Button Content="⟩"
+FontSize="20"
+Width="40" Height="40"
+Background="Transparent"
+BorderThickness="0"
+Grid.Column="2"
+VerticalAlignment="Center"/>
+                            </Grid>
+
+                            <!-- Botones inferiores -->
+        <!-- Botones inferiores / campos -->
+                            <TextBox x:Name="txtNombre"
+   Style="{StaticResource RoundedInput}"
+   Text="Nombre"
+   Tag="Nombre"
+   Foreground="Gray"
+   GotFocus="Placeholder_GotFocus"
+   LostFocus="Placeholder_LostFocus"
+   Margin="0,15,0,0"/>
+
+                            <TextBox x:Name="txtCorreo"
+    Style="{StaticResource RoundedInput}"
+    Text="Correo"
+    Tag="Correo"
+    Foreground="Gray"
+    GotFocus="Placeholder_GotFocus"
+    LostFocus="Placeholder_LostFocus"
+    Margin="0,15,0,0"/>
+
+ 
+
+        <TextBox x:Name="txtPassword"
+    Style="{StaticResource RoundedInput}"
+    Text="Contraseña"
+    Tag="Password"
+    Foreground="Gray"
+    GotFocus="Placeholder_GotFocus"
+    LostFocus="Placeholder_LostFocus"
+    Margin="0,15,0,0"/>
+
+        <TextBox x:Name="txtPassword2"
+Style="{StaticResource RoundedInput}"
+Text="Confirmar contraseña"
+Tag="Password2"
+Foreground="Gray"
+GotFocus="Placeholder_GotFocus"
+LostFocus="Placeholder_LostFocus"
+Margin="0,15,0,0"/>
+
+                            <!-- Botón de registro -->
+        <Button Content="Registrarse"
+Style="{StaticResource RoundedButton}"
+Margin="0,10,0,0"
+Background="#cce3f0"
+Click="BtnRegistro_Click"/>
+
+
+    </StackPanel>
+</Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </Window>

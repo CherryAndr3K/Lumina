@@ -76,6 +76,9 @@
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Favoritos_Click">
                         <Image Source="/Images/Iconos/Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
+                    <Button Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Click="Login_Click">
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                    </Button>
                 </StackPanel>
             </Grid>
 
