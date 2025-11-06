@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 // Alias para evitar ambigüedad y usar los tipos correctos
 using FavoritesStore = Lumina.Services.FavoritesStore;
 using SMediaType = Lumina.Services.MediaType;  // el que usan los métodos de FavoritesStore
-using MMediaType = Lumina.Model.MediaType;     // opcional si lo necesitas en otro lado
+using MMediaType = Lumina.Models;     // opcional si lo necesitas en otro lado
 
 namespace Lumina.Views
 {

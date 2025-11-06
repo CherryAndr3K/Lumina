@@ -5,15 +5,14 @@
         Background="#EDEDE9"
         WindowStyle="None"
         AllowsTransparency="True"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip"
+        Loaded="Window_Loaded">
 
     <!-- Grid principal: barra superior + contenido -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <!-- Barra superior -->
             <RowDefinition Height="*"/>
-            <!-- Contenido -->
         </Grid.RowDefinitions>
 
         <!-- Barra superior personalizada -->
@@ -24,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="LUMINA" VerticalAlignment="Center" Margin="10,0,0,0"
-                 FontWeight="Bold" FontSize="16"/>
+                       FontWeight="Bold" FontSize="16"/>
 
             <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
                 <Button Width="15" Height="15" Margin="2" Click="Minimize_Click" Background="Transparent" BorderThickness="0">
@@ -44,32 +43,30 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4"/>
                 <ColumnDefinition Width="56"/>
-                <!-- barra lateral -->
                 <ColumnDefinition Width="*"/>
-                <!-- contenido -->
             </Grid.ColumnDefinitions>
 
             <!-- Barra lateral izquierda -->
             <Grid Grid.Column="0" Background="#E3D5CA" Margin="0,0,4,0" Grid.ColumnSpan="2">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button Width="40" Height="40" Margin="5" Click="Home_Click"
-                  BorderBrush="Transparent" Background="Transparent">
+                            BorderBrush="Transparent" Background="Transparent">
                         <Image Source="/Images/Iconos/Home.png" Width="24" Height="24"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" Click="Libros_Click"
-                  BorderBrush="Transparent" Background="Transparent">
+                            BorderBrush="Transparent" Background="Transparent">
                         <Image Source="/Images/Iconos/Libros.png" Width="24" Height="24"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" Click="Musica_Click"
-                  BorderBrush="Transparent" Background="Transparent">
+                            BorderBrush="Transparent" Background="Transparent">
                         <Image Source="/Images/Iconos/Musica.png" Width="24" Height="24"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" Click="Peliculas_Click"
-                  BorderBrush="Transparent" Background="Transparent">
+                            BorderBrush="Transparent" Background="Transparent">
                         <Image Source="/Images/Iconos/Pelicula.png" Width="24" Height="24"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" Click="Favoritos_Click"
-                  BorderBrush="Transparent" Background="Transparent">
+                            BorderBrush="Transparent" Background="Transparent">
                         <Image Source="/Images/Iconos/Favoritos.png" Width="24" Height="24"/>
                     </Button>
                 </StackPanel>
@@ -87,7 +84,7 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="Favoritos" FontFamily="Fonts/#Roboto" FontSize="25"
-                       VerticalAlignment="Center" Grid.Column="0" Margin="0,2,10,0"/>
+                                   VerticalAlignment="Center" Grid.Column="0" Margin="0,2,10,0"/>
 
                         <!-- barra de búsqueda -->
                         <Border CornerRadius="15" Background="#D6CCC2" Width="232" Grid.Column="1">
@@ -97,24 +94,24 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Image Source="/Images/Iconos/lupa.png" Width="16" Height="16"
-                       VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
                                 <TextBox x:Name="SearchBox"
-                         BorderThickness="0" Background="Transparent" Foreground="Black"
-                         VerticalAlignment="Center" Grid.Column="1"
-                         Text="Buscar..."
-                         GotFocus="SearchBox_GotFocus"
-                         LostFocus="SearchBox_LostFocus"
-                         TextChanged="SearchBox_TextChanged"/>
+                                         BorderThickness="0" Background="Transparent" Foreground="Black"
+                                         VerticalAlignment="Center" Grid.Column="1"
+                                         Text="Buscar..."
+                                         GotFocus="SearchBox_GotFocus"
+                                         LostFocus="SearchBox_LostFocus"
+                                         TextChanged="SearchBox_TextChanged"/>
                             </Grid>
                         </Border>
                     </Grid>
 
                     <!-- Estado vacío -->
                     <TextBlock x:Name="EmptyState"
-                     Text="Aún no tienes favoritos ⭐"
-                     HorizontalAlignment="Center" Opacity="0.7" Margin="0,10,0,0"/>
+                               Text="Aún no tienes favoritos ⭐"
+                               HorizontalAlignment="Center" Opacity="0.7" Margin="0,10,0,0"/>
 
-                    <!-- Lista de favoritos -->
+                    <!-- Lista de favoritos (desde repositorio) -->
                     <ItemsControl x:Name="FavList" Margin="0,10,0,0">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -130,9 +127,9 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <!-- imagen -->
+                                        <!-- imagen (ícono según Tipo) -->
                                         <Border CornerRadius="8" Background="#EEE">
-                                            <Image Source="{Binding ImagePath}" Stretch="UniformToFill"/>
+                                            <Image Source="{Binding ImagePath}" Stretch="Uniform"/>
                                         </Border>
 
                                         <!-- texto -->
@@ -143,8 +140,8 @@
 
                                         <!-- ⭐ quitar -->
                                         <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top"
-                            Background="Transparent" BorderBrush="Transparent"
-                            Click="Star_Remove_Click" Tag="{Binding}">
+                                                Background="Transparent" BorderBrush="Transparent"
+                                                Click="Star_Remove_Click" Tag="{Binding}">
                                             <Image Source="/Images/Iconos/star_filled.png"/>
                                         </Button>
                                     </Grid>
