@@ -1,16 +1,13 @@
-﻿using Lumina.Services;
+﻿using Lumina.Repositories;
+using Lumina.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-
-// Alias para evitar ambigüedad y usar los tipos correctos
-using FavoritesStore = Lumina.Services.FavoritesStore;
-using SMediaType = Lumina.Services.MediaType;
-using MMediaType = Lumina.Model.MediaType;
 
 namespace Lumina.Views
 {
@@ -19,121 +16,168 @@ namespace Lumina.Views
         private const string PlaceholderText = "Buscar...";
         private bool _placeholderActive = true;
 
-        public Favoritos()
+        // Repositorio
+        private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
+
+        // Clase auxiliar para mostrar los favoritos en la UI
+        private class FavoriteCard
         {
-            InitializeComponent();
-            
+            public int FavoritoId { get; set; }  // 👈 corregido
+            public string Title { get; set; } = "";
+            public string Type { get; set; } = "";   // Album | Libro | Pelicula
+            public string ImagePath { get; set; } = "/Images/Iconos/Favoritos.png";
         }
 
-        
+        private ObservableCollection<FavoriteCard> _all = new();
+        private ObservableCollection<FavoriteCard> _filtered = new();
 
-        // Permite arrastrar la ventana al hacer click en la barra superior
+        public Favoritos()
+        {
+            InitializeComponent(); // siempre primero
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitSearchPlaceholderIfNeeded(SearchBox);
+            LoadFromRepository();
+            ApplyFilter(); // inicializa lista e indicador vacío
+        }
+
+        private void LoadFromRepository()
+        {
+            try
+            {
+                var views = _favRepo.GetAllViews(); // FavoritoView
+                var list = views.Select(v => new FavoriteCard
+                {
+                    FavoritoId = v.FavoritoId, // 👈 corregido
+                    Title = string.IsNullOrWhiteSpace(v.ReferenciaTitulo)
+                        ? "(Sin título)"
+                        : v.ReferenciaTitulo,
+                    Type = v.Tipo,
+                    ImagePath = IconFor(v.Tipo)
+                }).ToList();
+
+                _all = new ObservableCollection<FavoriteCard>(list);
+                _filtered = new ObservableCollection<FavoriteCard>(_all);
+                FavList.ItemsSource = _filtered;
+
+                EmptyState.Visibility = _filtered.Count == 0
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando favoritos: " + ex.Message);
+            }
+        }
+
+        private string IconFor(string tipo)
+        {
+            // Ajusta a tus iconos reales
+            return tipo switch
+            {
+                "Album" => "/Images/Iconos/Musica.png",
+                "Libro" => "/Images/Iconos/Libros.png",
+                "Pelicula" => "/Images/Iconos/Pelicula.png",
+                _ => "/Images/Iconos/Favoritos.png"
+            };
+        }
+
+        // ===== Barra superior =====
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                try { this.DragMove(); } catch { }
+                try { DragMove(); } catch { }
             }
         }
 
-        // Minimizar
         private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
+            => WindowState = WindowState.Minimized;
 
-        // Maximizar/Restaurar
         private void Maximize_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WindowState == WindowState.Maximized)
-                this.WindowState = WindowState.Normal;
-            else
-                this.WindowState = WindowState.Maximized;
+            WindowState = (WindowState == WindowState.Maximized)
+                ? WindowState.Normal
+                : WindowState.Maximized;
 
-            // Actualizar el ícono después de cambiar el estado
             if (sender is Button btn && btn.Content is Image image)
             {
-                SetMaximizeIcon(this.WindowState == WindowState.Maximized, image);
+                SetMaximizeIcon(WindowState == WindowState.Maximized, image);
             }
         }
 
-        // Cerrar
         private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+            => Close();
 
-        // Método para cambiar entre íconos de maximizar/restaurar
         private void SetMaximizeIcon(bool isMaximized, Image targetImage)
         {
-            // Cambia entre "maximizar.png" y "restaurar.png"
             var uri = new Uri(
                 isMaximized
                     ? "pack://application:,,,/Images/Iconos/restaurar.png"
                     : "pack://application:,,,/Images/Iconos/maximizar.png",
                 UriKind.Absolute);
-
-            try
-            {
-                targetImage.Source = new BitmapImage(uri);
-            }
-            catch
-            {
-                // Si la imagen no existe o hay un problema de recurso, ignora.
-            }
+            try { targetImage.Source = new BitmapImage(uri); } catch { }
         }
 
-        // Navegación entre ventanas (ahora se abren nuevas ventanas en lugar de navegar)
+        // ===== Navegación =====
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-            var homeWindow = new Homepage();
-            homeWindow.Owner = this;
-            homeWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            var homeWindow = new Homepage
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             homeWindow.Show();
-            this.Hide();
+            Hide();
         }
 
         private void Libros_Click(object sender, RoutedEventArgs e)
         {
-            var librosWindow = new Libros();
-            librosWindow.Owner = this;
-            librosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            librosWindow.Show();
-            this.Hide();
+            var w = new Libros
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.Show();
+            Hide();
         }
 
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
-            var musicaWindow = new Musica();
-            musicaWindow.Owner = this;
-            musicaWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            musicaWindow.Show();
-            this.Hide();
+            var w = new Musica
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.Show();
+            Hide();
         }
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            var peliculasWindow = new Peliculas();
-            peliculasWindow.Owner = this;
-            peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            peliculasWindow.Show();
-            this.Hide();
+            var w = new Peliculas
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            w.Show();
+            Hide();
         }
 
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
-            // Ya estamos en favoritos, no hacer nada
+            // Ya estás en favoritos
         }
 
-        // ================================
-        // Caja de búsqueda (placeholder)
-        // ================================
+        // ===== Placeholder búsqueda =====
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox tb && _placeholderActive)
             {
                 tb.Text = string.Empty;
-                tb.Opacity = 1.0; // se ve como texto real
+                tb.Opacity = 1.0;
                 _placeholderActive = false;
             }
         }
@@ -143,12 +187,11 @@ namespace Lumina.Views
             if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
                 tb.Text = PlaceholderText;
-                tb.Opacity = 0.6; // aspecto de placeholder
+                tb.Opacity = 0.6;
                 _placeholderActive = true;
             }
         }
 
-        // Opcional: inicializar placeholder al cargar
         private void InitSearchPlaceholderIfNeeded(TextBox tb)
         {
             if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
@@ -159,33 +202,65 @@ namespace Lumina.Views
             }
         }
 
-        // -------- Lista / estado vacío --------
+        // ===== Filtrado y acciones =====
         private void ApplyFilter()
         {
-            var q = (SearchBox?.Text ?? "").Trim().ToLower();
-            List<FavoriteItem> items = string.IsNullOrEmpty(q) || q == "buscar..."
-                ? FavoritesStore.Items.ToList()
-                : FavoritesStore.Items.Where(it =>
-                      (it.Title?.ToLower().Contains(q) ?? false) ||
-                      it.Type.ToString().ToLower().Contains(q)).ToList();
+            if (FavList == null || EmptyState == null) return; // seguridad
 
-            FavList.ItemsSource = null;
-            FavList.ItemsSource = items;
-            EmptyState.Visibility = items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            var q = (SearchBox?.Text ?? "").Trim().ToLower();
+            bool useAll = string.IsNullOrEmpty(q) || q == PlaceholderText.ToLower();
+
+            var src = useAll
+                ? _all
+                : new ObservableCollection<FavoriteCard>(
+                    _all.Where(it =>
+                        (it.Title?.ToLower().Contains(q) ?? false) ||
+                        (it.Type?.ToLower().Contains(q) ?? false)));
+
+            _filtered.Clear();
+            foreach (var x in src) _filtered.Add(x);
+
+            FavList.ItemsSource = _filtered;
+            EmptyState.Visibility = _filtered.Count == 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilter();
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+            => ApplyFilter();
 
-        // ⭐ quitar desde Favoritos
+        // ⭐ quitar desde Favoritos (usa repositorio)
         private void Star_Remove_Click(object sender, RoutedEventArgs e)
         {
-            if ((sender as FrameworkElement)?.Tag is FavoriteItem it)
+            if ((sender as FrameworkElement)?.Tag is FavoriteCard card)
             {
-                FavoritesStore.Toggle(it.Title, it.Type, it.ImagePath); // quita
-                ApplyFilter(); // refresca
+                var confirm = MessageBox.Show(
+                    $"¿Quitar '{card.Title}' de favoritos?",
+                    "Confirmar",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (confirm != MessageBoxResult.Yes) return;
+
+                try
+                {
+                    if (_favRepo.Delete(card.FavoritoId)) 
+                    {
+                        // quita de _all y vuelve a filtrar
+                        var item = _all.FirstOrDefault(x => x.FavoritoId == card.FavoritoId); 
+                        if (item != null) _all.Remove(item);
+                        ApplyFilter();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo eliminar el favorito.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al eliminar: " + ex.Message);
+                }
             }
         }
-
-        
     }
 }
