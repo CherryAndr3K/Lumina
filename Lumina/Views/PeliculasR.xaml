@@ -1,0 +1,68 @@
+﻿<Window x:Class="Lumina.Views.PeliculasR"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Películas" Height="560" Width="880"
+        Background="#F7F7F7" WindowStartupLocation="CenterScreen">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Gestión de Películas" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
+
+        <!-- ===== CRUD Películas ===== -->
+        <Border Grid.Row="1" Padding="12" Background="#FFFFFF" CornerRadius="12"
+                BorderBrush="#E3D5CA" BorderThickness="1">
+            <DockPanel LastChildFill="True" Margin="0">
+                <!-- Formulario -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Título"/>
+                            <TextBox x:Name="txtPeliTitulo"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                            <TextBlock Text="Género"/>
+                            <TextBox x:Name="txtPeliGenero"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                            <TextBlock Text="Año"/>
+                            <TextBox x:Name="txtPeliAnio"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Bottom">
+                            <Button Content="Agregar"   Click="BtnPeliAgregar_Click"   Margin="0,0,6,0" Padding="10,6"/>
+                            <Button Content="Modificar" Click="BtnPeliModificar_Click" Margin="0,0,6,0" Padding="10,6"/>
+                            <Button Content="Eliminar"  Click="BtnPeliEliminar_Click"  Padding="10,6"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <!-- DataGrid -->
+                <DataGrid x:Name="dgPeliculas"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          SelectionChanged="DgPeliculas_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding PeliculaId}" Width="60"/>
+                        <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
+                        <DataGridTextColumn Header="Género" Binding="{Binding Genero}" Width="220"/>
+                        <DataGridTextColumn Header="Año" Binding="{Binding Anio}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+        <!-- ===== /CRUD Películas ===== -->
+    </Grid>
+</Window>
