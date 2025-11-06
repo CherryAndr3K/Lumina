@@ -139,6 +139,15 @@ namespace Lumina.Views
             w.Show(); Hide();
         }
 
+        private void PeliculasR(object sender, RoutedEventArgs e)
+        {
+            var peliculasRWindow = new PeliculasR();
+            peliculasRWindow.Owner = this;
+            peliculasRWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            peliculasRWindow.Show();
+            this.Hide();
+        }
+
         // ===== Placeholder búsqueda =====
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {

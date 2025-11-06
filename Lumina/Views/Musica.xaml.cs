@@ -102,6 +102,15 @@ namespace Lumina.Views
                 try { image.Source = new BitmapImage(uri); } catch { }
             }
         }
+
+        private void MusicaR(object sender, RoutedEventArgs e)
+        {
+            var musicaRWindow = new MusicaR();
+            musicaRWindow.Owner = this;
+            musicaRWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            musicaRWindow.Show();
+            this.Hide();
+        }
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
         private void Home_Click(object sender, RoutedEventArgs e)
         { var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
