@@ -51,6 +51,16 @@ namespace Lumina.Views
             this.Close();
         }
 
+        //Boton de editar superior
+        private void LibrosR(object sender, RoutedEventArgs e)
+        {
+            var librosRWindow = new LibrosR();
+            librosRWindow.Owner = this;
+            librosRWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            librosRWindow.Show();
+            this.Hide();
+        }
+
         // Navegación entre ventanas (ahora se abren nuevas ventanas en lugar de navegar)
         private void Home_Click(object sender, RoutedEventArgs e)
         {
