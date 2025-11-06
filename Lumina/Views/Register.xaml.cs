@@ -1,37 +1,84 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Lumina.Models;
+using Lumina.Models; // MediaAppDbContext, Usuario
 
 namespace Lumina.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Window1.xaml
-    /// </summary>
     public partial class Register : Window
     {
         public Register()
         {
-            InitializeComponent();
+            InitializeComponent(); // No implementes este método manualmente
         }
 
-        private void InitializeComponent()
+        // ========== Barra de título / Ventana ==========
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                try { DragMove(); } catch { /* ignore */ }
+            }
         }
 
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+            => WindowState = WindowState.Minimized;
 
-        // Placeholders y borde negro (como en Login)
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+            => WindowState = (WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+            => Close();
+
+        // ========== Navegación lateral (opcional si existen esas ventanas) ==========
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var w = new Libros { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+                w.Show(); this.Hide();
+            }
+            catch { MessageBox.Show("Ventana Libros no disponible."); }
+        }
+
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var w = new Musica { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+                w.Show(); this.Hide();
+            }
+            catch { MessageBox.Show("Ventana Música no disponible."); }
+        }
+
+        private void Peliculas_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+                w.Show(); this.Hide();
+            }
+            catch { MessageBox.Show("Ventana Películas no disponible."); }
+        }
+
+        private void Favoritos_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Favoritos (pendiente).");
+        }
+
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+                w.ShowDialog();
+            }
+            catch { MessageBox.Show("Ventana Login no disponible."); }
+        }
+
+        // ========== Placeholders (TextBox usa Tag como placeholder) ==========
         private void Placeholder_GotFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox tb)
@@ -42,6 +89,7 @@ namespace Lumina.Views
                 {
                     tb.Text = string.Empty;
                     tb.Foreground = Brushes.Black;
+                    tb.Opacity = 1.0;
                 }
 
                 tb.BorderBrush = Brushes.Black;
@@ -59,6 +107,7 @@ namespace Lumina.Views
                 {
                     tb.Text = placeholder;
                     tb.Foreground = Brushes.Gray;
+                    tb.Opacity = 0.6;
                 }
 
                 tb.BorderBrush = Brushes.Black;
@@ -66,30 +115,48 @@ namespace Lumina.Views
             }
         }
 
-        private void BtnRegistrar_Click(object sender, RoutedEventArgs e)
+        // ========== Registrar ==========
+        private void BtnRegistro_Click(object sender, RoutedEventArgs e)
         {
-            string correo = txtCorreo.Text.Trim();
-            string nombre = txtNombre.Text.Trim();
-            string password = txtPassword.Text.Trim();
+            // Estos nombres vienen de tu XAML:
+            // txtNombre, txtCorreo, txtPassword, txtPassword2 (todos TextBox)
+            string nombre = txtNombre?.Text?.Trim() ?? "";
+            string correo = txtCorreo?.Text?.Trim() ?? "";
+            string pass1 = txtPassword?.Text?.Trim() ?? "";
+            string pass2 = txtPassword2?.Text?.Trim() ?? "";
 
-            if (string.IsNullOrWhiteSpace(correo) ||
-                string.IsNullOrWhiteSpace(nombre) ||
-                string.IsNullOrWhiteSpace(password))
+            // Si están en placeholder, vaciarlos
+            if (nombre == (txtNombre?.Tag as string)) nombre = "";
+            if (correo == (txtCorreo?.Tag as string)) correo = "";
+            if (pass1 == (txtPassword?.Tag as string)) pass1 = "";
+            if (pass2 == (txtPassword2?.Tag as string)) pass2 = "";
+
+            if (string.IsNullOrWhiteSpace(nombre) ||
+                string.IsNullOrWhiteSpace(correo) ||
+                string.IsNullOrWhiteSpace(pass1) ||
+                string.IsNullOrWhiteSpace(pass2))
             {
                 MessageBox.Show("Por favor completa todos los campos.",
-                                "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                "Registro", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (!string.Equals(pass1, pass2, StringComparison.Ordinal))
+            {
+                MessageBox.Show("Las contraseñas no coinciden.",
+                                "Registro", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             try
             {
-                using (var context = new MediaAppDbContext()) // 👈 Usa tu contexto generado
+                using (var context = new MediaAppDbContext())
                 {
                     var nuevoUsuario = new Usuario
                     {
                         Correo = correo,
                         Nombre = nombre,
-                        Contrasena = password
+                        Contrasena = pass1
                     };
 
                     context.Usuarios.Add(nuevoUsuario);
@@ -99,7 +166,7 @@ namespace Lumina.Views
                 MessageBox.Show("Usuario registrado correctamente.",
                                 "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                this.Close(); // Cierra la ventana de registro
+                Close();
             }
             catch (Exception ex)
             {
@@ -109,5 +176,3 @@ namespace Lumina.Views
         }
     }
 }
-
-

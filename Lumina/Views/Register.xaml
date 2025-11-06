@@ -1,10 +1,11 @@
-﻿<Window x:Class="Lumina.Views.Homepage"
+﻿<Window x:Class="Lumina.Views.Register"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Inicio" Height="576" Width="829"
+        Title="LUMINA - Registro" Height="576" Width="829"
+        Background="#EDEDE9"
         WindowStyle="None"
-        Background="#EDEDE9">
-
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip">
     <Window.Resources>
         <!-- Estilo para botones redondeados -->
         <Style x:Key="RoundedButton" TargetType="Button">
@@ -135,29 +136,29 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="6" Margin="46,0,0,0" Grid.Column="1">
                 <StackPanel Margin="20">
                     <!-- Encabezado -->
-<Grid Grid.Row="1" Margin="0,0,0,-1">
-    <!-- Tres columnas: centramos el contenido en la del medio -->
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="1" Margin="0,0,0,-1">
+                        <!-- Tres columnas: centramos el contenido en la del medio -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-    <StackPanel Grid.Column="1"
+                        <StackPanel Grid.Column="1"
             VerticalAlignment="Center"
             HorizontalAlignment="Center"
             Width="280" >
 
-        <!-- Título principal -->
-        <TextBlock Text="Lumina"
+                            <!-- Título principal -->
+                            <TextBlock Text="Lumina"
                FontSize="28"
                FontWeight="Bold"
                Foreground="Black"
                HorizontalAlignment="Center"
                Margin="0,0,0,5"/>
 
-        <!-- Subtítulo -->
-        <TextBlock Text="Registro"
+                            <!-- Subtítulo -->
+                            <TextBlock Text="Registro"
                FontSize="20"
                Foreground="Black"
                HorizontalAlignment="Center"
@@ -205,7 +206,7 @@ VerticalAlignment="Center"/>
                             </Grid>
 
                             <!-- Botones inferiores -->
-        <!-- Botones inferiores / campos -->
+                            <!-- Botones inferiores / campos -->
                             <TextBox x:Name="txtNombre"
    Style="{StaticResource RoundedInput}"
    Text="Nombre"
@@ -224,9 +225,9 @@ VerticalAlignment="Center"/>
     LostFocus="Placeholder_LostFocus"
     Margin="0,15,0,0"/>
 
- 
 
-        <TextBox x:Name="txtPassword"
+
+                            <TextBox x:Name="txtPassword"
     Style="{StaticResource RoundedInput}"
     Text="Contraseña"
     Tag="Password"
@@ -235,7 +236,7 @@ VerticalAlignment="Center"/>
     LostFocus="Placeholder_LostFocus"
     Margin="0,15,0,0"/>
 
-        <TextBox x:Name="txtPassword2"
+                            <TextBox x:Name="txtPassword2"
 Style="{StaticResource RoundedInput}"
 Text="Confirmar contraseña"
 Tag="Password2"
@@ -245,15 +246,15 @@ LostFocus="Placeholder_LostFocus"
 Margin="0,15,0,0"/>
 
                             <!-- Botón de registro -->
-        <Button Content="Registrarse"
+                            <Button Content="Registrarse"
 Style="{StaticResource RoundedButton}"
 Margin="0,10,0,0"
 Background="#cce3f0"
 Click="BtnRegistro_Click"/>
 
 
-    </StackPanel>
-</Grid>
+                        </StackPanel>
+                    </Grid>
 
                 </StackPanel>
             </ScrollViewer>
