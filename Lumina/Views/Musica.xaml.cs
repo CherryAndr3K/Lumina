@@ -100,7 +100,10 @@ namespace Lumina.Views
             this.Hide();
         }
 
-       
+        private void Musica_Click(object sender, RoutedEventArgs e)
+        {
+            //No se hace nada, ya estamos en la pagina
+        }
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
