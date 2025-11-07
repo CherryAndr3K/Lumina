@@ -151,28 +151,50 @@ namespace Lumina.Views
             if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
 
             var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
-            if (!id.HasValue) { MessageBox.Show("No se encontró el álbum en la BD."); return; }
+            if (!id.HasValue)
+            {
+                MessageBox.Show("No se encontró el álbum en la BD.");
+                return;
+            }
 
             var isFav = ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
-            if (isFav) { MessageBox.Show("Ya está en Favoritos."); SetStarIcon(btn, true); return; }
 
             try
             {
-                _ = _favRepo.Add(new Favorito
+                if (isFav)
                 {
-                    UsuarioId = AppSession.CurrentUserId,
-                    Tipo = "Album",
-                    ReferenciaId = id.Value
-                });
-                SetStarIcon(btn, true);
-                MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                    // Quitar de favoritos
+                    var eliminado = (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Album", id.Value) ?? false;
+                    if (eliminado)
+                    {
+                        SetStarIcon(btn, false);
+                        MessageBox.Show($"Eliminado de Favoritos: {titulo}");
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo eliminar de Favoritos.");
+                    }
+                }
+                else
+                {
+                    // Agregar a favoritos
+                    _ = _favRepo.Add(new Favorito
+                    {
+                        UsuarioId = AppSession.CurrentUserId,
+                        Tipo = "Album",
+                        ReferenciaId = id.Value,
+                        FechaMarcado = DateTime.Now
+                    });
+
+                    SetStarIcon(btn, true);
+                    MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudo agregar: " + ex.Message);
+                MessageBox.Show("Error al actualizar favoritos: " + ex.Message);
             }
         }
-
 
         private void MusicLink_Click(object sender, RoutedEventArgs e)
         {

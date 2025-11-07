@@ -1,5 +1,6 @@
-﻿using Lumina.Repositories;
+﻿using Lumina.Infra;
 using Lumina.Models;
+using Lumina.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -253,10 +254,12 @@ namespace Lumina.Views
 
                 try
                 {
-                    if (_favRepo.Delete(card.FavoritoId)) 
+                    var eliminado = (_favRepo as FavoritoRepository)?
+                        .DeleteFavorito(AppSession.CurrentUserId, card.Type, card.FavoritoId) ?? false;
+
+                    if (eliminado)
                     {
-                        // quita de _all y vuelve a filtrar
-                        var item = _all.FirstOrDefault(x => x.FavoritoId == card.FavoritoId); 
+                        var item = _all.FirstOrDefault(x => x.FavoritoId == card.FavoritoId);
                         if (item != null) _all.Remove(item);
                         ApplyFilter();
                     }

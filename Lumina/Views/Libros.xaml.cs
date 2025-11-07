@@ -189,28 +189,51 @@ namespace Lumina.Views
                 if (!string.Equals(tipo, "Book", StringComparison.OrdinalIgnoreCase)) return;
 
                 var id = ResolveReferenciaId_LibroPorTitulo(titulo);
-                if (!id.HasValue) { MessageBox.Show("No se encontró el libro en la BD."); return; }
-
-                var isFav = ExisteFavorito(AppSession.CurrentUserId, "Libro", id.Value);
-                if (isFav)
+                if (!id.HasValue)
                 {
-                    MessageBox.Show("Ya está en Favoritos.");
-                    SetStarIcon(btn, true);
+                    MessageBox.Show("No se encontró el libro en la BD.");
                     return;
                 }
 
-                _ = _favRepo.Add(new Favorito
-                {
-                    UsuarioId = AppSession.CurrentUserId,
-                    Tipo = "Libro",
-                    ReferenciaId = id.Value
-                });
+                var isFav = ExisteFavorito(AppSession.CurrentUserId, "Libro", id.Value);
 
-                SetStarIcon(btn, true);
-                MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                try
+                {
+                    if (isFav)
+                    {
+                        // Quitar de favoritos
+                        var eliminado = (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Libro", id.Value) ?? false;
+                        if (eliminado)
+                        {
+                            SetStarIcon(btn, false);
+                            MessageBox.Show($"Eliminado de Favoritos: {titulo}");
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo eliminar de Favoritos.");
+                        }
+                    }
+                    else
+                    {
+                        // Agregar a favoritos
+                        _ = _favRepo.Add(new Favorito
+                        {
+                            UsuarioId = AppSession.CurrentUserId,
+                            Tipo = "Libro",
+                            ReferenciaId = id.Value,
+                            FechaMarcado = DateTime.Now
+                        });
+
+                        SetStarIcon(btn, true);
+                        MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al actualizar favoritos: " + ex.Message);
+                }
             }
         }
-
 
         // === NUEVO MÉTODO PARA ENLACES DE LIBROS ===
         private void BookLink_Click(object sender, RoutedEventArgs e)
