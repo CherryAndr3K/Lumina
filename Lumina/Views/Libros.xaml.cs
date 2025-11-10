@@ -1,7 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,7 +8,7 @@ using System.Windows.Media.Imaging;
 using Lumina.Infra;
 using Lumina.Models;
 using Lumina.Repositories;
-
+using Microsoft.Data.SqlClient;
 
 namespace Lumina.Views
 {
@@ -17,94 +16,79 @@ namespace Lumina.Views
     {
         private const string PlaceholderText = "Buscar...";
         private bool _placeholderActive = true;
+
         public Libros()
         {
             InitializeComponent();
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                Loaded += (_, __) => { /* carga diferida si la necesitas */ };
         }
 
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                try { this.DragMove(); } catch { }
+                try { DragMove(); } catch { /* ignore */ }
             }
         }
 
-
         // ================================
-        // Ventana (ahora métodos directos de Window)
+        // Ventana (métodos directos de Window)
         // ================================
-        private void Minimize_Click(object sender, RoutedEventArgs e)
+        private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+        private void Maximize_Click(object sender, RoutedEventArgs e) =>
+            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+
+        private void Close_Click(object sender, RoutedEventArgs e) => Close();
+
+        // Botón de editar superior
+        private void LibrosR(object sender, RoutedEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            var w = new LibrosR { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
-        private void Maximize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = (this.WindowState == WindowState.Maximized)
-                              ? WindowState.Normal
-                              : WindowState.Maximized;
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        // Navegación entre ventanas (ahora se abren nuevas ventanas en lugar de navegar)
+        // Navegación entre ventanas
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-            var homeWindow = new Homepage();
-            homeWindow.Owner = this;
-            homeWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            homeWindow.Show();
-            this.Hide();
+            var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
-        private void Libros_Click(object sender, RoutedEventArgs e)
-        {
-            //No hacer nada estamos en ventana de libros
-        }
+        private void Libros_Click(object sender, RoutedEventArgs e) { /* ya estás aquí */ }
 
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
-            var musicaWindow = new Musica();
-            musicaWindow.Owner = this;
-            musicaWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            musicaWindow.Show();
-            this.Hide();
+            var w = new Musica { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            var peliculasWindow = new Peliculas();
-            peliculasWindow.Owner = this;
-            peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            peliculasWindow.Show();
-            this.Hide();
+            var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
-            var favoritosWindow = new Favoritos();
-            favoritosWindow.Owner = this;
-            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            favoritosWindow.Show();
-            this.Hide();
+            var w = new Favoritos { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            var loginWindow = new Login();
-            loginWindow.Owner = this;
-            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            loginWindow.Show();
-            this.Hide();
+            var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
-
         // ======= FAVORITOS: helpers y handlers =======
-
         private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
 
         private (string tipo, string titulo, string? image) ParseTag(string tag)
@@ -116,73 +100,85 @@ namespace Lumina.Views
             return (tipo, titulo, image);
         }
 
-        private string Cnn() => ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        private static string Cnn() =>
+            ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        private int? ResolveReferenciaId_LibroPorTitulo(string titulo)
+        private static int? ResolveReferenciaId_LibroPorTitulo(string titulo)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand("SELECT TOP 1 LibroID FROM dbo.Libros WHERE Titulo=@t", cn);
-            cmd.Parameters.AddWithValue("@t", titulo);
-            cn.Open();
-            var o = cmd.ExecuteScalar();
-            return o == null ? (int?)null : Convert.ToInt32(o);
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand("SELECT TOP 1 LibroID FROM dbo.Libros WHERE Titulo=@t", cn);
+                cmd.Parameters.AddWithValue("@t", (object?)titulo ?? DBNull.Value);
+                cn.Open();
+                var o = cmd.ExecuteScalar();
+                return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
+            }
+            catch
+            {
+                return null; // no romper UI si hay problema de conexión
+            }
         }
 
-        private bool ExisteFavorito(int userId, string tipo, int referenciaId)
+        private static bool ExisteFavorito(int userId, string tipo, int referenciaId)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand("SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
-            cmd.Parameters.AddWithValue("@u", userId);
-            cmd.Parameters.AddWithValue("@t", tipo);
-            cmd.Parameters.AddWithValue("@r", referenciaId);
-            cn.Open();
-            using var rd = cmd.ExecuteReader();
-            return rd.Read();
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand(
+                    "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+                cmd.Parameters.AddWithValue("@u", userId);
+                cmd.Parameters.AddWithValue("@t", tipo);
+                cmd.Parameters.AddWithValue("@r", referenciaId);
+                cn.Open();
+                using var rd = cmd.ExecuteReader();
+                return rd.Read();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        private void SetStarIcon(Button btn, bool isFav)
+        private static void SetStarIcon(Button btn, bool isFav)
         {
-            // Usa las rutas REALES del proyecto
-            var path = isFav
-                ? "/Images/Iconos/star_filled.png"
-                : "/Images/Iconos/star_outline.png";
+            // Usa las rutas REALES del proyecto (recursos de contenido)
+            var relative = isFav ? "/Images/Iconos/star_filled.png" : "/Images/Iconos/star_outline.png";
 
-            // Pack URI más robusto para recursos embebidos
-            var uri = new Uri($"pack://application:,,,{path}", UriKind.Absolute);
+            // Pack URI robusto para recursos empacados
+            var uri = new Uri($"pack://application:,,,{relative}", UriKind.Absolute);
 
             try
             {
                 var bmp = new BitmapImage(uri);
                 if (btn.Content is Image img)
-                {
                     img.Source = bmp;
-                }
                 else
-                {
                     btn.Content = new Image { Source = bmp, Width = 18, Height = 18 };
-                }
             }
             catch
             {
-                // Si por cualquier cosa no encuentra la imagen, evita que crashee la ventana
+                // Ignorar si el recurso no existe para no romper UI
             }
         }
 
         private void Star_Loaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is Button btn && btn.Tag is string tag)
             {
                 var (tipo, titulo, _) = ParseTag(tag);  // "Book"
                 if (!string.Equals(tipo, "Book", StringComparison.OrdinalIgnoreCase)) return;
 
                 var id = ResolveReferenciaId_LibroPorTitulo(titulo);
-                var isFav = (id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Libro", id.Value));
+                var isFav = id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Libro", id.Value);
                 SetStarIcon(btn, isFav);
             }
         }
 
         private void Star_Toggle_Click(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is Button btn && btn.Tag is string tag)
             {
                 var (tipo, titulo, _) = ParseTag(tag);
@@ -256,7 +252,6 @@ namespace Lumina.Views
             }
         }
 
-
         // ================================
         // Caja de búsqueda (placeholder)
         // ================================
@@ -265,7 +260,7 @@ namespace Lumina.Views
             if (sender is TextBox tb && _placeholderActive)
             {
                 tb.Text = string.Empty;
-                tb.Opacity = 1.0; // se ve como texto real
+                tb.Opacity = 1.0;
                 _placeholderActive = false;
             }
         }
@@ -275,12 +270,11 @@ namespace Lumina.Views
             if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
                 tb.Text = PlaceholderText;
-                tb.Opacity = 0.6; // aspecto de placeholder
+                tb.Opacity = 0.6;
                 _placeholderActive = true;
             }
         }
 
-        // Opcional: inicializar placeholder al cargar
         private void InitSearchPlaceholderIfNeeded(TextBox tb)
         {
             if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
@@ -291,17 +285,11 @@ namespace Lumina.Views
             }
         }
 
-        // Evento para manejar cuando se cierra la ventana
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-
-            // Si esta ventana era la owner de otras, cierra la aplicación
-            if (this.Owner == null)
-            {
+            if (Owner == null)
                 Application.Current.Shutdown();
-            }
         }
-
     }
 }
