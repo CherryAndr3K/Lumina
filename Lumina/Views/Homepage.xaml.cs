@@ -1,6 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Configuration;
-using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Lumina.Infra;
 using Lumina.Models;
 using Lumina.Repositories;
+using Microsoft.Data.SqlClient;
 
 namespace Lumina.Views
 {
@@ -22,7 +23,15 @@ namespace Lumina.Views
         public Homepage()
         {
             InitializeComponent();
+            // Evita ejecutar lógica de datos en diseñador
+            if (!DesignerProperties.GetIsInDesignMode(this))
+                Loaded += Homepage_Loaded;
+        }
 
+        private void Homepage_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Si necesitas inicializar algo al abrir la ventana, hazlo aquí.
+            // (Dejé vacío para no tocar tu flujo actual)
         }
 
         // ================================
@@ -53,60 +62,48 @@ namespace Lumina.Views
         }
 
         // ================================
-        // Navegación del menu
+        // Navegación del menú
         // ================================
 
-        //Libros
+        // Libros
         private void Libros_Click(object sender, RoutedEventArgs e)
         {
-            var librosWindow = new Libros();
-            librosWindow.Owner = this;
-            librosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            librosWindow.Show();
-            this.Hide();
+            var w = new Libros { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
-        //Musica
+        // Música
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
-            var musicaWindow = new Musica();
-            musicaWindow.Owner = this;
-            musicaWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            musicaWindow.Show();
-            this.Hide();
+            var w = new Musica { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
-        //Peliculas
+        // Películas
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            
-            var peliculasWindow = new Peliculas();
-            peliculasWindow.Owner = this;
-            peliculasWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            peliculasWindow.Show();
-            this.Hide();
-            
+            var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
-        //Favoritos
+
+        // Favoritos
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
-            var favoritosWindow = new Favoritos();
-            favoritosWindow.Owner = this;
-            favoritosWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            favoritosWindow.Show();
-            this.Hide();
+            var w = new Favoritos { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
 
-        //Login
+        // Login
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            var loginWindow = new Login();
-            loginWindow.Owner = this;
-            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            loginWindow.Show();
-            this.Hide();
+            var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show();
+            Hide();
         }
-
 
         // ================= Helpers BD / Favoritos =================
         private static string Cnn() =>
@@ -124,25 +121,39 @@ namespace Lumina.Views
 
         private static int? ResolveReferenciaId_AlbumPorTitulo(string titulo)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand("SELECT TOP 1 AlbumID FROM dbo.Albumes WHERE Titulo=@t", cn);
-            cmd.Parameters.AddWithValue("@t", titulo);
-            cn.Open();
-            var o = cmd.ExecuteScalar();
-            return o == null ? (int?)null : Convert.ToInt32(o);
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand("SELECT TOP 1 AlbumID FROM dbo.Albumes WHERE Titulo=@t", cn);
+                cmd.Parameters.AddWithValue("@t", (object?)titulo ?? DBNull.Value);
+                cn.Open();
+                var o = cmd.ExecuteScalar();
+                return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
+            }
+            catch
+            {
+                return null; // no revientes la UI si hay un fallo de conexión
+            }
         }
 
         private static bool ExisteFavorito(int userId, string tipo, int referenciaId)
         {
-            using var cn = new SqlConnection(Cnn());
-            using var cmd = new SqlCommand(
-                "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
-            cmd.Parameters.AddWithValue("@u", userId);
-            cmd.Parameters.AddWithValue("@t", tipo);
-            cmd.Parameters.AddWithValue("@r", referenciaId);
-            cn.Open();
-            using var rd = cmd.ExecuteReader();
-            return rd.Read();
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand(
+                    "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+                cmd.Parameters.AddWithValue("@u", userId);
+                cmd.Parameters.AddWithValue("@t", tipo);
+                cmd.Parameters.AddWithValue("@r", referenciaId);
+                cn.Open();
+                using var rd = cmd.ExecuteReader();
+                return rd.Read();
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static void SetStarIcon(Button btn, bool isFav)
@@ -167,22 +178,31 @@ namespace Lumina.Views
             }
         }
 
-
         // ================= Botón ⭐ por tarjeta =================
         private void Star_Loaded(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
-            ParseTag(tag, out var tipo, out var titulo, out _);
-            if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
+            try
+            {
+                ParseTag(tag, out var tipo, out var titulo, out _);
+                if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
 
-            var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
-            var isFav = id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
-            SetStarIcon(btn, isFav);
+                var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
+                var isFav = id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
+                SetStarIcon(btn, isFav);
+            }
+            catch
+            {
+                // No bloquear la UI por un fallo de BD
+                SetStarIcon(btn, false);
+            }
         }
 
         private void Star_Toggle_Click(object sender, RoutedEventArgs e)
         {
+            if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
             ParseTag(tag, out var tipo, out var titulo, out _);
@@ -257,21 +277,14 @@ namespace Lumina.Views
 
         private void SetMaximizeIcon(bool isMaximized, Image targetImage)
         {
-            // Cambia entre "maximizar.png" y "restaurar.png"
             var uri = new Uri(
                 isMaximized
                     ? "pack://application:,,,/Images/Iconos/restaurar.png"
                     : "pack://application:,,,/Images/Iconos/maximizar.png",
                 UriKind.Absolute);
 
-            try
-            {
-                targetImage.Source = new BitmapImage(uri);
-            }
-            catch
-            {
-                // Si la imagen no existe o hay un problema de recurso, ignora.
-            }
+            try { targetImage.Source = new BitmapImage(uri); }
+            catch { /* Ignorar si el recurso no existe */ }
         }
 
         // ================================
@@ -282,7 +295,7 @@ namespace Lumina.Views
             if (sender is TextBox tb && _placeholderActive)
             {
                 tb.Text = string.Empty;
-                tb.Opacity = 1.0; // se ve como texto real
+                tb.Opacity = 1.0;
                 _placeholderActive = false;
             }
         }
@@ -292,7 +305,7 @@ namespace Lumina.Views
             if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
             {
                 tb.Text = PlaceholderText;
-                tb.Opacity = 0.6; // aspecto de placeholder
+                tb.Opacity = 0.6;
                 _placeholderActive = true;
             }
         }
@@ -308,72 +321,9 @@ namespace Lumina.Views
             }
         }
 
-
-        //links
-
-        private void MusicLink_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is string url)
-            {
-                try
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = url,
-                        UseShellExecute = true
-                    });
-                }
-                catch
-                {
-                    MessageBox.Show("No se pudo abrir el enlace.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
-
-        private void BookLink_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is string url)
-            {
-                try
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = url,
-                        UseShellExecute = true
-                    });
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}",
-                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
-        private void Poster_Click(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is Image img && img.Tag is string link && !string.IsNullOrWhiteSpace(link))
-            {
-                try
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = link,
-                        UseShellExecute = true
-                    });
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}", "Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
-
-
-        // 1) Helper reutilizable para abrir URLs desde Button.Tag o Image.Tag
+        // ================================
+        // Links
+        // ================================
         private static void OpenUrlFrom(object sender)
         {
             string url = null;
@@ -399,23 +349,15 @@ namespace Lumina.Views
             }
         }
 
-        // 2) Poster_Click para Button.Click (firma correcta: RoutedEventHandler)
-private void Poster_Click(object sender, RoutedEventArgs e)
-{
-    OpenUrlFrom(sender);
-}
+        // Para imágenes (MouseDown en XAML)
+        private void Poster_Click(object sender, MouseButtonEventArgs e) => OpenUrlFrom(sender);
 
-        /*
-        // 4) Favoritos_Click
-        private void Favoritos_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: abrir ventana de favoritos o navegar a la sección
-            MessageBox.Show("Favoritos (pendiente).", "Lumina",
-                MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-        */
+        // Para botones (Click en XAML)
+        private void Poster_Click(object sender, RoutedEventArgs e) => OpenUrlFrom(sender);
 
+        private void MusicLink_Click(object sender, RoutedEventArgs e) => OpenUrlFrom(sender);
 
-
+        private void BookLink_Click(object sender, RoutedEventArgs e) => OpenUrlFrom(sender)
+        ;
     }
 }
