@@ -243,8 +243,12 @@ namespace Lumina.Views
                         FileName = url,
                         UseShellExecute = true
                     });
+
                 }
-            }
+                }
         }
     }
 }
+        
+    
+
