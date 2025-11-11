@@ -12,4 +12,8 @@ public partial class Pelicula
     public string? Genero { get; set; }
 
     public int? Anio { get; set; }
+
+    public string? Link { get; set; }
+
+    public string? Imagen { get; set; }
 }
