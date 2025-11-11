@@ -230,6 +230,7 @@ namespace Lumina.Views
                 }
             }
         }
+<<<<<<< HEAD
 
         // === NUEVO MÉTODO PARA ENLACES DE LIBROS ===
         private void BookLink_Click(object sender, RoutedEventArgs e)
@@ -291,5 +292,7 @@ namespace Lumina.Views
             if (Owner == null)
                 Application.Current.Shutdown();
         }
+=======
+>>>>>>> 18eea0d02bb6b353d4e7180724d3f8508ac614b7
     }
 }
