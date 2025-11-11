@@ -86,33 +86,32 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="6" Margin="46,0,0,0" Grid.Column="1">
                 <StackPanel Margin="20">
                     <!-- Encabezado -->
-                    <!-- Encabezado -->
                     <DockPanel Margin="0,0,0,10" LastChildFill="True">
 
                         <!-- Botón Editar (derecha) -->
                         <Button DockPanel.Dock="Right"
-            Click="MusicaR"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            Padding="0"
-            VerticalAlignment="Center"
-            Margin="5,0,0,0">
+                                Click="MusicaR"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Padding="0"
+                                VerticalAlignment="Center"
+                                Margin="5,0,0,0">
                             <Image Source="/Images/Iconos/editar.png"
-               Width="24"
-               Height="24"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"/>
+                                   Width="24"
+                                   Height="24"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                         </Button>
 
-                        <!-- Buscador (a la derecha del texto) -->
+                        <!-- Buscador -->
                         <Border DockPanel.Dock="Right"
-            CornerRadius="15"
-            Background="#D6CCC2"
-            Width="232"
-            Height="30"
-            Margin="10,0,5,0"
-            VerticalAlignment="Center">
+                                CornerRadius="15"
+                                Background="#D6CCC2"
+                                Width="232"
+                                Height="30"
+                                Margin="10,0,5,0"
+                                VerticalAlignment="Center">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
@@ -120,38 +119,43 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Image Source="/Images/Iconos/lupa.png"
-                   Width="16" Height="16"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Grid.Column="0"/>
+                                       Width="16" Height="16"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Grid.Column="0"/>
 
                                 <TextBox x:Name="SearchTextBox"
-                     BorderThickness="0"
-                     Background="Transparent"
-                     Foreground="Black"
-                     VerticalAlignment="Center"
-                     Grid.Column="1"
-                     Text="Buscar..."
-                     GotFocus="SearchBox_GotFocus"
-                     LostFocus="SearchBox_LostFocus"/>
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         Foreground="Black"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="1"
+                                         Text="Buscar..."
+                                         GotFocus="SearchBox_GotFocus"
+                                         LostFocus="SearchBox_LostFocus"/>
                             </Grid>
                         </Border>
 
                         <!-- Título (izquierda) -->
                         <TextBlock Text="Musica"
-               FontFamily="Fonts/#Roboto"
-               FontSize="25"
-               FontWeight="Regular"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Left"
-               Foreground="Black"
-               Margin="0,2,0,0"/>
+                                   FontFamily="Fonts/#Roboto"
+                                   FontSize="25"
+                                   FontWeight="Regular"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Foreground="Black"
+                                   Margin="0,2,0,0"/>
                     </DockPanel>
 
-
                     <!-- Sección Música -->
-                    <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"><Run Text="Tod"/><Run Text="os los albumes"/></TextBlock>
-                    <ItemsControl>
+                    <TextBlock FontSize="19"
+                               FontFamily="Fonts/#Roboto"
+                               FontWeight="Thin"
+                               Margin="0,20,0,10">
+                        <Run Text="Todos los álbumes"/>
+                    </TextBlock>
+
+                    <ItemsControl ItemsSource="{Binding AlbumesList}">
                         <ItemsControl.Resources>
                             <!-- Portadas cuadradas 120x120 con esquinas redondeadas -->
                             <Style x:Key="MusicImg" TargetType="Image">
@@ -172,135 +176,41 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
-                        <!-- HMHAS -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/HMHAS.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/1aqg30bNvLSWgShZgX4oop?si=nCNQ8mMVSaSnn8xABvB6bw">
-                            </Button>
-                            <Button Width="22" Height="22"
-                                    HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|HMHAS|/Images/Musica/HMHAS.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="120" Height="120" Margin="5">
+                                    <!-- Portada desde BD -->
+                                    <Image Source="{Binding Imagen}"
+                                           Style="{StaticResource MusicImg}"/>
 
-                        <!-- MBF -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/MBF.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/7aJuG4TFXa2hmE4z1yxc3n?si=So9DIOeqQACaavxKm_LBKg">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|MBF|/Images/Musica/MBF.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
+                                    <!-- Botón que abre el álbum (Spotify, etc) -->
+                                    <Button Width="120" Height="120"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Click="MusicLink_Click"
+                                            Tag="{Binding Link}"/>
 
-                        <!-- 1989 -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/1989.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/1yGbNOtRIgdIiGHOEBaZWf?si=kp0If4-dTC2lros1e11jzQ">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|1989|/Images/Musica/1989.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- TBP -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/TBP.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/0FZK97MXMm5mUQ8mtudjuK?si=oiRRiQRyQUCNsz141VxsFg">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|TBP|/Images/Musica/TBP.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- FancyT -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/FancyT.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/3o81FH5FTYVtoBQOZr3T7y?si=1mKp3dA1TLektVlDAkgQVw">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|FancyT|/Images/Musica/FancyT.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Spanish -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/Spanish.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/1inJBfnZWe33KcXl6TNaXV?si=EgsblTAQQqW2jbv0ypH0dA">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|Spanish|/Images/Musica/Spanish.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- BNE -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/BNE.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/27UqZoE1kV6sIV6uQcI28A?si=HunX322RSTC7dmeZgRtEAQ">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|BNE|/Images/Musica/BNE.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Huntrix -->
-                        <Grid Width="120" Height="120" Margin="5">
-                            <Image Source="/Images/Musica/Huntrix.jpg" Style="{StaticResource MusicImg}"/>
-                            <Button Width="120" Height="120"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="MusicLink_Click"
-                                    Tag="https://open.spotify.com/intl-es/album/14JkAa6IiFaOh5s0nMyMU9?si=WAzy7qyUTqqqk63kAePE7g">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="4"
-                                    Background="Transparent" BorderBrush="Transparent"
-                                    Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                                    Tag="Music|Huntrix|/Images/Musica/Huntrix.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
+                                    <!-- Estrellita de favorito -->
+                                    <Button Width="22" Height="22"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Margin="4"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Click="Star_Toggle_Click"
+                                            Loaded="Star_Loaded">
+                                        <Button.Tag>
+                                            <!-- tipo|Titulo|Imagen -->
+                                            <MultiBinding StringFormat="Music|{0}|{1}">
+                                                <Binding Path="Titulo"/>
+                                                <Binding Path="Imagen"/>
+                                            </MultiBinding>
+                                        </Button.Tag>
+                                        <Image Width="18" Height="18"/>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
                 </StackPanel>

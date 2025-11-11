@@ -31,7 +31,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Top" Margin="0,6,10,0">
                 <!-- Botón Minimizar -->
                 <Button Width="15" Height="15" Margin="2" Click="Minimize_Click" Background="Transparent" BorderThickness="0">
-                    <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\minimizar.png" Stretch="Uniform"/>
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\minimizar.png" Stretch="Uniform"/>
                 </Button>
 
                 <!-- Botón Maximizar / Restaurar -->
@@ -41,7 +41,7 @@
 
                 <!-- Botón Cerrar -->
                 <Button Width="15" Height="15" Margin="2" Click="Close_Click" Background="Transparent" BorderThickness="0">
-                    <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\cerrar.png" Stretch="Uniform"/>
+                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\cerrar.png" Stretch="Uniform"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -65,19 +65,19 @@
                         <Image Source="/Images/Iconos/Home.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Libros_Click">
-                        <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Libros.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Musica_Click">
-                        <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\Musica.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Musica.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Peliculas_Click">
-                        <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\Pelicula.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Pelicula.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" Margin="5" BorderBrush="Transparent" Background="Transparent" Click="Favoritos_Click">
-                        <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\Favoritos.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                     <Button Width="40" Height="40" BorderBrush="Transparent" Background="Transparent" Click="Login_Click">
-                        <Image Source="C:\Users\cherp\Source\Repos\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\usuario.png" Width="24" Height="24" HorizontalAlignment="Center" VerticalAlignment="Top"/>
                     </Button>
                 </StackPanel>
             </Grid>
@@ -90,28 +90,28 @@
 
                         <!-- Botón Editar (derecha) -->
                         <Button DockPanel.Dock="Right"
-            Click="PeliculasR"
-            Background="Transparent"
-            BorderBrush="Transparent"
-            BorderThickness="0"
-            Padding="0"
-            VerticalAlignment="Center"
-            Margin="5,0,0,0">
+                                Click="PeliculasR"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="0"
+                                Padding="0"
+                                VerticalAlignment="Center"
+                                Margin="5,0,0,0">
                             <Image Source="/Images/Iconos/editar.png"
-               Width="24"
-               Height="24"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"/>
+                                   Width="24"
+                                   Height="24"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
                         </Button>
 
-                        <!-- Buscador (a la derecha del texto) -->
+                        <!-- Buscador -->
                         <Border DockPanel.Dock="Right"
-            CornerRadius="15"
-            Background="#D6CCC2"
-            Width="232"
-            Height="30"
-            Margin="10,0,5,0"
-            VerticalAlignment="Center">
+                                CornerRadius="15"
+                                Background="#D6CCC2"
+                                Width="232"
+                                Height="30"
+                                Margin="10,0,5,0"
+                                VerticalAlignment="Center">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
@@ -119,39 +119,42 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Image Source="/Images/Iconos/lupa.png"
-                   Width="16" Height="16"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Grid.Column="0"/>
+                                       Width="16" Height="16"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Grid.Column="0"/>
 
                                 <TextBox x:Name="SearchTextBox"
-                     BorderThickness="0"
-                     Background="Transparent"
-                     Foreground="Black"
-                     VerticalAlignment="Center"
-                     Grid.Column="1"
-                     Text="Buscar..."
-                     GotFocus="SearchBox_GotFocus"
-                     LostFocus="SearchBox_LostFocus"/>
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         Foreground="Black"
+                                         VerticalAlignment="Center"
+                                         Grid.Column="1"
+                                         Text="Buscar..."
+                                         GotFocus="SearchBox_GotFocus"
+                                         LostFocus="SearchBox_LostFocus"/>
                             </Grid>
                         </Border>
 
                         <!-- Título (izquierda) -->
                         <TextBlock Text="Películas"
-               FontFamily="Fonts/#Roboto"
-               FontSize="25"
-               FontWeight="Regular"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Left"
-               Foreground="Black"
-               Margin="0,2,0,0"/>
+                                   FontFamily="Fonts/#Roboto"
+                                   FontSize="25"
+                                   FontWeight="Regular"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Foreground="Black"
+                                   Margin="0,2,0,0"/>
                     </DockPanel>
 
-
                     <!-- Sección Películas -->
-                    <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10" Text="Todas las peliculas"/>
+                    <TextBlock FontSize="19"
+                               FontFamily="Fonts/#Roboto"
+                               FontWeight="Thin"
+                               Margin="0,20,0,10"
+                               Text="Todas las películas"/>
 
-                    <ItemsControl>
+                    <ItemsControl ItemsSource="{Binding PeliculasList}">
                         <ItemsControl.Resources>
                             <Style x:Key="PosterImg" TargetType="Image">
                                 <Setter Property="Width" Value="110"/>
@@ -171,126 +174,42 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
 
-                        <!-- Huevos -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Huevos.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://www.youtube.com/watch?v=5bgjbk1wInA"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Huevos|/Images/Peliculas/Huevos.jpg">
-                                <Image x:Name="StarIcon" Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Width="110" Height="140" Margin="5">
+                                    <!-- Portada desde BD -->
+                                    <Image Source="{Binding Imagen}"
+                                           Style="{StaticResource PosterImg}"/>
 
-                        <!-- Pollo -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Pollo.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://www.youtube.com/watch?v=FeuHkSOYSMY"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Pollo|/Images/Peliculas/Pollo.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
+                                    <!-- Botón que abre el link de la peli -->
+                                    <Button Width="110"
+                                            Height="140"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Click="PeliLink_Click"
+                                            Tag="{Binding Link}"/>
 
-                        <!-- Gallo -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Gallo.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://www.youtube.com/watch?v=KL_TRDegmpo"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Gallo|/Images/Peliculas/Gallo.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Cónclave -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Conclave.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://pelisplus.la/peliculas/conclave-2024"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Conclave|/Images/Peliculas/Conclave.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Mamma Mia -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Mammamia.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://pelisplus.la/peliculas/mamma-mia-2008"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Mammamia|/Images/Peliculas/Mammamia.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Castle -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Castle.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://pelisplus.la/peliculas/el-increible-castillo-vagabundo-2004"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Castle|/Images/Peliculas/Castle.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Your Name -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/YourName.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://pelisplus.la/peliculas/your-name-2016"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|YourName|/Images/Peliculas/YourName.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Captain -->
-                        <Grid Width="110" Height="140" Margin="5">
-                            <Image Source="/Images/Peliculas/Captain.jpg"
-           Style="{StaticResource PosterImg}"
-           MouseLeftButtonUp="Poster_Click"
-           Tag="https://pelisplus.la/peliculas/capitan-america-y-el-soldado-del-invierno-2014"/>
-                            <Button Width="22" Height="22"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Captain|/Images/Peliculas/Captain.jpg">
-                                <Image Source="/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
+                                    <!-- Estrellita de favorito -->
+                                    <Button Width="22" Height="22"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Margin="6"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            Click="Star_Toggle_Click"
+                                            Loaded="Star_Loaded">
+                                        <Button.Tag>
+                                            <!-- tipo|Titulo|Imagen -->
+                                            <MultiBinding StringFormat="Movie|{0}|{1}">
+                                                <Binding Path="Titulo"/>
+                                                <Binding Path="Imagen"/>
+                                            </MultiBinding>
+                                        </Button.Tag>
+                                        <Image Width="18" Height="18"/>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
                 </StackPanel>

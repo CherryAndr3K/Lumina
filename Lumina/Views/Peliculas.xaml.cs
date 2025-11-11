@@ -3,8 +3,10 @@ using Lumina.Models;
 using Lumina.Repositories;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,16 +22,57 @@ namespace Lumina.Views
         // Repo de favoritos
         private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
 
+        // Lista enlazada al ItemsControl
+        public ObservableCollection<Pelicula> PeliculasList { get; set; } = new();
+
         public Peliculas()
         {
             InitializeComponent();
+
             if (!DesignerProperties.GetIsInDesignMode(this))
-                Loaded += (_, __) => { /* carga diferida si la necesitas */ };
+            {
+                DataContext = this;
+                Loaded += (_, __) => CargarPeliculasDesdeBd();
+            }
         }
 
         // ===== Helpers BD / Favoritos =====
         private static string Cnn() =>
             ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+        private void CargarPeliculasDesdeBd()
+        {
+            PeliculasList.Clear();
+
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand(@"
+                    SELECT PeliculaID, Titulo, Genero, Anio, Link, Imagen
+                    FROM dbo.Peliculas", cn);
+                cn.Open();
+                using var rd = cmd.ExecuteReader();
+
+                while (rd.Read())
+                {
+                    var peli = new Pelicula
+                    {
+                        PeliculaId = rd["PeliculaID"] is int id ? id : Convert.ToInt32(rd["PeliculaID"]),
+                        Titulo = rd["Titulo"] as string,
+                        Genero = rd["Genero"] as string,
+                        Anio = rd["Anio"] == DBNull.Value ? (int?)null : Convert.ToInt32(rd["Anio"]),
+                        Link = rd["Link"] as string,
+                        Imagen = rd["Imagen"] as string
+                    };
+
+                    PeliculasList.Add(peli);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar películas: " + ex.Message);
+            }
+        }
 
         private static void ParseTag(string tag, out string tipo, out string titulo, out string imagePath)
         {
@@ -171,12 +214,6 @@ namespace Lumina.Views
             }
         }
 
-        private void InitSearchPlaceholderIfNeeded(TextBox tb)
-        {
-            if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
-            { tb.Text = PlaceholderText; tb.Opacity = 0.6; _placeholderActive = true; }
-        }
-
         // ===== Botón ⭐ por tarjeta =====
         private void Star_Loaded(object sender, RoutedEventArgs e)
         {
@@ -212,7 +249,6 @@ namespace Lumina.Views
             {
                 if (isFav)
                 {
-                    // Quitar de favoritos
                     var eliminado = (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Pelicula", id.Value) ?? false;
                     if (eliminado)
                     {
@@ -226,7 +262,6 @@ namespace Lumina.Views
                 }
                 else
                 {
-                    // Agregar a favoritos
                     _ = _favRepo.Add(new Favorito
                     {
                         UsuarioId = AppSession.CurrentUserId,
@@ -244,22 +279,22 @@ namespace Lumina.Views
             }
         }
 
-        private void Poster_Click(object sender, MouseButtonEventArgs e)
+        private void PeliLink_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Image img && img.Tag is string link && !string.IsNullOrWhiteSpace(link))
+            if (sender is Button button && button.Tag is string url && !string.IsNullOrWhiteSpace(url))
             {
                 try
                 {
                     System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                     {
-                        FileName = link,
+                        FileName = url,
                         UseShellExecute = true
                     });
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}", "Error",
-                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("No se pudo abrir el enlace: " + ex.Message,
+                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

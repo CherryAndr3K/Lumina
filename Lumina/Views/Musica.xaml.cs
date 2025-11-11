@@ -3,6 +3,7 @@ using Lumina.Models;
 using Lumina.Repositories;
 using Microsoft.Data.SqlClient;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
 using System.Windows;
@@ -20,16 +21,57 @@ namespace Lumina.Views
         // Repo de Favoritos
         private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
 
+        // Lista enlazada al ItemsControl
+        public ObservableCollection<Albumes> AlbumesList { get; set; } = new();
+
         public Musica()
         {
             InitializeComponent();
+
             if (!DesignerProperties.GetIsInDesignMode(this))
-                Loaded += (_, __) => { /* carga diferida si la necesitas */ };
+            {
+                DataContext = this;
+                Loaded += (_, __) => CargarAlbumesDesdeBd();
+            }
         }
 
         // ================= Helpers BD / Favoritos =================
         private static string Cnn() =>
             ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+        private void CargarAlbumesDesdeBd()
+        {
+            AlbumesList.Clear();
+
+            try
+            {
+                using var cn = new SqlConnection(Cnn());
+                using var cmd = new SqlCommand(@"
+                    SELECT AlbumID, Titulo, Artista, Genero, Link, Imagen
+                    FROM dbo.Albumes", cn);
+                cn.Open();
+                using var rd = cmd.ExecuteReader();
+
+                while (rd.Read())
+                {
+                    var alb = new Albumes
+                    {
+                        AlbumesId = rd["AlbumID"] is int id ? id : Convert.ToInt32(rd["AlbumID"]),
+                        Titulo = rd["Titulo"] as string,
+                        Artista = rd["Artista"] as string,
+                        Genero = rd["Genero"] as string,
+                        Link = rd["Link"] as string,
+                        Imagen = rd["Imagen"] as string
+                    };
+
+                    AlbumesList.Add(alb);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar álbumes: " + ex.Message);
+            }
+        }
 
         private static void ParseTag(string tag, out string tipo, out string titulo, out string imagePath)
         {
@@ -123,32 +165,50 @@ namespace Lumina.Views
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
 
         private void Home_Click(object sender, RoutedEventArgs e)
-        { var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+        {
+            var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
+        }
 
         private void Libros_Click(object sender, RoutedEventArgs e)
-        { var w = new Libros { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+        {
+            var w = new Libros { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
+        }
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
-        { var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+        {
+            var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
+        }
 
         private void Favoritos_Click(object sender, RoutedEventArgs e)
-        { var w = new Favoritos { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+        {
+            var w = new Favoritos { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
+        }
 
         private void Login_Click(object sender, RoutedEventArgs e)
-        { var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner }; w.Show(); Hide(); }
+        {
+            var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            w.Show(); Hide();
+        }
 
         // ================= Placeholder búsqueda =================
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb && _placeholderActive) { tb.Text = string.Empty; tb.Opacity = 1.0; _placeholderActive = false; }
+            if (sender is TextBox tb && _placeholderActive)
+            {
+                tb.Text = string.Empty; tb.Opacity = 1.0; _placeholderActive = false;
+            }
         }
+
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text)) { tb.Text = PlaceholderText; tb.Opacity = 0.6; _placeholderActive = true; }
-        }
-        private void InitSearchPlaceholderIfNeeded(TextBox tb)
-        {
-            if (tb != null && string.IsNullOrWhiteSpace(tb.Text)) { tb.Text = PlaceholderText; tb.Opacity = 0.6; _placeholderActive = true; }
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = PlaceholderText; tb.Opacity = 0.6; _placeholderActive = true;
+            }
         }
 
         // ================= Botón ⭐ por tarjeta =================
@@ -186,7 +246,6 @@ namespace Lumina.Views
             {
                 if (isFav)
                 {
-                    // Quitar de favoritos
                     var eliminado = (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Album", id.Value) ?? false;
                     if (eliminado)
                     {
@@ -200,7 +259,6 @@ namespace Lumina.Views
                 }
                 else
                 {
-                    // Agregar a favoritos
                     _ = _favRepo.Add(new Favorito
                     {
                         UsuarioId = AppSession.CurrentUserId,
@@ -221,7 +279,7 @@ namespace Lumina.Views
 
         private void MusicLink_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button button && button.Tag is string url)
+            if (sender is Button button && button.Tag is string url && !string.IsNullOrWhiteSpace(url))
             {
                 try
                 {

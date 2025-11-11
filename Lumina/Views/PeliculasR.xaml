@@ -13,14 +13,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <!-- Encabezado con botón de regreso -->
         <DockPanel Margin="0,0,0,12">
-            <!-- Botón Regresar -->
+            <Button Content="Regresar"
+                    FontWeight="SemiBold"
+                    FontSize="13"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Click="BtnRegresar_Click"/>
 
-            <Button Content="Regresar" FontWeight="SemiBold" FontSize="13" Margin="5,0,0,0" VerticalAlignment="Center" Click="BtnRegresar_Click">
-            </Button>
-
-
-            <TextBlock Text="Gestión de Peliculas"
+            <TextBlock Text="Gestión de Películas"
                        FontSize="20"
                        FontWeight="Bold"
                        Margin="12,0,0,0"
@@ -41,9 +43,17 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
+                            <!-- Título -->
                             <ColumnDefinition Width="2*"/>
+                            <!-- Género -->
                             <ColumnDefinition Width="1*"/>
+                            <!-- Año -->
+                            <ColumnDefinition Width="2*"/>
+                            <!-- Link -->
+                            <ColumnDefinition Width="2*"/>
+                            <!-- Imagen -->
                             <ColumnDefinition Width="Auto"/>
+                            <!-- Botones -->
                         </Grid.ColumnDefinitions>
 
                         <!-- Título -->
@@ -64,8 +74,20 @@
                             <TextBox x:Name="txtPeliAnio"/>
                         </StackPanel>
 
+                        <!-- Link -->
+                        <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                            <TextBlock Text="Link"/>
+                            <TextBox x:Name="txtPeliLink"/>
+                        </StackPanel>
+
+                        <!-- Imagen -->
+                        <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                            <TextBlock Text="Imagen (ruta)"/>
+                            <TextBox x:Name="txtPeliImagen"/>
+                        </StackPanel>
+
                         <!-- Botones CRUD -->
-                        <StackPanel Grid.Column="3"
+                        <StackPanel Grid.Column="5"
                                     Orientation="Horizontal"
                                     VerticalAlignment="Bottom">
                             <Button Content="Agregar"
@@ -98,10 +120,16 @@
                                             Width="*"/>
                         <DataGridTextColumn Header="Género"
                                             Binding="{Binding Genero}"
-                                            Width="220"/>
+                                            Width="180"/>
                         <DataGridTextColumn Header="Año"
                                             Binding="{Binding Anio}"
-                                            Width="100"/>
+                                            Width="80"/>
+                        <DataGridTextColumn Header="Link"
+                                            Binding="{Binding Link}"
+                                            Width="200"/>
+                        <DataGridTextColumn Header="Imagen"
+                                            Binding="{Binding Imagen}"
+                                            Width="200"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
