@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;              // 👈 importante para Brushes
 using System.Windows.Media.Imaging;
 using Lumina.Infra;
 using Lumina.Models;
@@ -20,10 +21,12 @@ namespace Lumina.Views
         public Libros()
         {
             InitializeComponent();
+
             if (!DesignerProperties.GetIsInDesignMode(this))
                 Loaded += (_, __) => { /* carga diferida si la necesitas */ };
         }
 
+        // ============= BARRA DE TÍTULO =============
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -32,17 +35,39 @@ namespace Lumina.Views
             }
         }
 
-        // ================================
-        // Ventana (métodos directos de Window)
-        // ================================
-        private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+        // ============= SEARCHBOX PLACEHOLDER =============
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb && _placeholderActive)
+            {
+                tb.Text = string.Empty;
+                tb.Foreground = Brushes.Black;
+                _placeholderActive = false;
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = PlaceholderText;
+                tb.Foreground = Brushes.Gray;
+                _placeholderActive = true;
+            }
+        }
+
+        // ============= VENTANA (MIN/MAX/CLOSE) =============
+        private void Minimize_Click(object sender, RoutedEventArgs e) =>
+            WindowState = WindowState.Minimized;
 
         private void Maximize_Click(object sender, RoutedEventArgs e) =>
-            WindowState = (WindowState == WindowState.Maximized) ? WindowState.Normal : WindowState.Maximized;
+            WindowState = (WindowState == WindowState.Maximized)
+                ? WindowState.Normal
+                : WindowState.Maximized;
 
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
 
-        // Botón de editar superior
+        // ============= NAVEGACIÓN =============
         private void LibrosR(object sender, RoutedEventArgs e)
         {
             var w = new LibrosR { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
@@ -50,7 +75,6 @@ namespace Lumina.Views
             Hide();
         }
 
-        // Navegación entre ventanas
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
@@ -58,7 +82,10 @@ namespace Lumina.Views
             Hide();
         }
 
-        private void Libros_Click(object sender, RoutedEventArgs e) { /* ya estás aquí */ }
+        private void Libros_Click(object sender, RoutedEventArgs e)
+        {
+            // ya estás aquí
+        }
 
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
@@ -88,7 +115,7 @@ namespace Lumina.Views
             Hide();
         }
 
-        // ======= FAVORITOS: helpers y handlers =======
+        // ============= FAVORITOS =============
         private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
 
         private (string tipo, string titulo, string? image) ParseTag(string tag)
@@ -142,10 +169,7 @@ namespace Lumina.Views
 
         private static void SetStarIcon(Button btn, bool isFav)
         {
-            // Usa las rutas REALES del proyecto (recursos de contenido)
             var relative = isFav ? "/Images/Iconos/star_filled.png" : "/Images/Iconos/star_outline.png";
-
-            // Pack URI robusto para recursos empacados
             var uri = new Uri($"pack://application:,,,{relative}", UriKind.Absolute);
 
             try
@@ -158,7 +182,7 @@ namespace Lumina.Views
             }
             catch
             {
-                // Ignorar si el recurso no existe para no romper UI
+                // Ignorar si el recurso no existe
             }
         }
 
@@ -167,7 +191,7 @@ namespace Lumina.Views
             if (DesignerProperties.GetIsInDesignMode(this)) return;
             if (sender is Button btn && btn.Tag is string tag)
             {
-                var (tipo, titulo, _) = ParseTag(tag);  // "Book"
+                var (tipo, titulo, _) = ParseTag(tag);
                 if (!string.Equals(tipo, "Book", StringComparison.OrdinalIgnoreCase)) return;
 
                 var id = ResolveReferenciaId_LibroPorTitulo(titulo);
@@ -197,7 +221,6 @@ namespace Lumina.Views
                 {
                     if (isFav)
                     {
-                        // Quitar de favoritos
                         var eliminado = (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Libro", id.Value) ?? false;
                         if (eliminado)
                         {
@@ -211,7 +234,6 @@ namespace Lumina.Views
                     }
                     else
                     {
-                        // Agregar a favoritos
                         _ = _favRepo.Add(new Favorito
                         {
                             UsuarioId = AppSession.CurrentUserId,
@@ -231,7 +253,6 @@ namespace Lumina.Views
             }
         }
 
-        // === NUEVO MÉTODO PARA ENLACES DE LIBROS ===
         private void BookLink_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.Tag is string url)
@@ -243,12 +264,12 @@ namespace Lumina.Views
                         FileName = url,
                         UseShellExecute = true
                     });
-
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("No se pudo abrir el enlace: " + ex.Message);
                 }
+            }
         }
     }
 }
-        
-    
-

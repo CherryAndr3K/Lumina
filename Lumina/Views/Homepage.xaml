@@ -5,7 +5,7 @@
         WindowStyle="None"
         Background="#EDEDE9">
 
-    <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
+  <!-- Grid principal que contendrá la barra superior y el resto del contenido -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -23,7 +23,7 @@
 
             <!-- Título de la ventana -->
             <TextBlock Text="LUMINA" VerticalAlignment="Top" Margin="10,4,0,0"
-                   FontWeight="Bold" FontSize="16"/>
+                       FontWeight="Bold" FontSize="16"/>
 
             <!-- Botones de ventana -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Top" Margin="0,6,10,0">
@@ -123,124 +123,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-
-                        <!-- Amanecer en la cosecha -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/Amanecer en la cosecha.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="http://reader.z-library.sk/read/...">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|Amanecer en la cosecha|pack://application:,,,/Images/Libros/Amanecer en la cosecha.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- La vegetariana -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/La vegetariana.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="https://reader.z-library.sk/read/...">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|La vegetariana|pack://application:,,,/Images/Libros/La vegetariana.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- El dragón rojo -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/El dragon rojo.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="https://reader.z-library.sk/read/...">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|El dragon rojo|pack://application:,,,/Images/Libros/El dragon rojo.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Oficio de tinieblas -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/OficioT.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="https://reader.z-library.sk/read/...">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|OficioT|pack://application:,,,/Images/Libros/OficioT.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Gracias (sin link conocido) -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/Gracias.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="#">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|Gracias|pack://application:,,,/Images/Libros/Gracias.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- PercyJ -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/PercyJ.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="https://reader.z-library.sk/read/4b880e1e6a6ee1e56be28cf5ee32fe7aa93be13fe4430245485311bd3cb715a8/1175816/5df8ba/the-lightning-thief.html?client_key=1fFLi67gBrNRP1j1iPy1&amp;extension=epub&amp;signature=e49d0fd2602f54d26c6323bd28a18e10647a6b3cda0440b04af4a9f26b833a09&amp;download_location=https%3A%2F%2Fes.z-library.sk%2Fdl%2F1175816%2Faf9443">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|PercyJ|pack://application:,,,/Images/Libros/PercyJ.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- GOD (sin link conocido) -->
-                        <Grid Width="80" Height="120" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Libros/GOD.jpg"/>
-                            <Button Width="80" Height="120"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="BookLink_Click"
-            Tag="#">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Book|GOD|pack://application:,,,/Images/Libros/GOD.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Botón + (igual que tenías) -->
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\Amanecer en la cosecha.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\La vegetariana.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\El dragon rojo.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\OficioT.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\Gracias.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\PercyJ.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\GOD.jpg"/>
                         <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="pack://application:,,,/Images/Libros/MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\MerlinaYMilo.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
@@ -249,147 +142,40 @@
                                 </Grid>
                             </Border>
                         </Button>
+                    </ItemsControl>
 
-                        <!-- Sección Música -->
-                        <TextBlock Text="Música" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
-                        <ItemsControl>
-                            <ItemsControl.Resources>
-                                <Style TargetType="Image">
-                                    <Setter Property="Width" Value="80"/>
-                                    <Setter Property="Height" Value="80"/>
-                                    <Setter Property="Stretch" Value="Fill"/>
-                                    <Setter Property="Margin" Value="5"/>
-                                    <Setter Property="Clip">
-                                        <Setter.Value>
-                                            <RectangleGeometry Rect="0,0,80,80" RadiusX="10" RadiusY="10"/>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ItemsControl.Resources>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <!-- HMHAS -->
-                            <Grid Width="80" Height="80" Margin="5">
-                                <Image Source="pack://application:,,,/Images/Musica/HMHAS.jpg"/>
-                                <Button Width="80" Height="80"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="MusicLink_Click"
-                Tag="https://open.spotify.com/album/xxxxxxxx">
-                                </Button>
-                                <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Music|HMHAS|pack://application:,,,/Images/Musica/HMHAS.jpg">
-                                    <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                                </Button>
-                            </Grid>
-
-                            <!-- MBF -->
-                            <Grid Width="80" Height="80" Margin="5">
-                                <Image Source="pack://application:,,,/Images/Musica/MBF.jpg"/>
-                                <Button Width="80" Height="80"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="MusicLink_Click"
-                Tag="https://open.spotify.com/album/yyyyyyyy">
-                                </Button>
-                                <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Music|MBF|pack://application:,,,/Images/Musica/MBF.jpg">
-                                    <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                                </Button>
-                            </Grid>
-
-                            <!-- 1989 -->
-                            <Grid Width="80" Height="80" Margin="5">
-                                <Image Source="pack://application:,,,/Images/Musica/1989.jpg"/>
-                                <Button Width="80" Height="80"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="MusicLink_Click"
-                Tag="https://open.spotify.com/album/zzzzzzzz">
-                                </Button>
-                                <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Music|1989|pack://application:,,,/Images/Musica/1989.jpg">
-                                    <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                                </Button>
-                            </Grid>
-
-                            <!-- TBP -->
-                            <Grid Width="80" Height="80" Margin="5">
-                                <Image Source="pack://application:,,,/Images/Musica/TBP.jpg"/>
-                                <Button Width="80" Height="80"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="MusicLink_Click"
-                Tag="https://open.spotify.com/album/tbp12345">
-                                </Button>
-                                <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Music|TBP|pack://application:,,,/Images/Musica/TBP.jpg">
-                                    <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                                </Button>
-                            </Grid>
-
-                            <!-- FancyT -->
-                            <Grid Width="80" Height="80" Margin="5">
-                                <Image Source="pack://application:,,,/Images/Musica/FancyT.jpg"/>
-                                <Button Width="80" Height="80"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="MusicLink_Click"
-                Tag="https://open.spotify.com/album/fancyt123">
-                                </Button>
-                                <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Music|FancyT|pack://application:,,,/Images/Musica/FancyT.jpg">
-                                    <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                                </Button>
-                            </Grid>
-                        </ItemsControl>
-
-                        <!-- Spanish -->
-                        <Grid Width="80" Height="80" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Musica/Spanish.jpg"/>
-                            <Button Width="80" Height="80"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="MusicLink_Click"
-            Tag="https://open.spotify.com/album/spanish123">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|Spanish|pack://application:,,,/Images/Musica/Spanish.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- BNE -->
-                        <Grid Width="80" Height="80" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Musica/BNE.jpg"/>
-                            <Button Width="80" Height="80"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="MusicLink_Click"
-            Tag="https://open.spotify.com/album/bne12345">
-                            </Button>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Music|BNE|pack://application:,,,/Images/Musica/BNE.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Botón + -->
+                    <!-- Sección Música -->
+                    <TextBlock Text="Música" FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10"/>
+                    <ItemsControl>
+                        <ItemsControl.Resources>
+                            <Style TargetType="Image">
+                                <Setter Property="Width" Value="80"/>
+                                <Setter Property="Height" Value="80"/>
+                                <Setter Property="Stretch" Value="Fill"/>
+                                <Setter Property="Margin" Value="5"/>
+                                <Setter Property="Clip">
+                                    <Setter.Value>
+                                        <RectangleGeometry Rect="0,0,80,80" RadiusX="10" RadiusY="10"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ItemsControl.Resources>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\HMHAS.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\MBF.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\1989.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\TBP.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\FancyT.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\Spanish.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\BNE.jpg"/>
                         <Button Width="80" Height="80" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="pack://application:,,,/Images/Musica/Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Musica\Huntrix.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
@@ -421,117 +207,17 @@
                                 <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-
-                        <!-- Huevos -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/Huevos.jpg"/>
-                            <Button Width="80" Height="101"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Poster_Click"
-                Tag="https://www.youtube.com/watch?v=5bgjbk1wInA"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Movie|Huevos|pack://application:,,,/Images/Peliculas/Huevos.jpg">
-                                <Image x:Name="StarIcon" Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Pollo -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/Pollo.jpg"/>
-                            <Button Width="80" Height="101"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Poster_Click"
-                Tag="https://www.youtube.com/watch?v=FeuHkSOYSMY"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Movie|Pollo|pack://application:,,,/Images/Peliculas/Pollo.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Gallo -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/Gallo.jpg"/>
-                            <Button Width="80" Height="101"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Poster_Click"
-                Tag="https://www.youtube.com/watch?v=KL_TRDegmpo"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Movie|Gallo|pack://application:,,,/Images/Peliculas/Gallo.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Conclave -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/Conclave.jpg"/>
-                            <Button Width="80" Height="101"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Poster_Click"
-                Tag="https://pelisplus.la/peliculas/conclave-2024"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-                Background="Transparent" BorderBrush="Transparent"
-                Click="Star_Toggle_Click" Loaded="Star_Loaded"
-                Tag="Movie|Conclave|pack://application:,,,/Images/Peliculas/Conclave.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Mamma Mia -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/Mammamia.jpg"/>
-                            <Button Width="80" Height="101"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Poster_Click"
-            Tag="https://pelisplus.la/peliculas/mamma-mia-2008"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Mammamia|pack://application:,,,/Images/Peliculas/Mammamia.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Castle -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/Castle.jpg"/>
-                            <Button Width="80" Height="101"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Poster_Click"
-            Tag="https://pelisplus.la/peliculas/el-increible-castillo-vagabundo-2004"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|Castle|pack://application:,,,/Images/Peliculas/Castle.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Your Name -->
-                        <Grid Width="80" Height="101" Margin="5">
-                            <Image Source="pack://application:,,,/Images/Peliculas/YourName.jpg"/>
-                            <Button Width="80" Height="101"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Poster_Click"
-            Tag="https://pelisplus.la/peliculas/your-name-2016"/>
-                            <Button Width="22" Height="22" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
-            Background="Transparent" BorderBrush="Transparent"
-            Click="Star_Toggle_Click" Loaded="Star_Loaded"
-            Tag="Movie|YourName|pack://application:,,,/Images/Peliculas/YourName.jpg">
-                                <Image Source="pack://application:,,,/Images/Iconos/star_outline.png" Width="18" Height="18"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Botón + -->
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Huevos.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Pollo.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Gallo.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Conclave.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Mammamia.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Castle.jpg"/>
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\YourName.jpg"/>
                         <Button Width="80" Height="101" Margin="5" BorderBrush="Transparent" Background="Transparent">
                             <Border CornerRadius="10" ClipToBounds="True">
                                 <Grid>
-                                    <Image Source="pack://application:,,,/Images/Peliculas/Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
+                                    <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Peliculas\Captain.jpg" Stretch="Fill" Margin="-2,-2,-2,-3">
                                         <Image.Effect>
                                             <BlurEffect/>
                                         </Image.Effect>
@@ -541,7 +227,6 @@
                             </Border>
                         </Button>
                     </ItemsControl>
-
 
                 </StackPanel>
             </ScrollViewer>

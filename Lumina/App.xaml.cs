@@ -1,8 +1,9 @@
-﻿using Lumina.Repositories;
-using Lumina.Views;
-using System;
+﻿using System;
 using System.Windows;
+using Lumina.Repositories;
 using Lumina.Seeding;
+using Lumina.Views;
+
 namespace Lumina
 {
     public partial class App : Application
@@ -29,9 +30,8 @@ namespace Lumina
 
             CrearLibros.Inicializar();
 
-            var loginWindow = new Login();
-            loginWindow.Show();
+            var homepage = new Homepage();
+            homepage.Show();
         }
     }
 }
-

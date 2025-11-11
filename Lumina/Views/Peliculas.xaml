@@ -86,27 +86,67 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="6" Margin="46,0,0,0" Grid.Column="1">
                 <StackPanel Margin="20">
                     <!-- Encabezado -->
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Peliculas" FontFamily="Fonts/#Roboto" FontSize="25" FontWeight="Regular" VerticalAlignment="Center" Grid.Column="0" Margin="0,2,0,0"/>
-                        <Border CornerRadius="15" Background="#D6CCC2" Width="232" Grid.Column="1" Margin="0,0,5,0" Cursor="Help">
+                    <DockPanel Margin="0,0,0,10" LastChildFill="True">
+
+                        <!-- Botón Editar (derecha) -->
+                        <Button DockPanel.Dock="Right"
+            Click="PeliculasR"
+            Background="Transparent"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            Padding="0"
+            VerticalAlignment="Center"
+            Margin="5,0,0,0">
+                            <Image Source="/Images/Iconos/editar.png"
+               Width="24"
+               Height="24"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+                        </Button>
+
+                        <!-- Buscador (a la derecha del texto) -->
+                        <Border DockPanel.Dock="Right"
+            CornerRadius="15"
+            Background="#D6CCC2"
+            Width="232"
+            Height="30"
+            Margin="10,0,5,0"
+            VerticalAlignment="Center">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="/Images/Iconos/lupa.png" Width="16" Height="16" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0"/>
-                                <TextBox x:Name="SearchTextBox" BorderThickness="0" Background="Transparent" Foreground="Black" VerticalAlignment="Center" Margin="0,0,0,0" Grid.Column="1" Text="Buscar..." GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
+
+                                <Image Source="/Images/Iconos/lupa.png"
+                   Width="16" Height="16"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   Grid.Column="0"/>
+
+                                <TextBox x:Name="SearchTextBox"
+                     BorderThickness="0"
+                     Background="Transparent"
+                     Foreground="Black"
+                     VerticalAlignment="Center"
+                     Grid.Column="1"
+                     Text="Buscar..."
+                     GotFocus="SearchBox_GotFocus"
+                     LostFocus="SearchBox_LostFocus"/>
                             </Grid>
                         </Border>
 
-                        <Button Click="PeliculasR">
-                            <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Iconos\editar.png" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="471,0,0,0"/>
-                        </Button>
-                    </Grid>
+                        <!-- Título (izquierda) -->
+                        <TextBlock Text="Películas"
+               FontFamily="Fonts/#Roboto"
+               FontSize="25"
+               FontWeight="Regular"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Left"
+               Foreground="Black"
+               Margin="0,2,0,0"/>
+                    </DockPanel>
+
 
                     <!-- Sección Películas -->
                     <TextBlock FontSize="19" FontFamily="Fonts/#Roboto" FontWeight="Thin" Margin="0,20,0,10" Text="Todas las peliculas"/>
