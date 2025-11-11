@@ -11,7 +11,7 @@ namespace Lumina.Views
     public partial class MusicaR : Window
     {
         private readonly IAlbumRepository _albumRepo = new AlbumRepository();
-        private ObservableCollection<Albume> _albumes = new();
+        private ObservableCollection<Albumes> _albumes = new();
 
         public MusicaR()
         {
@@ -22,7 +22,7 @@ namespace Lumina.Views
         private void CargarAlbumes()
         {
             var data = _albumRepo.GetAll().ToList();
-            _albumes = new ObservableCollection<Albume>(data);
+            _albumes = new ObservableCollection<Albumes>(data);
             dgAlbumes.ItemsSource = _albumes;
         }
 
@@ -34,11 +34,11 @@ namespace Lumina.Views
             dgAlbumes.SelectedItem = null;
         }
 
-        private Albume? GetAlbumSel() => dgAlbumes.SelectedItem as Albume;
+        private Albumes? GetAlbumSel() => dgAlbumes.SelectedItem as Albumes;
 
         private void DgAlbumes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (GetAlbumSel() is Albume a)
+            if (GetAlbumSel() is Albumes a)
             {
                 txtAlbumTitulo.Text = a.Titulo;
                 txtAlbumArtista.Text = a.Artista;
@@ -54,7 +54,7 @@ namespace Lumina.Views
                 return;
             }
 
-            var nuevo = new Albume
+            var nuevo = new Albumes
             {
                 Titulo = txtAlbumTitulo.Text.Trim(),
                 Artista = string.IsNullOrWhiteSpace(txtAlbumArtista.Text) ? null : txtAlbumArtista.Text.Trim(),
@@ -62,7 +62,7 @@ namespace Lumina.Views
             };
 
             var id = _albumRepo.Add(nuevo);
-            nuevo.AlbumId = id;
+            nuevo.AlbumesId = id;
             _albumes.Insert(0, nuevo);
             LimpiarFormAlbumes();
         }
@@ -93,7 +93,7 @@ namespace Lumina.Views
             if (MessageBox.Show($"¿Eliminar \"{sel.Titulo}\"?", "Confirmar",
                 MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                if (_albumRepo.Delete(sel.AlbumId))
+                if (_albumRepo.Delete(sel.AlbumesId))
                 {
                     _albumes.Remove(sel);
                     LimpiarFormAlbumes();

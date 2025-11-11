@@ -10,10 +10,10 @@ namespace Lumina.Repositories
 {
     public interface IAlbumRepository
     {
-        IEnumerable<Albume> GetAll();
-        Albume? GetById(int id);
-        int Add(Albume album);
-        bool Update(Albume album);
+        IEnumerable<Albumes> GetAll();
+        Albumes? GetById(int id);
+        int Add(Albumes album);
+        bool Update(Albumes album);
         bool Delete(int id);
     }
 }

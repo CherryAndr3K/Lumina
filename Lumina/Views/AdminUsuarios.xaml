@@ -1,0 +1,29 @@
+﻿<Window x:Class="Lumina.Views.AdminUsuarios"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Administrar Usuarios" Height="400" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- DataGrid -->
+        <DataGrid x:Name="dgUsuarios" AutoGenerateColumns="False" IsReadOnly="False"
+                  CanUserAddRows="False" Margin="10" Grid.Row="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding UsuarioId}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}"/>
+                <DataGridTextColumn Header="Correo" Binding="{Binding Correo}"/>
+                <DataGridTextColumn Header="Contraseña" Binding="{Binding Contrasena}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Botones CRUD -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Grid.Row="1">
+            <Button Content="Crear Usuario" Width="120" Margin="5" Click="Crear_Click"/>
+            <Button Content="Eliminar Usuario" Width="120" Margin="5" Click="Eliminar_Click"/>
+            <Button Content="Guardar cambios" Width="120" Margin="5" Click="Guardar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

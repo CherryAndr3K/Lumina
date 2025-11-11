@@ -15,7 +15,7 @@ public partial class MediaAppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Albume> Albumes { get; set; }
+    public virtual DbSet<Albumes> Albumes { get; set; }
 
     public virtual DbSet<Favorito> Favoritos { get; set; }
 
@@ -31,13 +31,13 @@ public partial class MediaAppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Albume>(entity =>
+        modelBuilder.Entity<Albumes>(entity =>
         {
-            entity.HasKey(e => e.AlbumId).HasName("PK__Albumes__97B4BE17E6E4BEBB");
+            entity.HasKey(e => e.AlbumesId).HasName("PK__Albumes__97B4BE17E6E4BEBB");
 
             entity.HasIndex(e => e.Titulo, "IX_Albumes_Titulo");
 
-            entity.Property(e => e.AlbumId).HasColumnName("AlbumID");
+            entity.Property(e => e.AlbumesId).HasColumnName("AlbumID");
             entity.Property(e => e.Artista).HasMaxLength(150);
             entity.Property(e => e.Genero).HasMaxLength(100);
             entity.Property(e => e.Titulo).HasMaxLength(200);

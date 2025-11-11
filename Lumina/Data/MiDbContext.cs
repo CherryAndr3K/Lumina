@@ -1,5 +1,7 @@
 ﻿using Lumina.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Lumina.Data
 {
@@ -9,20 +11,23 @@ namespace Lumina.Data
         public DbSet<Favorito> Favoritos { get; set; }
         public DbSet<Pelicula> Peliculas { get; set; }
         public DbSet<Libro> Libros { get; set; }
-        public DbSet<Albume> Albumes { get; set; }
+        public DbSet<Albumes> Albumes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(
-                    @"Server=BALKIRIA\VSGESTION;Database=MediaAppDB;Trusted_Connection=True;TrustServerCertificate=True;");
+                // Leer la cadena de conexión desde App.config
+                var connectionString = System.Configuration.ConfigurationManager
+                    .ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                optionsBuilder.UseSqlServer(connectionString);
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Relacion Usuario - Favoritos
+            // Relación Usuario - Favoritos
             modelBuilder.Entity<Favorito>()
                 .HasOne(f => f.Usuario)
                 .WithMany(u => u.Favoritos)

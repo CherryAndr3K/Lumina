@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Lumina.Repositories;
+using Lumina.Views;
+using System;
 using System.Windows;
-using Lumina.Repositories;
-
+using Lumina.Seeding;
 namespace Lumina
 {
     public partial class App : Application
@@ -25,6 +26,11 @@ namespace Lumina
             {
                 Console.WriteLine("Error al conectar: " + ex.Message);
             }
+
+            CrearLibros.Inicializar();
+
+            var loginWindow = new Login();
+            loginWindow.Show();
         }
     }
 }

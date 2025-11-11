@@ -16,7 +16,28 @@ namespace Lumina.Views
         }
 
         // ========== Barra de título / Ventana ==========
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var adminWindow = new AdminUsuarios
+                {
+                    Owner = this,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                adminWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir la ventana de administración: " + ex.Message,
+                                "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    
+
+
+
+private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {

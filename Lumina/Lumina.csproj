@@ -9,8 +9,52 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Avatares\Dog_Lumina1.png" />
+    <None Remove="Images\Avatares\Dog_Lumina2.png" />
+    <None Remove="Images\Avatares\Dog_Lumina3.png" />
+    <None Remove="Images\Avatares\Kat_Lumina1.png" />
+    <None Remove="Images\Avatares\Kat_Lumina2.png" />
+    <None Remove="Images\Avatares\Kat_Lumina3.png" />
+    <None Remove="Images\Iconos\agregar.png" />
+    <None Remove="Images\Iconos\cerrar.png" />
+    <None Remove="Images\Iconos\editar.png" />
+    <None Remove="Images\Iconos\eliminar.png" />
+    <None Remove="Images\Iconos\Favoritos.png" />
+    <None Remove="Images\Iconos\Home.png" />
+    <None Remove="Images\Iconos\key-icon.png" />
+    <None Remove="Images\Iconos\Libros.png" />
+    <None Remove="Images\Iconos\Lupa.png" />
+    <None Remove="Images\Iconos\maximizar.png" />
+    <None Remove="Images\Iconos\minimizar.png" />
+    <None Remove="Images\Iconos\Musica.png" />
+    <None Remove="Images\Iconos\Pelicula.png" />
     <None Remove="Images\Iconos\star_filled.png" />
     <None Remove="Images\Iconos\star_outline.png" />
+    <None Remove="Images\Iconos\usuario.png" />
+    <None Remove="Images\Libros\Amanecer en la cosecha.jpg" />
+    <None Remove="Images\Libros\El dragon rojo.jpg" />
+    <None Remove="Images\Libros\GOD.jpg" />
+    <None Remove="Images\Libros\Gracias.jpg" />
+    <None Remove="Images\Libros\La vegetariana.jpg" />
+    <None Remove="Images\Libros\MerlinaYMilo.jpg" />
+    <None Remove="Images\Libros\OficioT.jpg" />
+    <None Remove="Images\Libros\PercyJ.jpg" />
+    <None Remove="Images\Musica\1989.jpg" />
+    <None Remove="Images\Musica\BNE.jpg" />
+    <None Remove="Images\Musica\FancyT.jpg" />
+    <None Remove="Images\Musica\HMHAS.jpg" />
+    <None Remove="Images\Musica\Huntrix.jpg" />
+    <None Remove="Images\Musica\MBF.jpg" />
+    <None Remove="Images\Musica\Spanish.jpg" />
+    <None Remove="Images\Musica\TBP.jpg" />
+    <None Remove="Images\Peliculas\Captain.jpg" />
+    <None Remove="Images\Peliculas\Castle.jpg" />
+    <None Remove="Images\Peliculas\Conclave.jpg" />
+    <None Remove="Images\Peliculas\Gallo.jpg" />
+    <None Remove="Images\Peliculas\Huevos.jpg" />
+    <None Remove="Images\Peliculas\Mammamia.jpg" />
+    <None Remove="Images\Peliculas\Pollo.jpg" />
+    <None Remove="Images\Peliculas\YourName.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +73,142 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Avatares\Dog_Lumina1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Avatares\Dog_Lumina2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Avatares\Dog_Lumina3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Avatares\Kat_Lumina1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Avatares\Kat_Lumina2.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Avatares\Kat_Lumina3.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\agregar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\cerrar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\editar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\eliminar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\Favoritos.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\Home.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\key-icon.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\Libros.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\Lupa.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\maximizar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\minimizar.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\Musica.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\Pelicula.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Iconos\star_filled.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Iconos\star_outline.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Iconos\usuario.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\Amanecer en la cosecha.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\El dragon rojo.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\GOD.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\Gracias.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\La vegetariana.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\MerlinaYMilo.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\OficioT.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Libros\PercyJ.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\1989.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\BNE.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\FancyT.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\HMHAS.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\Huntrix.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\MBF.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\Spanish.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Musica\TBP.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Captain.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Castle.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Conclave.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Gallo.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Huevos.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Mammamia.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\Pollo.jpg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Peliculas\YourName.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

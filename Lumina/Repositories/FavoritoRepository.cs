@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Configuration;
+
 
 namespace Lumina.Repositories
 { 
@@ -16,9 +18,9 @@ SELECT f.FavoritoID, f.UsuarioID, u.Nombre AS UsuarioNombre, f.Tipo, f.Referenci
        COALESCE(a.Titulo, l.Titulo, p.Titulo) AS ReferenciaTitulo, f.FechaMarcado
 FROM dbo.Favoritos f
 JOIN dbo.Usuarios u ON u.UsuarioID = f.UsuarioID
-LEFT JOIN dbo.Albumes   a ON f.Tipo='Album'    AND a.AlbumID    = f.ReferenciaID
-LEFT JOIN dbo.Libros    l ON f.Tipo='Libro'    AND l.LibroID    = f.ReferenciaID
-LEFT JOIN dbo.Peliculas p ON f.Tipo='Pelicula' AND p.PeliculaID = f.ReferenciaID
+LEFT JOIN dbo.Albumes   a ON f.Tipo='Album'    AND a.AlbumesId  = f.ReferenciaId
+LEFT JOIN dbo.Libros    l ON f.Tipo='Libro'    AND l.LibroId    = f.ReferenciaId
+LEFT JOIN dbo.Peliculas p ON f.Tipo='Pelicula' AND p.PeliculaId = f.ReferenciaId
 ORDER BY f.FavoritoID DESC;", cn);
 
             cn.Open();
@@ -67,17 +69,18 @@ VALUES (@u, @t, @r, SYSUTCDATETIME());", cn);
         // 🔥 Nuevo método: eliminar favorito por usuario/tipo/referencia
         public bool DeleteFavorito(int usuarioId, string tipo, int referenciaId)
         {
-            using var cn = GetConnection();
+            using var cn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             using var cmd = new SqlCommand(
-                "DELETE FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+                "DELETE FROM Favoritos WHERE UsuarioId = @u AND Tipo = @t AND ReferenciaId = @r", cn);
 
             cmd.Parameters.AddWithValue("@u", usuarioId);
             cmd.Parameters.AddWithValue("@t", tipo);
             cmd.Parameters.AddWithValue("@r", referenciaId);
 
             cn.Open();
-            return cmd.ExecuteNonQuery() == 1;
+            return cmd.ExecuteNonQuery() > 0;
         }
+
     }
 }
 

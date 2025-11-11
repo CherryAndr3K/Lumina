@@ -119,22 +119,59 @@ namespace Lumina.Views
             if (p.Length > 2) imagePath = p[2].Trim();
         }
 
-        private static int? ResolveReferenciaId_AlbumPorTitulo(string titulo)
+        private static int? ResolveReferenciaIdPorTitulo(string tipo, string titulo)
         {
             try
             {
+                // Normalizar los tipos que vienen desde el Tag (acepta variantes en inglés/español)
+                tipo = tipo switch
+                {
+                    "Music" or "Album" => "Album",
+                    "Book" or "Libro" => "Libro",
+                    "Movie" or "Pelicula" or "Film" => "Pelicula",
+                    _ => tipo
+                };
+
+                string tabla;
+                string columnaId;
+
+                switch (tipo)
+                {
+                    case "Album":
+                        tabla = "Albumes";
+                        columnaId = "AlbumesId";   // según tu CREATE TABLE
+                        break;
+                    case "Libro":
+                        tabla = "Libros";
+                        columnaId = "LibroId";     // según tu CREATE TABLE
+                        break;
+                    case "Pelicula":
+                        tabla = "Peliculas";
+                        columnaId = "PeliculaId";  // según tu CREATE TABLE
+                        break;
+                    default:
+                        return null;
+                }
+
                 using var cn = new SqlConnection(Cnn());
-                using var cmd = new SqlCommand("SELECT TOP 1 AlbumID FROM dbo.Albumes WHERE Titulo=@t", cn);
+                using var cmd = new SqlCommand(
+                    $"SELECT TOP 1 {columnaId} FROM dbo.{tabla} WHERE Titulo = @t", cn);
+
                 cmd.Parameters.AddWithValue("@t", (object?)titulo ?? DBNull.Value);
                 cn.Open();
+
                 var o = cmd.ExecuteScalar();
                 return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
             }
             catch
             {
-                return null; // no revientes la UI si hay un fallo de conexión
+                return null;
             }
         }
+
+
+
+
 
         private static bool ExisteFavorito(int userId, string tipo, int referenciaId)
         {
@@ -187,9 +224,13 @@ namespace Lumina.Views
             try
             {
                 ParseTag(tag, out var tipo, out var titulo, out _);
-                if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
+                // No limitar solo a música, queremos permitir Libro, Película y Album
+                if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase) &&
+                    !string.Equals(tipo, "Libro", StringComparison.OrdinalIgnoreCase) &&
+                    !string.Equals(tipo, "Pelicula", StringComparison.OrdinalIgnoreCase))
+                    return;
 
-                var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
+                var id = ResolveReferenciaIdPorTitulo(tipo, titulo);
                 var isFav = id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
                 SetStarIcon(btn, isFav);
             }
@@ -206,30 +247,55 @@ namespace Lumina.Views
             if (sender is not Button btn || btn.Tag is not string tag) return;
 
             ParseTag(tag, out var tipo, out var titulo, out _);
-            if (!string.Equals(tipo, "Music", StringComparison.OrdinalIgnoreCase)) return;
 
-            var id = ResolveReferenciaId_AlbumPorTitulo(titulo);
-            if (!id.HasValue) { MessageBox.Show("No se encontró el álbum en la BD."); return; }
+            // Ajustamos tipo a nombres internos de la BD
+            tipo = tipo switch
+            {
+                "Music" => "Album",
+                "Libro" => "Libro",
+                "Pelicula" => "Pelicula",
+                _ => tipo
+            };
 
-            var isFav = ExisteFavorito(AppSession.CurrentUserId, "Album", id.Value);
-            if (isFav) { MessageBox.Show("Ya está en Favoritos."); SetStarIcon(btn, true); return; }
+            var id = ResolveReferenciaIdPorTitulo(tipo, titulo);
+            if (!id.HasValue)
+            {
+                MessageBox.Show($"No se encontró el {tipo.ToLower()} en la BD.");
+                return;
+            }
+
+            var isFav = ExisteFavorito(AppSession.CurrentUserId, tipo, id.Value);
 
             try
             {
-                _ = _favRepo.Add(new Favorito
+                if (isFav)
                 {
-                    UsuarioId = AppSession.CurrentUserId,
-                    Tipo = "Album",
-                    ReferenciaId = id.Value
-                });
-                SetStarIcon(btn, true);
-                MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                    // Eliminar si ya existe
+                    if (_favRepo.DeleteFavorito(AppSession.CurrentUserId, tipo, id.Value))
+                    {
+                        SetStarIcon(btn, false);
+                        MessageBox.Show($"Quitado de Favoritos: {titulo}");
+                    }
+                }
+                else
+                {
+                    // Agregar si no existe
+                    _ = _favRepo.Add(new Favorito
+                    {
+                        UsuarioId = AppSession.CurrentUserId,
+                        Tipo = tipo,
+                        ReferenciaId = id.Value
+                    });
+                    SetStarIcon(btn, true);
+                    MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("No se pudo agregar: " + ex.Message);
+                MessageBox.Show("Error al actualizar favorito: " + ex.Message);
             }
         }
+
 
         // ================================
         // Botones de ventana

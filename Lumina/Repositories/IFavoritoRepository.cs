@@ -14,5 +14,8 @@ namespace Lumina.Repositories
         IEnumerable<FavoritoView> GetAllViews();
         int Add(Favorito favorito);     // Favorito es tu entidad EF (Lumina.Models)
         bool Delete(int id);
+        bool DeleteFavorito(int usuarioId, string tipo, int referenciaId);
+
     }
+
 }
