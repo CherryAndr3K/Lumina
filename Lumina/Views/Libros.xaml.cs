@@ -230,7 +230,6 @@ namespace Lumina.Views
                 }
             }
         }
-<<<<<<< HEAD
 
         // === NUEVO MÉTODO PARA ENLACES DE LIBROS ===
         private void BookLink_Click(object sender, RoutedEventArgs e)
@@ -245,54 +244,7 @@ namespace Lumina.Views
                         UseShellExecute = true
                     });
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"No se pudo abrir el enlace:\n{ex.Message}",
-                        "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
             }
         }
-
-        // ================================
-        // Caja de búsqueda (placeholder)
-        // ================================
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb && _placeholderActive)
-            {
-                tb.Text = string.Empty;
-                tb.Opacity = 1.0;
-                _placeholderActive = false;
-            }
-        }
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox tb && string.IsNullOrWhiteSpace(tb.Text))
-            {
-                tb.Text = PlaceholderText;
-                tb.Opacity = 0.6;
-                _placeholderActive = true;
-            }
-        }
-
-        private void InitSearchPlaceholderIfNeeded(TextBox tb)
-        {
-            if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
-            {
-                tb.Text = PlaceholderText;
-                tb.Opacity = 0.6;
-                _placeholderActive = true;
-            }
-        }
-
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            if (Owner == null)
-                Application.Current.Shutdown();
-        }
-=======
->>>>>>> 18eea0d02bb6b353d4e7180724d3f8508ac614b7
     }
 }
