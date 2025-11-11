@@ -127,7 +127,8 @@
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\La vegetariana.jpg"/>
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\El dragon rojo.jpg"/>
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\OficioT.jpg"/>
-                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\Gracias.jpg"/>
+
+                        <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\Gracias.jpg" />
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\PercyJ.jpg"/>
                         <Image Source="C:\Users\andre\Desktop\Lumina\Lumina\Lumina\Images\Libros\GOD.jpg"/>
                         <Button Width="80" Height="120" Margin="5" BorderBrush="Transparent" Background="Transparent">

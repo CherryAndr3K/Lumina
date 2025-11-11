@@ -12,4 +12,8 @@ public partial class Libro
     public string? Autor { get; set; }
 
     public string? Genero { get; set; }
+
+    public string? Link { get; set; }
+
+    public string? Imagen { get; set; }
 }

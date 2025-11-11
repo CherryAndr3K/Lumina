@@ -1,4 +1,4 @@
-﻿using Lumina.Model;
+﻿using Lumina.Models;
 using System;
 using System.Data.SqlClient;
 using System.Net;

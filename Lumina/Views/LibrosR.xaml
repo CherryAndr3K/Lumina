@@ -1,20 +1,42 @@
 ﻿<Window x:Class="Lumina.Views.LibrosR"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Libros" Height="560" Width="880"
-        Background="#F7F7F7" WindowStartupLocation="CenterScreen">
+        Title="Libros"
+        Height="560"
+        Width="880"
+        Background="#F7F7F7"
+        WindowStartupLocation="CenterScreen">
+
     <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Gestión de Libros" FontSize="20" FontWeight="Bold" Margin="0,0,0,12"/>
+        <!-- Encabezado con botón de regreso -->
+        <DockPanel Margin="0,0,0,12">
+            <!-- Botón Regresar -->
+           
+                    <Button Content="Regresar" FontWeight="SemiBold" FontSize="13" Margin="5,0,0,0" VerticalAlignment="Center" Click="BtnRegresar_Click">
+                  </Button>
+                   
+
+            <TextBlock Text="Gestión de Libros"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Margin="12,0,0,0"
+                       VerticalAlignment="Center"/>
+        </DockPanel>
 
         <!-- ===== CRUD Libros ===== -->
-        <Border Grid.Row="1" Padding="12" Background="#FFFFFF" CornerRadius="12"
-                BorderBrush="#E3D5CA" BorderThickness="1">
+        <Border Grid.Row="1"
+                Padding="12"
+                Background="#FFFFFF"
+                CornerRadius="12"
+                BorderBrush="#E3D5CA"
+                BorderThickness="1">
             <DockPanel LastChildFill="True" Margin="0">
+
                 <!-- Formulario -->
                 <StackPanel DockPanel.Dock="Top" Margin="0,0,0,12">
                     <Grid>
@@ -22,28 +44,56 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
+                        <!-- Título -->
                         <StackPanel Grid.Column="0" Margin="0,0,10,0">
                             <TextBlock Text="Título"/>
                             <TextBox x:Name="txtLibroTitulo"/>
                         </StackPanel>
 
+                        <!-- Autor -->
                         <StackPanel Grid.Column="1" Margin="0,0,10,0">
                             <TextBlock Text="Autor"/>
                             <TextBox x:Name="txtLibroAutor"/>
                         </StackPanel>
 
+                        <!-- Género -->
                         <StackPanel Grid.Column="2" Margin="0,0,10,0">
                             <TextBlock Text="Género"/>
                             <TextBox x:Name="txtLibroGenero"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Bottom">
-                            <Button Content="Agregar"   Click="BtnLibroAgregar_Click"  Margin="0,0,6,0" Padding="10,6"/>
-                            <Button Content="Modificar" Click="BtnLibroModificar_Click" Margin="0,0,6,0" Padding="10,6"/>
-                            <Button Content="Eliminar"  Click="BtnLibroEliminar_Click" Padding="10,6"/>
+                        <!-- Link -->
+                        <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                            <TextBlock Text="Link"/>
+                            <TextBox x:Name="txtLibroLink"/>
+                        </StackPanel>
+
+                        <!-- Imagen -->
+                        <StackPanel Grid.Column="4" Margin="0,0,10,0">
+                            <TextBlock Text="Imagen (ruta)"/>
+                            <TextBox x:Name="txtLibroImagen"/>
+                        </StackPanel>
+
+                        <!-- Botones CRUD -->
+                        <StackPanel Grid.Column="5"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Bottom">
+                            <Button Content="Agregar"
+                                    Click="BtnLibroAgregar_Click"
+                                    Margin="0,0,6,0"
+                                    Padding="10,6"/>
+                            <Button Content="Modificar"
+                                    Click="BtnLibroModificar_Click"
+                                    Margin="0,0,6,0"
+                                    Padding="10,6"/>
+                            <Button Content="Eliminar"
+                                    Click="BtnLibroEliminar_Click"
+                                    Padding="10,6"/>
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -55,14 +105,27 @@
                           SelectionMode="Single"
                           SelectionChanged="DgLibros_SelectionChanged">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Binding="{Binding LibroId}" Width="60"/>
-                        <DataGridTextColumn Header="Título" Binding="{Binding Titulo}" Width="*"/>
-                        <DataGridTextColumn Header="Autor" Binding="{Binding Autor}" Width="220"/>
-                        <DataGridTextColumn Header="Género" Binding="{Binding Genero}" Width="160"/>
+                        <DataGridTextColumn Header="ID"
+                                            Binding="{Binding LibroId}"
+                                            Width="60"/>
+                        <DataGridTextColumn Header="Título"
+                                            Binding="{Binding Titulo}"
+                                            Width="*"/>
+                        <DataGridTextColumn Header="Autor"
+                                            Binding="{Binding Autor}"
+                                            Width="180"/>
+                        <DataGridTextColumn Header="Género"
+                                            Binding="{Binding Genero}"
+                                            Width="120"/>
+                        <DataGridTextColumn Header="Link"
+                                            Binding="{Binding Link}"
+                                            Width="200"/>
+                        <DataGridTextColumn Header="Imagen"
+                                            Binding="{Binding Imagen}"
+                                            Width="200"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
         </Border>
-        <!-- ===== /CRUD Libros ===== -->
     </Grid>
 </Window>

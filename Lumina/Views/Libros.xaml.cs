@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;              // 👈 importante para Brushes
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Lumina.Infra;
 using Lumina.Models;
@@ -18,12 +19,26 @@ namespace Lumina.Views
         private const string PlaceholderText = "Buscar...";
         private bool _placeholderActive = true;
 
+        // Lista que se enlaza al ItemsControl del XAML
+        public ObservableCollection<Libro> LibrosList { get; } = new();
+
+        // Repo de favoritos
+        private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
+
         public Libros()
         {
             InitializeComponent();
 
             if (!DesignerProperties.GetIsInDesignMode(this))
-                Loaded += (_, __) => { /* carga diferida si la necesitas */ };
+            {
+                DataContext = this;              // para los bindings
+                Loaded += Libros_Loaded;         // carga al abrir la ventana
+            }
+        }
+
+        private void Libros_Loaded(object? sender, RoutedEventArgs e)
+        {
+            CargarLibrosDesdeBD();
         }
 
         // ============= BARRA DE TÍTULO =============
@@ -70,14 +85,22 @@ namespace Lumina.Views
         // ============= NAVEGACIÓN =============
         private void LibrosR(object sender, RoutedEventArgs e)
         {
-            var w = new LibrosR { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            var w = new LibrosR
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             w.Show();
             Hide();
         }
 
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Homepage { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            var w = new Homepage
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             w.Show();
             Hide();
         }
@@ -89,61 +112,84 @@ namespace Lumina.Views
 
         private void Musica_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Musica { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            var w = new Musica
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             w.Show();
             Hide();
         }
 
         private void Peliculas_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Peliculas { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            var w = new Peliculas
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             w.Show();
             Hide();
         }
 
         private void Favoritos_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Favoritos { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            var w = new Favoritos
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             w.Show();
             Hide();
         }
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            var w = new Login { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            var w = new Login
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             w.Show();
             Hide();
         }
 
-        // ============= FAVORITOS =============
-        private readonly IFavoritoRepository _favRepo = new FavoritoRepository();
-
-        private (string tipo, string titulo, string? image) ParseTag(string tag)
-        {
-            var p = (tag ?? "").Split(new[] { '|' }, 3, StringSplitOptions.None);
-            var tipo = (p.Length > 0 ? p[0] : "").Trim();
-            var titulo = (p.Length > 1 ? p[1] : "").Trim();
-            var image = (p.Length > 2 ? p[2] : null);
-            return (tipo, titulo, image);
-        }
+        // ============= BASE DE DATOS =============
 
         private static string Cnn() =>
             ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        private static int? ResolveReferenciaId_LibroPorTitulo(string titulo)
+        private void CargarLibrosDesdeBD()
         {
+            LibrosList.Clear();
+
             try
             {
                 using var cn = new SqlConnection(Cnn());
-                using var cmd = new SqlCommand("SELECT TOP 1 LibroID FROM dbo.Libros WHERE Titulo=@t", cn);
-                cmd.Parameters.AddWithValue("@t", (object?)titulo ?? DBNull.Value);
+                using var cmd = new SqlCommand(
+                    "SELECT LibroID, Titulo, Autor, Genero, Link, Imagen FROM dbo.Libros ORDER BY LibroID",
+                    cn);
+
                 cn.Open();
-                var o = cmd.ExecuteScalar();
-                return (o == null || o == DBNull.Value) ? (int?)null : Convert.ToInt32(o);
+                using var rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    var libro = new Libro
+                    {
+                        LibroId = rd.IsDBNull(0) ? 0 : rd.GetInt32(0),
+                        Titulo = rd.IsDBNull(1) ? string.Empty : rd.GetString(1),
+                        Autor = rd.IsDBNull(2) ? string.Empty : rd.GetString(2),
+                        Genero = rd.IsDBNull(3) ? string.Empty : rd.GetString(3),
+                        Link = rd.IsDBNull(4) ? string.Empty : rd.GetString(4),
+                        Imagen = rd.IsDBNull(5) ? string.Empty : rd.GetString(5)
+                    };
+
+                    LibrosList.Add(libro);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return null; // no romper UI si hay problema de conexión
+                MessageBox.Show("Error al cargar libros: " + ex.Message);
             }
         }
 
@@ -153,7 +199,8 @@ namespace Lumina.Views
             {
                 using var cn = new SqlConnection(Cnn());
                 using var cmd = new SqlCommand(
-                    "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r", cn);
+                    "SELECT 1 FROM dbo.Favoritos WHERE UsuarioID=@u AND Tipo=@t AND ReferenciaID=@r",
+                    cn);
                 cmd.Parameters.AddWithValue("@u", userId);
                 cmd.Parameters.AddWithValue("@t", tipo);
                 cmd.Parameters.AddWithValue("@r", referenciaId);
@@ -186,89 +233,92 @@ namespace Lumina.Views
             }
         }
 
+        // ============= FAVORITOS =============
+
         private void Star_Loaded(object sender, RoutedEventArgs e)
         {
             if (DesignerProperties.GetIsInDesignMode(this)) return;
-            if (sender is Button btn && btn.Tag is string tag)
-            {
-                var (tipo, titulo, _) = ParseTag(tag);
-                if (!string.Equals(tipo, "Book", StringComparison.OrdinalIgnoreCase)) return;
+            if (sender is not Button btn) return;
+            if (btn.DataContext is not Libro libro) return;
 
-                var id = ResolveReferenciaId_LibroPorTitulo(titulo);
-                var isFav = id.HasValue && ExisteFavorito(AppSession.CurrentUserId, "Libro", id.Value);
-                SetStarIcon(btn, isFav);
-            }
+            var isFav = ExisteFavorito(AppSession.CurrentUserId, "Libro", libro.LibroId);
+            SetStarIcon(btn, isFav);
         }
 
         private void Star_Toggle_Click(object sender, RoutedEventArgs e)
         {
             if (DesignerProperties.GetIsInDesignMode(this)) return;
-            if (sender is Button btn && btn.Tag is string tag)
+            if (sender is not Button btn) return;
+            if (btn.DataContext is not Libro libro) return;
+
+            var id = libro.LibroId;
+            var titulo = libro.Titulo ?? "(sin título)";
+            var isFav = ExisteFavorito(AppSession.CurrentUserId, "Libro", id);
+
+            try
             {
-                var (tipo, titulo, _) = ParseTag(tag);
-                if (!string.Equals(tipo, "Book", StringComparison.OrdinalIgnoreCase)) return;
-
-                var id = ResolveReferenciaId_LibroPorTitulo(titulo);
-                if (!id.HasValue)
+                if (isFav)
                 {
-                    MessageBox.Show("No se encontró el libro en la BD.");
-                    return;
-                }
+                    var eliminado =
+                        (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Libro", id)
+                        ?? false;
 
-                var isFav = ExisteFavorito(AppSession.CurrentUserId, "Libro", id.Value);
-
-                try
-                {
-                    if (isFav)
+                    if (eliminado)
                     {
-                        var eliminado = (_favRepo as FavoritoRepository)?.DeleteFavorito(AppSession.CurrentUserId, "Libro", id.Value) ?? false;
-                        if (eliminado)
-                        {
-                            SetStarIcon(btn, false);
-                            MessageBox.Show($"Eliminado de Favoritos: {titulo}");
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se pudo eliminar de Favoritos.");
-                        }
+                        SetStarIcon(btn, false);
+                        MessageBox.Show($"Eliminado de Favoritos: {titulo}");
                     }
                     else
                     {
-                        _ = _favRepo.Add(new Favorito
-                        {
-                            UsuarioId = AppSession.CurrentUserId,
-                            Tipo = "Libro",
-                            ReferenciaId = id.Value,
-                            FechaMarcado = DateTime.Now
-                        });
-
-                        SetStarIcon(btn, true);
-                        MessageBox.Show($"Añadido a Favoritos: {titulo}");
+                        MessageBox.Show("No se pudo eliminar de Favoritos.");
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Error al actualizar favoritos: " + ex.Message);
+                    _ = _favRepo.Add(new Favorito
+                    {
+                        UsuarioId = AppSession.CurrentUserId,
+                        Tipo = "Libro",
+                        ReferenciaId = id,
+                        FechaMarcado = DateTime.Now
+                    });
+
+                    SetStarIcon(btn, true);
+                    MessageBox.Show($"Añadido a Favoritos: {titulo}");
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar favoritos: " + ex.Message);
             }
         }
 
+        // ============= LINK DEL LIBRO =============
+
         private void BookLink_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag is string url)
+            if (sender is not Button btn) return;
+            if (btn.DataContext is not Libro libro) return;
+
+            var url = libro.Link;
+
+            if (string.IsNullOrWhiteSpace(url))
             {
-                try
+                MessageBox.Show("Este libro no tiene enlace configurado.");
+                return;
+            }
+
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = url,
-                        UseShellExecute = true
-                    });
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("No se pudo abrir el enlace: " + ex.Message);
-                }
+                    FileName = url,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se pudo abrir el enlace: " + ex.Message);
             }
         }
     }

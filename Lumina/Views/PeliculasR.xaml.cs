@@ -34,6 +34,16 @@ namespace Lumina.Views
             dgPeliculas.SelectedItem = null;
         }
 
+
+        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new Peliculas();
+            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            w.Show();
+
+            this.Close(); // Cierra solo esta ventana, sin cerrar la nueva
+        }
+
         private Pelicula? GetPeliSel() => dgPeliculas.SelectedItem as Pelicula;
 
         private void DgPeliculas_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -26,6 +26,15 @@ namespace Lumina.Views
             dgAlbumes.ItemsSource = _albumes;
         }
 
+        private void BtnRegresar_Click(object sender, RoutedEventArgs e)
+        {
+            var w = new Musica();
+            w.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            w.Show();
+
+            this.Close(); // Cierra solo esta ventana, sin cerrar la nueva
+        }
+
         private void LimpiarFormAlbumes()
         {
             txtAlbumTitulo.Text = "";
